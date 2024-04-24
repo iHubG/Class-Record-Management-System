@@ -22,6 +22,10 @@
     width: 200px;
 }
 
+h2#login-as {
+    margin-top: 5rem;
+}
+
 a.login-button {
     text-decoration: none;
     color: white;
@@ -29,6 +33,7 @@ a.login-button {
     padding: 15px;
     border-radius: 30px;
     background-color: #22DD22;
+    font-size: 1.1rem;
 }
 
 a.login-button:hover {
@@ -39,7 +44,7 @@ img#question-mark {
     cursor: pointer;
     width: 40px;
     float: right;
-    margin-top: 5rem;
+    margin-top: 3rem;
     margin-right: 1.5rem;
 }
 
