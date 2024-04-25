@@ -24,6 +24,7 @@
 
 h2#login-as {
     margin-top: 5rem;
+    text-shadow: 1px 1px #C0C0C0;
 }
 
 a.login-button {
@@ -50,4 +51,73 @@ img#question-mark {
 
 img#question-mark:hover {
     opacity: 0.5;
+}
+
+@media (min-width: 300px) and (max-width: 767px){
+
+    #login-left {
+        border-radius: 20px 20px 0px 0px;
+        background-image: none;
+        height: auto;
+    }
+
+    #isu-icon {
+        width: 100px;
+        margin-top: 2rem;
+    }
+
+    #login-box {
+        background-image: url(../img/isu-blur.png);
+        background-size: cover;
+        background-position: center;
+    }
+
+    a.login-button {
+        width: 70%;
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    h2#login-as {
+        margin-top: 2rem;
+        font-size: 1.5rem;
+    }
+
+    img#question-mark {
+        width: 30px;
+        float: right;
+        margin-top: 0rem;
+        margin-right: 0rem;
+        margin-bottom: 1rem;
+    }
+
+  
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+
+    #login-left {
+        border-radius: 20px 20px 0px 0px;
+        background-image: none;
+        height: auto;
+    }
+
+    #login-box {
+        background-image: url(../img/isu-blur.png);
+        background-size: cover;
+        background-position: center;
+    }
+
+    #isu-icon {
+        width: 180px;
+        margin-top: 2rem;
+    }
+
+    img#question-mark {
+        width: 30px;
+        float: right;
+        margin-top: 0rem;
+        margin-right: 0rem;
+        margin-bottom: 1rem;
+    }
 }
