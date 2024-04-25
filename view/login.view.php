@@ -18,9 +18,9 @@
                             <div class="col-12 col-lg-6 text-center" id="login-right">
                                 <h2 id="login-as">Login As</h2>
                                 <div class="d-flex flex-column my-5 gap-lg-5 gap-4 align-items-center">
-                                    <a href="#" class="login-button">Admin</a>
-                                    <a href="#" class="login-button">Instructor</a>
-                                    <a href="#" class="login-button">Student</a>
+                                    <a href="/crms-project/admin-login" class="login-button">Admin</a>
+                                    <a href="/crms-project/instructor-login" class="login-button">Instructor</a>
+                                    <a href="/crms-project/student-login" class="login-button">Student</a>
                                 </div>
                                 <img id="question-mark" src="./public/img/question-mark.png" alt="question mark">
                             </div>

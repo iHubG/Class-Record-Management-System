@@ -4,9 +4,9 @@
     $routes = [
         '/crms-project/' => 'index',
         '/crms-project/view/' => 'login',
-        '/tutorial/register' => 'register',
-        '/tutorial/table' => 'table',
-        '/tutorial/router' => 'router',
+        '/crms-project/admin-login' => 'admin-login',
+        '/crms-project/instructor-login' => 'instructor-login',
+        '/crms-project/student-login' => 'student-login',
         '/tutorial/login_process' => 'login_process',
         '/tutorial/register_validation' => 'register_validation',
     ];
@@ -28,17 +28,17 @@
             case 'login':
                 require ('./view/login.view.php'); // Include the file for the home page
                 break;
-            case 'register':
-                require ''; // Include the file for the about page
+            case 'admin-login':
+                require ('./view/admin.view.php'); // Include the file for the home page
                 break;
-            case 'table':
-                require ''; // Include the file for the contact page
+            case 'instructor-login':
+                require ('./view/instructor.view.php'); // Include the file for the home page
                 break;
-            case 'login_process':
-                require ''; // Include the file for the contact page
+            case 'student-login':
+                require ('./view/student.view.php'); // Include the file for the home page
                 break;
             case 'register_validation':
-                require ''; // Include the file for the contact page
+                require ('./view/admin.view.php'); // Include the file for the home page
                 break;
             // Add more routes as needed
             default:
