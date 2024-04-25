@@ -7,7 +7,7 @@
         '/crms-project/admin-login' => 'admin-login',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',
-        '/tutorial/login_process' => 'login_process',
+        '/crms-project/instructor-login-process' => 'instructor-process',
         '/tutorial/register_validation' => 'register_validation',
     ];
 
@@ -34,13 +34,12 @@
             case 'instructor-login':
                 require ('./view/instructor.view.php'); // Include the file for the home page
                 break;
+            case 'instructor-process':
+                require ('./view/instructor-dash.view.php'); // Include the file for the home page
+                break;
             case 'student-login':
                 require ('./view/student.view.php'); // Include the file for the home page
                 break;
-            case 'register_validation':
-                require ('./view/admin.view.php'); // Include the file for the home page
-                break;
-            // Add more routes as needed
             default:
                 // Handle 404 error
                 echo "<h1 class='text-center text-muted my-5'>404 Page Not Found</h1>";

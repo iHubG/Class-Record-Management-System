@@ -18,7 +18,7 @@
                             <div class="col-12 col-lg-6" id="login-right">
                                 <h2 id="login-as" class="text-center">Instructor</h2>
                                 <div class="d-flex flex-column my-5 gap-lg-5 gap-4 px-5">
-                                <form action="/tutorial/login_process" method="post">
+                                <form action="/crms-project/instructor-login-process" method="post">
                                     <!-- Email Address -->
                                     <div class="mb-3">
                                         <label for="email" class="form-label fw-bold">Email address:</label>
