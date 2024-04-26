@@ -122,3 +122,9 @@ img#question-mark:hover {
         margin-bottom: 1rem;
     }
 }
+
+/* Admin Dashboard */
+#admin-sidebar {
+    background-color: #36454F;
+    height: 1000px;
+}

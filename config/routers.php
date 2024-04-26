@@ -7,6 +7,7 @@
         '/crms-project/admin-login' => 'admin-login',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',
+        '/crms-project/admin-login-process' => 'admin-process',
         '/crms-project/instructor-login-process' => 'instructor-process',
         '/tutorial/register_validation' => 'register_validation',
     ];
@@ -30,6 +31,9 @@
                 break;
             case 'admin-login':
                 require ('./view/admin.view.php'); // Include the file for the home page
+                break;
+            case 'admin-process':
+                require ('./view/admin-dash.view.php'); // Include the file for the home page
                 break;
             case 'instructor-login':
                 require ('./view/instructor.view.php'); // Include the file for the home page
