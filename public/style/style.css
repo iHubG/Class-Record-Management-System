@@ -125,6 +125,21 @@ img#question-mark:hover {
 
 /* Admin Dashboard */
 #admin-sidebar {
-    background-color: #36454F;
-    height: 1000px;
+    background-color: 	#36454F;
+    position: fixed;
+    color: #ffff;
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full height of viewport */
+}
+
+.dash-nav {
+    width: 100%;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.dash-nav:hover {
+    opacity: 1;
+    background-color: #28282B;
 }
