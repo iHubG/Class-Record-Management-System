@@ -158,3 +158,11 @@ img#question-mark:hover {
     background-color: #F9F6EE;
     height: 100vh;
 }
+
+@media (min-width: 300px) and (max-width: 991px) {
+
+    i#burger-menu {
+        cursor: pointer;
+    }
+}
+
