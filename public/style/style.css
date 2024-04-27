@@ -143,3 +143,18 @@ img#question-mark:hover {
     opacity: 1;
     background-color: #28282B;
 }
+
+.logout-nav {
+    width: 100%;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.logout-nav:hover {
+    opacity: 1;
+}
+
+#admin-main-content {
+    background-color: #F9F6EE;
+    height: 100vh;
+}
