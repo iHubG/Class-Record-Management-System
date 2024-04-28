@@ -125,7 +125,7 @@ img#question-mark:hover {
 
 /* Admin Dashboard */
 #admin-sidebar {
-    background-color: 	#36454F;
+    background-color: #36454F;
     position: fixed;
     color: #ffff;
     top: 0;
@@ -164,5 +164,11 @@ img#question-mark:hover {
     i#burger-menu {
         cursor: pointer;
     }
+
+    #offcanvasScrolling {
+        background-color: #36454F;
+        color: #ffff;
+    }
+
 }
 

@@ -9,7 +9,7 @@
         <section id="admin-dash">
             <div class="row g-0">
                 <!-- Sidebar -->
-                <div class="col-0 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-lg-2 d-flex p-3 px-2 flex-column" id="admin-sidebar">                   
+                <div class="col-0 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-lg-2 d-flex p-3 p-xxl-4 px-2 flex-column" id="admin-sidebar">                   
                     <h2 class="h4 text-center">Admin</h2>
                     <nav>
                         <div class="dash-nav d-flex gap-2 my-4 p-2 rounded">
@@ -26,11 +26,20 @@
                 <!-- OffCanvas -->
                 <div class="offcanvas offcanvas-start w-50" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <h5 class="offcanvas-title text-center m-auto" id="offcanvasScrollingLabel">Admin</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <p>Try scrolling the rest of the page to see this option in action.</p>
+                        <nav>
+                            <div class="dash-nav d-flex gap-2 my-4 p-2 rounded">
+                                <i class="bi bi-house"></i>
+                                <h5>Dashboard</h5>
+                            </div>
+                            <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <h5>Log out</h5>
+                            </div>
+                        </nav>
                     </div>
                 </div>
 
@@ -38,7 +47,7 @@
                 <div class="col-12 col-lg-10 offset-lg-2" id="admin-main-content">
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
-                            <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
+                            <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
                             <h4>Welcome to Admin Dashboard!</h4>
                             <i class="bi bi-person-circle fs-3"></i>
                         </div>  
