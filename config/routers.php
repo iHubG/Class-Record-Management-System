@@ -3,7 +3,7 @@
     // Define your routes
     $routes = [
         '/crms-project/' => 'index',
-        '/crms-project/view/' => 'login',
+        '/crms-project/view' => 'login',
         '/crms-project/admin-login' => 'admin-login',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',

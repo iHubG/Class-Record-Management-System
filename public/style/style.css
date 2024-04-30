@@ -139,10 +139,12 @@ img#question-mark:hover {
     opacity: .5;
 }
 
-.dash-nav:hover {
+.dash-nav:hover, .active {
     opacity: 1;
     background-color: #28282B;
 }
+
+
 
 .logout-nav {
     width: 100%;
@@ -171,4 +173,7 @@ img#question-mark:hover {
     }
 
 }
+
+
+
 

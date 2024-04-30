@@ -11,14 +11,22 @@
                 <!-- Sidebar -->
                 <div class="col-0 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-lg-2 d-flex p-3 p-xxl-4 px-2 flex-column" id="admin-sidebar">                   
                     <h2 class="h4 text-center">Admin</h2>
-                    <nav>
-                        <div class="dash-nav d-flex gap-2 my-4 p-2 rounded">
+                    <nav id="dash-nav">
+                        <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
                             <i class="bi bi-house"></i>
-                            <h5>Dashboard</h5>
+                            <a href="#" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
+                        </div>
+                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                            <i class="bi bi-book"></i>
+                            <a href="#" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
+                        </div>
+                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                            <i class="bi bi-backpack2"></i>
+                            <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
                         </div>
                         <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
                             <i class="bi bi-box-arrow-right"></i>
-                            <h5>Log out</h5>
+                            <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
                         </div>
                     </nav>
                 </div>
@@ -30,14 +38,22 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <nav>
-                            <div class="dash-nav d-flex gap-2 my-4 p-2 rounded">
+                        <nav id="dash-nav">
+                            <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
                                 <i class="bi bi-house"></i>
-                                <h5>Dashboard</h5>
+                                <a href="#" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
+                            </div>
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-book"></i>
+                                <a href="#" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
+                            </div>
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-backpack2"></i>
+                                <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
                             </div>
                             <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <h5>Log out</h5>
+                                <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
                             </div>
                         </nav>
                     </div>
