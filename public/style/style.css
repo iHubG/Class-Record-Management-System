@@ -10,6 +10,11 @@
     border-radius: 20px;
 }
 
+#login-body {
+    height: 100vh;
+    background-color: #F9F6EE;
+}
+
 #login-left {
     background-image: url(../img/isu-blur.png);
     background-size: cover;
@@ -123,6 +128,53 @@ img#question-mark:hover {
     }
 }
 
+@media (min-width: 992px) and (max-width: 1300px){
+
+    #login-box {
+        height: 450px;
+    }
+
+    #login-left {
+        height: 450px;
+    }
+
+    #login-right {
+        height: 450px;
+        background-color: #ffff;
+        border-radius: 0px 20px 20px 0px;
+    }
+    
+    h2#login-as {
+        margin-top: 4rem;
+        text-shadow: 1px 1px #C0C0C0;
+    }
+
+    img#question-mark {
+        width: 30px;
+        margin-top: 2rem;
+        margin-right: 1.5rem;
+    }
+
+    a.login-button {
+        padding: 12px;
+    }
+    
+}
+
+@media (min-width: 1301px) {
+
+    #login-right {
+        border-radius: 0px 20px 20px 0px;
+        background-color: #ffff;
+    }
+
+    img#question-mark {
+        width: 40px;
+        margin-top: 5rem;
+        margin-right: 1.5rem;
+    }
+}
+
 /* Admin Dashboard */
 #admin-sidebar {
     background-color: #36454F;
@@ -158,7 +210,7 @@ img#question-mark:hover {
 
 #admin-main-content {
     background-color: #F9F6EE;
-    height: 100vh;
+    height: auto;
 }
 
 @media (min-width: 300px) and (max-width: 991px) {

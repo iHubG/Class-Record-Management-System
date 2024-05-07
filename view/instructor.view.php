@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Instructor Login</title>
     </head>
-    <body>
+    <body id="login-body">
         <!-- Login -->
         <section id="login">
             <div class="container">
@@ -34,7 +34,7 @@
                                     </div>
 
                                     <!-- Password -->
-                                    <div class="mb-3">
+                                    <div class="mb-3 mb-lg-0 mb-xxl-3">
                                         <label for="password" class="form-label fw-bold">Password:</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
@@ -62,7 +62,7 @@
                                     <?php endif; ?>
 
                                     <div class="text-center">
-                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-5">Login</button>
+                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-5 px-5">Login</button>
                                     </div>
                                 </form>
                                 </div>

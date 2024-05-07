@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
     </head>
-    <body>
+    <body id="login-body">
         <!-- Login -->
         <section id="login">
             <div class="container">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-12 col-lg-6 text-center" id="login-right">
                                 <h2 id="login-as">Login As</h2>
-                                <div class="d-flex flex-column my-5 gap-lg-5 gap-4 align-items-center">
+                                <div class="d-flex flex-column my-5 my-lg-0 mt-lg-5 gap-xxl-5 gap-lg-4 gap-4 align-items-center">
                                     <a href="/crms-project/admin-login" class="login-button">Admin</a>
                                     <a href="/crms-project/instructor-login" class="login-button">Instructor</a>
                                     <a href="/crms-project/student-login" class="login-button">Student</a>

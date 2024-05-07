@@ -109,7 +109,7 @@
                                     <i class="bi bi-person-circle fs-1"></i>                          
                                 </div>
                                 <div class="modal-footer d-flex justify-content-around">
-                                    <a href="#" class="btn btn-primary">View Classes</a>
+                                    <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
                                     <a href="#" class="btn btn-danger">Delete Account</a>
                                 </div>
                                 </div>
