@@ -11,7 +11,7 @@
         '/crms-project/admin-instructor-dash' => 'admin-instructor',
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/instructor-login-process' => 'instructor-process',
-        '/crms-project/register_validation' => 'register_validation',
+        '/crms-project/student-login-process' => 'student-process',
     ];
 
     // Get the current URL
@@ -51,6 +51,9 @@
                 break;
             case 'student-login':
                 require ('./view/student.view.php'); // Include the file for the home page
+                break;
+            case 'student-process':
+                require ('./view/student-dash.view.php'); // Include the file for the home page
                 break;
             default:
                 // Handle 404 error
