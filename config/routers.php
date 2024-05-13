@@ -12,6 +12,7 @@
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/instructor-login-process' => 'instructor-process',
         '/crms-project/student-login-process' => 'student-process',
+        '/crms-project/grading-sheets' => 'grades-sheet',
     ];
 
     // Get the current URL
@@ -26,34 +27,37 @@
         $route = $routes[$url];
         switch ($route) {
             case 'index':
-                require ('./view/login.view.php'); // Include the file for the home page
+                require ('./view/login.view.php'); 
                 break;
             case 'login':
-                require ('./view/login.view.php'); // Include the file for the home page
+                require ('./view/login.view.php'); 
                 break;
             case 'admin-login':
-                require ('./view/admin.view.php'); // Include the file for the home page
+                require ('./view/admin.view.php'); 
                 break;
             case 'admin-process':
-                require ('./view/admin-dash.view.php'); // Include the file for the home page
+                require ('./view/admin-dash.view.php'); 
                 break;
             case 'admin-instructor':
-                require ('./view/admin-instructor.view.php'); // Include the file for the home page
+                require ('./view/admin-instructor.view.php'); 
                 break;
             case 'admin-ins-class':
-                require ('./view/admin-instructor-class.view.php'); // Include the file for the home page
+                require ('./view/admin-instructor-class.view.php'); 
                 break;
             case 'instructor-login':
-                require ('./view/instructor.view.php'); // Include the file for the home page
+                require ('./view/instructor.view.php'); 
                 break;
             case 'instructor-process':
-                require ('./view/instructor-dash.view.php'); // Include the file for the home page
+                require ('./view/instructor-dash.view.php'); 
                 break;
             case 'student-login':
-                require ('./view/student.view.php'); // Include the file for the home page
+                require ('./view/student.view.php'); 
                 break;
             case 'student-process':
-                require ('./view/student-dash.view.php'); // Include the file for the home page
+                require ('./view/student-dash.view.php'); 
+                break;
+            case 'grades-sheet':
+                require ('./view/grading-sheets.view.php'); 
                 break;
             default:
                 // Handle 404 error

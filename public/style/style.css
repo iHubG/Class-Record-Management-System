@@ -226,7 +226,7 @@ img#question-mark:hover {
 
 }
 
-#admin-prof-logo, i#add-logo {
+#admin-prof-logo, i#add-logo, a.cursor-pointer {
     cursor: pointer;
 }
 

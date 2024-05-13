@@ -31,7 +31,7 @@
                                 <span class="placeholder col-8"></span>
                                 </p>
                                 <div class="d-flex justify-content-between">
-                                    <a class="btn btn-primary disabled placeholder col-6 fs-6" aria-disabled="true">Class 1</a>
+                                    <a href="/crms-project/grading-sheets" class="btn btn-primary fs-6 cursor-pointer">Cloud Computing</a>
                                     <i class="bi bi-chat fs-4"></i>
                                 </div>
                             </div>
