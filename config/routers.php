@@ -8,6 +8,7 @@
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/admin-login-process' => 'admin-process',
+        '/crms-project/admin-dashboard' => 'admin-dashboard',
         '/crms-project/admin-instructor-dash' => 'admin-instructor',
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/instructor-login-process' => 'instructor-process',
@@ -36,6 +37,9 @@
                 require ('./view/admin.view.php'); 
                 break;
             case 'admin-process':
+                require ('./controller/admin-login-process.php'); 
+                break;
+            case 'admin-dashboard':
                 require ('./view/admin-dash.view.php'); 
                 break;
             case 'admin-instructor':
