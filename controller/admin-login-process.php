@@ -1,66 +1,4 @@
-<?php /*
-session_start();
-
-$errors = [];
-
-// Validate email
-if (empty($_POST['username'])) {
-    $errors['username'] = "Username is required";
-} else {
-    $email = $_POST['email'];
-}
-
-// Validate password
-if (empty($_POST['password'])) {
-    $errors['password'] = "Password is required";
-} else {
-    $password = $_POST['password'];
-}
-
-// Redirect if there are errors
-if (!empty($errors)) {
-    $_SESSION['errors'] = $errors;
-    header("Location: /crms-project/admin-login");
-    exit(); // Exit immediately after redirection
-}
-
-
-// Function to sanitize input data
-
-function test_input($data) {
-     
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-  
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-     
-    $username = test_input($_POST["username"]);
-    $password = test_input($_POST["password"]);
-    $stmt = $pdo->prepare("SELECT * FROM admin");
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-     
-    foreach($users as $user) {
-         
-        if(($user['username'] == $username) && 
-            ($user['password'] == $password)) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                header("location: /crms-project/admin-dashboard");
-        }
-        else {
-            $errors['login'] = "Invalid username or password";
-        }
-    }
-}
-
-$_SESSION['errors'] = $errors;
-header("Location: /crms-project/admin-login");
-exit(); */
-
+<?php 
 session_start();
 
 $errors = [];
@@ -109,6 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, start a new session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+
+            // Clear remember cookie
+            setcookie('remember_credentials', '', time() - 3600, '/');
+
+            if (isset($_POST['rememberMe'])){
+                // Set a cookie to remember the username and password for a week
+                $cookieData = [
+                    'username' => $username,
+                    'password' => $password // Note: Storing plain password in a cookie is not recommended for security reasons
+                ];
+                $cookieValue = json_encode($cookieData);
+                setcookie('remember_credentials', $cookieValue, time() + (86400 * 7), "/"); // Cookie lasts for 7 days
+            }
 
             // Redirect to the dashboard
             header('Location: /crms-project/admin-dashboard');

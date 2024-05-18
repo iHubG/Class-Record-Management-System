@@ -9,6 +9,11 @@ $formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
 unset($_SESSION['errors']);
 unset($_SESSION['form_data']);
 
+// Check if remember credentials cookie exists and decrypt it
+$rememberedCredentials = isset($_COOKIE['remember_credentials']) ? json_decode($_COOKIE['remember_credentials'], true) : null;
+$rememberedUsername = $rememberedCredentials['username'] ?? '';
+$rememberedPassword = $rememberedCredentials['password'] ?? '';
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +44,7 @@ unset($_SESSION['form_data']);
                                             <span class="input-group-text">
                                                 <i class="bi bi-person"></i>
                                             </span>
-                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo isset($formData['username']) ? htmlspecialchars($formData['username']) : ''; ?>" placeholder="Username" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo (empty($_POST) && !isset($errors['username'])) ? htmlspecialchars($rememberedUsername) : (isset($formData['username']) ? htmlspecialchars($formData['username']) : ''); ?>" placeholder="Username" autocomplete="off" required>
                                         </div>
                                         <?php if (!empty($errors['username'])): ?>
                                             <div class="text-danger"><?php echo $errors['username']; ?></div>
@@ -53,7 +58,7 @@ unset($_SESSION['form_data']);
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off" required>
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off" required>
                                         </div>
                                         <?php if (!empty($errors['password'])): ?>
                                             <div class="text-danger"><?php echo $errors['password']; ?></div>
@@ -64,9 +69,16 @@ unset($_SESSION['form_data']);
                                         <?php endif; ?>
                                     </div>
 
+                                    <div class="form-check my-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe" name="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">
+                                            Remember Me
+                                        </label>
+                                    </div>
+
                                     <!-- Error message for login failure -->
                                     <?php if(isset($errors['login'])): ?>
-                                        <div class="mb-3">
+                                        <div class="my-2 mt-xxl-3 text-center">
                                             <div class="text-danger">
                                                 <?php echo $errors['login']; ?>
                                             </div>
@@ -74,7 +86,7 @@ unset($_SESSION['form_data']);
                                     <?php endif; ?>
 
                                     <div class="text-center">
-                                        <input type="submit" name="submit" value="Login" class="btn btn-primary my-5 px-5">
+                                        <input type="submit" name="submit" value="Login" class="btn btn-primary my-2 my-xxl-5 px-5">
                                     </div>
                                 </form>
                             </div>

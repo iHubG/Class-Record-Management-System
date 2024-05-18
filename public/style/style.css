@@ -73,7 +73,7 @@ img#question-mark:hover {
     }
 
     #login-box {
-        background-image: url(../img/isu-blur.png);
+        background-color: #ffff;
         background-size: cover;
         background-position: center;
     }
@@ -109,7 +109,7 @@ img#question-mark:hover {
     }
 
     #login-box {
-        background-image: url(../img/isu-blur.png);
+        background-color: #ffff;        
         background-size: cover;
         background-position: center;
     }

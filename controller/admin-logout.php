@@ -5,6 +5,7 @@ session_start();
 session_destroy();
 
 // Redirect to login page
-header("Location: /crms-project/");
+header("Location: /crms-project/admin-login");
+
 exit();
 
