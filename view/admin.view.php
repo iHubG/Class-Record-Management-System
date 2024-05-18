@@ -1,4 +1,15 @@
-<?php session_start(); ?>
+<?php
+
+session_start();
+
+$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+
+// Clear errors and form data from session
+unset($_SESSION['errors']);
+unset($_SESSION['form_data']);
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

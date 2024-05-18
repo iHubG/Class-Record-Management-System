@@ -2,6 +2,13 @@
 session_start();
 
 // Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /crms-project/admin-login');
+    exit();
+}
+
+// Get the username from the session
+$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Admin';
 
 ?>
 
@@ -33,7 +40,7 @@ session_start();
                         </div>
                         <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
                             <i class="bi bi-box-arrow-right"></i>
-                            <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                            <a href="/crms-project/admin-logout" class="text-decoration-none text-white"><h5>Log out</h5></a>
                         </div>
                     </nav>
                 </div>
@@ -60,7 +67,7 @@ session_start();
                             </div>
                             <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                                <a href="/crms-project/admin-logout" class="text-decoration-none text-white"><h5>Log out</h5></a>
                             </div>
                         </nav>
                     </div>
@@ -71,13 +78,13 @@ session_start();
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header border-0">
-                            <h1 class="modal-title fs-5" id="admin-account">Admin Name</h1>
+                            <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="p-5 text-center">
                                 <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                <h2>Admin</h2>
+                                <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                             </div>
                         </div>
                         <div class="modal-footer border-0">
@@ -92,7 +99,7 @@ session_start();
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Welcome <?php echo htmlspecialchars($_SESSION['username']); ?>!</h4>
+                            <h4>Welcome Admin <?php echo htmlspecialchars($_SESSION['username']); ?>!</h4>
                             <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-account" id="add-logo"></i>
                         </div>  
                     </nav>

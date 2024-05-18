@@ -5,6 +5,7 @@
         '/crms-project/' => 'index',
         '/crms-project/view' => 'login',
         '/crms-project/admin-login' => 'admin-login',
+        '/crms-project/admin-logout' => 'admin-logout',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/admin-login-process' => 'admin-process',
@@ -35,6 +36,9 @@
                 break;
             case 'admin-login':
                 require ('./view/admin.view.php'); 
+                break;
+            case 'admin-logout':
+                require ('./controller/admin-logout.php'); 
                 break;
             case 'admin-process':
                 require ('./controller/admin-login-process.php'); 
