@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,21 +15,34 @@
                 <div class="col-0 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-lg-2 d-flex p-3 p-xxl-4 px-2 flex-column" id="admin-sidebar">                   
                     <h2 class="h4 text-center">Admin</h2>
                     <nav id="dash-nav">
-                        <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
-                            <i class="bi bi-house"></i>
-                            <a href="/crms-project/admin-login-process" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
-                        </div>
-                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                            <i class="bi bi-book"></i>
-                            <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
-                        </div>
-                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                            <i class="bi bi-backpack2"></i>
-                            <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
-                        </div>
-                        <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                        <hr>
+                        
+                        <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
+                            <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                                <i class="bi bi-house"></i>
+                                <h5>Dashboard</h5>
+                            </div>
+                        </a> 
+                        <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-book"></i>
+                                <h5>Instructors</h5>           
+                            </div>
+                        </a>   
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-backpack2"></i>
+                                <h5>Students</h5>           
+                            </div>
+                        </a>   
+                        <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
+                            <hr class="bottom-rule">
+                            <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
+                                <div class="logout-nav d-flex justify-content-center gap-2 p-2">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <h5>Log out</h5>
+                                </div> 
+                            </a>                        
                         </div>
                     </nav>
                 </div>
@@ -37,23 +53,37 @@
                         <h5 class="offcanvas-title text-center m-auto" id="offcanvasScrollingLabel">Admin</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+                    <div class="p-3 p-xxl-4 px-2">
+                        <hr>
+                    </div>
                     <div class="offcanvas-body">
                         <nav id="dash-nav">
-                            <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
-                                <i class="bi bi-house"></i>
-                                <a href="/crms-project/admin-login-process" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
-                            </div>
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                                <i class="bi bi-book"></i>
-                                <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
-                            </div>
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                                <i class="bi bi-backpack2"></i>
-                                <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
-                            </div>
-                            <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                            <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
+                                <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                                    <i class="bi bi-house"></i>
+                                    <h5>Dashboard</h5>
+                                </div>
+                            </a> 
+                            <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                    <i class="bi bi-book"></i>
+                                    <h5>Instructors</h5>           
+                                </div>
+                            </a>   
+                            <a href="#" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                    <i class="bi bi-backpack2"></i>
+                                    <h5>Students</h5>           
+                                </div>
+                            </a>   
+                            <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
+                                <hr class="bottom-rule">
+                                <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
+                                    <div class="logout-nav d-flex justify-content-center gap-2 p-2">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <h5>Log out</h5>
+                                    </div> 
+                                </a>                        
                             </div>
                         </nav>
                     </div>
@@ -64,13 +94,13 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header border-0">
-                            <h1 class="modal-title fs-5" id="admin-account">Admin Name</h1>
+                            <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="p-5 text-center">
                                 <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                <h2>Admin</h2>
+                                <h2>Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                             </div>
                         </div>
                         <div class="modal-footer border-0">
@@ -139,8 +169,9 @@
                         </div>
                     </div>
 
-                    <!-- Add Prof Icon -->
-                    <i class="bi bi-plus-circle text-end my-5 mx-2 fs-1 fixed-bottom z-1" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add-logo"></i>
+                    <!-- Add Prof Icon -->  
+                    <i class="bi bi-plus-circle text-end my-5 mx-2 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add-logo"></i>
+                   
 
                     <!-- Instructor Button Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,10 +191,10 @@
                                             <span class="input-group-text">
                                                 <i class="bi bi-person-plus"></i>
                                             </span>
-                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="Fullname" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo isset($formData['name']) ? htmlspecialchars($formData['name']) : ''; ?>" placeholder="Fullname" autocomplete="off" required>
                                         </div>
-                                        <?php if (!empty($errors['email'])): ?>
-                                            <div class="text-danger"><?php echo $errors['email']; ?></div>
+                                        <?php if (!empty($errors['name'])): ?>
+                                            <div class="text-danger"><?php echo $errors['name']; ?></div>
                                         <?php endif; ?>
                                     </div>
 

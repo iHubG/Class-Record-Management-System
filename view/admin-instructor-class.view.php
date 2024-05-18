@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -12,21 +15,33 @@
                 <div class="col-0 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-lg-2 d-flex p-3 p-xxl-4 px-2 flex-column" id="admin-sidebar">                   
                     <h2 class="h4 text-center">Admin</h2>
                     <nav id="dash-nav">
-                        <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
-                            <i class="bi bi-house"></i>
-                            <a href="/crms-project/admin-login-process" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
-                        </div>
-                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                            <i class="bi bi-book"></i>
-                            <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
-                        </div>
-                        <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                            <i class="bi bi-backpack2"></i>
-                            <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
-                        </div>
-                        <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                        <hr>
+                        <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
+                            <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                                <i class="bi bi-house"></i>
+                                <h5>Dashboard</h5>
+                            </div>
+                        </a> 
+                        <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-book"></i>
+                                <h5>Instructors</h5>           
+                            </div>
+                        </a>   
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <i class="bi bi-backpack2"></i>
+                                <h5>Students</h5>           
+                            </div>
+                        </a>   
+                        <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
+                        <hr class="bottom-rule">
+                            <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
+                                <div class="logout-nav d-flex justify-content-center gap-2 p-2">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <h5>Log out</h5>
+                                </div> 
+                            </a>                        
                         </div>
                     </nav>
                 </div>
@@ -37,25 +52,60 @@
                         <h5 class="offcanvas-title text-center m-auto" id="offcanvasScrollingLabel">Admin</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+                    <div class="p-3 p-xxl-4 px-2">
+                        <hr>
+                    </div>
                     <div class="offcanvas-body">
                         <nav id="dash-nav">
-                            <div class="dash-nav d-flex gap-2 mt-5 p-2 rounded">
-                                <i class="bi bi-house"></i>
-                                <a href="/crms-project/admin-login-process" class="text-decoration-none text-white"><h5>Dashboard</h5></a>              
-                            </div>
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                                <i class="bi bi-book"></i>
-                                <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white"><h5>Instructors</h5></a>              
-                            </div>
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
-                                <i class="bi bi-backpack2"></i>
-                                <a href="#" class="text-decoration-none text-white"><h5>Students</h5></a>              
-                            </div>
-                            <div class="logout-nav d-flex justify-content-center gap-2 my-4 p-2 rounded position-absolute bottom-0 start-0">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <a href="/crms-project/" class="text-decoration-none text-white"><h5>Log out</h5></a>
+                            <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
+                                <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                                    <i class="bi bi-house"></i>
+                                    <h5>Dashboard</h5>
+                                </div>
+                            </a> 
+                            <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                    <i class="bi bi-book"></i>
+                                    <h5>Instructors</h5>           
+                                </div>
+                            </a>   
+                            <a href="#" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                    <i class="bi bi-backpack2"></i>
+                                    <h5>Students</h5>           
+                                </div>
+                            </a>   
+                            <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
+                                <hr class="bottom-rule">
+                                <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
+                                    <div class="logout-nav d-flex justify-content-center gap-2 p-2">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <h5>Log out</h5>
+                                    </div> 
+                                </a>                        
                             </div>
                         </nav>
+                    </div>
+                </div>
+
+                 <!-- Admin Account Modal -->
+                 <div class="modal fade" id="admin-account" tabindex="-1" aria-labelledby="admin-account" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="p-5 text-center">
+                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
+                                <h2>Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
 
@@ -65,7 +115,7 @@
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
                             <h4>Classes</h4>
-                            <i class="bi bi-person-circle fs-3"></i>
+                            <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-account" id="add-logo"></i>
                         </div>  
                     </nav>
                     <div class="main-content-info container-fluid p-5">
@@ -163,31 +213,8 @@
                                 </div>
                             </div>
                         </div>
-                     
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="admin-ins-label">Instructor</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body d-flex justify-content-center">
-                                    <i class="bi bi-person-circle fs-1"></i>                          
-                                </div>
-                                <div class="modal-footer d-flex justify-content-around">
-                                    <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
-                                    <a href="#" class="btn btn-danger">Delete Account</a>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Add Prof Icon -->
-                    <i class="bi bi-plus-circle text-end my-5 mx-2 fs-1 fixed-bottom z-1"></i>
 
                 </div>
             </div>

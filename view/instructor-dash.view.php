@@ -180,7 +180,7 @@
                     </div>
 
                     <!-- Add Instructor Button -->
-                    <i class="bi bi-plus-circle text-end my-5 fs-1 fixed-bottom z-1" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                    <i class="bi bi-plus-circle my-5 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
 
                     <!-- Instructor Button Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

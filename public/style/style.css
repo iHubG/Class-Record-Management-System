@@ -196,7 +196,9 @@ img#question-mark:hover {
     background-color: #28282B;
 }
 
-
+.logout-box {
+    width: 100%;
+}
 
 .logout-nav {
     width: 100%;
@@ -229,6 +231,22 @@ img#question-mark:hover {
 #admin-prof-logo, i#add-logo, a.cursor-pointer {
     cursor: pointer;
 }
+
+hr.bottom-rule {
+    width: 100%;
+}
+
+i.add-icon {
+    width: fit-content;
+    cursor: pointer;
+    float: right;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+
 
 
 
