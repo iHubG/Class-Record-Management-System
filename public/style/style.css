@@ -191,7 +191,12 @@ img#question-mark:hover {
     opacity: .5;
 }
 
-.dash-nav:hover, .active {
+.dash-nav:hover, .dash-nav.active {
+    opacity: 1;
+    background-color: #28282B;
+}
+
+.active {
     opacity: 1;
     background-color: #28282B;
 }

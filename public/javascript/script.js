@@ -1,16 +1,24 @@
-// Add active class to the current button (highlight it)
-let header = document.getElementById("dash-nav");
-let btns = header.getElementsByClassName("dash-nav");
-for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active");
+function activateLink() {
+  // Get current URL path
+  var path = window.location.pathname;
   
-      // If there's no active class
-      if (current.length > 0) {
-        current[0].className = current[0].className.replace(" active", "");
-      }
-  
-      // Add the active class to the current/clicked button
-      this.className += " active";
-    });
+  // Remove 'active' class from all links
+  var links = document.getElementsByClassName('dash-nav');
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.remove('active');
   }
+  
+  // Add 'active' class to the link that matches the current URL path
+  if (path.includes('admin-dashboard')) {
+    document.getElementById('dashboard-link').classList.add('active');
+  } else if (path.includes('admin-instructor-dash')) {
+    document.getElementById('instructor-link').classList.add('active');
+  }
+}
+
+// Call activateLink on page load
+window.onload = activateLink;
+
+
+
+

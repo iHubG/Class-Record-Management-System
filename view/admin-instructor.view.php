@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin-Instructor Dashboard</title>
+        <title>Admin Instructor</title>
     </head>
     <body id="login-body">
         <section id="admin-dash">
@@ -18,19 +18,19 @@
                         <hr>
                         
                         <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
-                            <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                            <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded" id="dashboard-link">
                                 <i class="bi bi-house"></i>
                                 <h5>Dashboard</h5>
                             </div>
                         </a> 
                         <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="instructor-link">
                                 <i class="bi bi-book"></i>
                                 <h5>Instructors</h5>           
                             </div>
                         </a>   
                         <a href="#" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
@@ -59,19 +59,19 @@
                     <div class="offcanvas-body">
                         <nav id="dash-nav">
                             <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
-                                <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded">
+                                <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded" id="dashboard-link">
                                     <i class="bi bi-house"></i>
                                     <h5>Dashboard</h5>
                                 </div>
                             </a> 
                             <a href="/crms-project/admin-instructor-dash" class="text-decoration-none text-white">                              
-                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="instructor-link">
                                     <i class="bi bi-book"></i>
                                     <h5>Instructors</h5>           
                                 </div>
                             </a>   
                             <a href="#" class="text-decoration-none text-white">
-                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                     <i class="bi bi-backpack2"></i>
                                     <h5>Students</h5>           
                                 </div>
