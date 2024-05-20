@@ -22,7 +22,7 @@
                                 <form action="/crms-project/student-login-process" method="post">
                                     <!-- Email Address -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label fw-bold">Email address:</label>
+                                        <label for="email" class="form-label fw-bold">Email address</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-envelope-at"></i>
@@ -36,7 +36,7 @@
 
                                     <!-- Password -->
                                     <div class="mb-3 mb-lg-0 mb-xxl-3">
-                                        <label for="password" class="form-label fw-bold">Password:</label>
+                                        <label for="password" class="form-label fw-bold">Password</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>

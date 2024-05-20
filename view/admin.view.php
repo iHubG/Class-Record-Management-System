@@ -42,12 +42,12 @@ $rememberedPassword = $rememberedCredentials['password'] ?? '';
                                 <form action="/crms-project/admin-login-process" method="post">
                                     <!-- Username -->
                                     <div class="mb-3">
-                                        <label for="username" class="form-label fw-bold">Username:</label>
+                                        <label for="username" class="form-label fw-bold">Username</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-person"></i>
                                             </span>
-                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo (empty($_POST) && !isset($errors['username'])) ? htmlspecialchars($rememberedUsername) : (isset($formData['username']) ? htmlspecialchars($formData['username']) : ''); ?>" placeholder="Username" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo (empty($_POST) && !isset($errors['username'])) ? htmlspecialchars($rememberedUsername) : (isset($formData['username']) ? htmlspecialchars($formData['username']) : ''); ?>" placeholder="Username" autocomplete="off">
                                         </div>
                                         <?php if (!empty($errors['username'])): ?>
                                             <div class="text-danger"><?php echo $errors['username']; ?></div>
@@ -56,12 +56,12 @@ $rememberedPassword = $rememberedCredentials['password'] ?? '';
 
                                     <!-- Password -->
                                     <div class="mb-3 mb-lg-0 mb-xxl-3">
-                                        <label for="password" class="form-label fw-bold">Password:</label>
+                                        <label for="password" class="form-label fw-bold">Password</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off" required>
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off">
                                         </div>
                                         <?php if (!empty($errors['password'])): ?>
                                             <div class="text-danger"><?php echo $errors['password']; ?></div>

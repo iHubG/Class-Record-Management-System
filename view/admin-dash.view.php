@@ -2,13 +2,14 @@
     session_start();
 
     // Check if the user is logged in
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['admin_id'])) {
         header('Location: /crms-project/admin-login');
         exit();
     }
 
     // Get the username from the session
     $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Admin';
+
 ?>
 
 <!DOCTYPE html>
@@ -102,23 +103,73 @@
                 <div class="modal fade" id="admin-account" tabindex="-1" aria-labelledby="admin-account" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                        <div class="modal-header border-0">
-                            <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="p-5 text-center">
-                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                            <div class="modal-header border-0">
+                                <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        </div>
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                            <div class="modal-body">
+                                <div class="p-5 text-center">
+                                <?php
+                                    function get_admin_profile_picture($adminId) {
+                                    // Assuming you have a function to connect to the database
+                                    require ('./config/db.php');
+                                
+                                    // Prepare the SQL query to retrieve the profile picture
+                                    $sql = 'SELECT `profile_picture` FROM `admin` WHERE `id` = ?';
+                                    $stmt = $pdo->prepare($sql);
+                                    
+                                    // Execute the query with the provided admin ID
+                                    $stmt->execute([$adminId]);
+                                    
+                                    // Fetch the result
+                                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    
+                                    // Check if a profile picture exists for the admin
+                                    if ($result && $result['profile_picture']) {
+                                        // Return the profile picture data
+                                        return $result['profile_picture'];
+                                    } else {
+                                        // Return null if no picture is found
+                                        return null;
+                                    }
+                                    }                                    
+                                    
+                                    if (isset($_SESSION['admin_id'])) {
+                                        $adminId = $_SESSION['admin_id'];
+                                        // Proceed with operations that require admin_id
+                                    } else {
+                                        // Handle the case where admin_id is not set
+                                        // Redirect to login page or show an error message
+                                    }
+                                    // Assuming you have a function to retrieve the profile picture
+                                    $profilePicture = get_admin_profile_picture($_SESSION['admin_id']);
+                                    if ($profilePicture) {
+                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($profilePicture) . '" alt="Profile Picture" width="100">';
+                                    } else {
+                                        echo '<i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>';
+                                    }
+                                    ?>
+                                    
+                                    
+                                    <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <!-- Profile Picture Form -->
+                                <form action="./controller/admin-profile-pict.php" method="post" enctype="multipart/form-data">
+                                    <!-- Display existing profile picture (if available) -->
+                                    
+                                    <br>
+                                    <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png">
+                                    <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
+                                    <input type="submit" class="btn btn-primary" value="Save changes">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+               
                 <!-- Main Content -->
                 <div class="col-12 col-lg-10 offset-lg-2" id="admin-main-content">
                     <nav class="bg-success-subtle">
@@ -153,6 +204,25 @@
                             </div>
                         </div>
                     </div>
+
+<!-- Success message for upload -->
+<?php if(isset($uploadMessages['upload'])): ?>
+    <div class="my-2 mt-xxl-3 text-center">
+        <div class="text-success">
+            <?php echo $uploadMessages['upload']; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<!-- Error message for upload failure -->
+<?php if(isset($uploadErrors['upload'])): ?>
+    <div class="my-2 mt-xxl-3 text-center">
+        <div class="text-danger">
+            <?php echo $uploadErrors['upload']; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
                 </div>
             </div>
         </section>

@@ -3,6 +3,7 @@
 
 require './config/db.php';
 require ('./config/routers.php');
+require ('./controller/admin-profile-pict.php');
 
 
 ?>
