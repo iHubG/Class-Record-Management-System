@@ -55,8 +55,8 @@ img#question-mark {
     margin-right: 1.5rem;
 }
 
-img#question-mark:hover {
-    opacity: 0.5;
+img#question-mark:hover, i.back:hover{
+    opacity: 0.7;
 }
 
 @media (min-width: 300px) and (max-width: 767px){
@@ -233,7 +233,7 @@ img#question-mark:hover {
 
 }
 
-#admin-prof-logo, i#add-logo, a.cursor-pointer {
+#admin-prof-logo, i#add-logo, a.cursor-pointer, i.cursor-pointer {
     cursor: pointer;
 }
 
@@ -249,6 +249,11 @@ i.add-icon {
     right: 20px;
     bottom: 20px;
     z-index: 1000;
+}
+
+/* Custom Tooltip */
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
 }
 
 

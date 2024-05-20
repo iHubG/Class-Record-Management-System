@@ -9,7 +9,8 @@
         <!-- Login -->
         <section id="login">
             <div class="container">
-                <div class="row justify-content-center my-5">
+                <a href="/crms-project/" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back home"  data-bs-custom-class="custom-tooltip"></i></a>
+                <div class="row justify-content-center my-2 my-lg-0 my-xxl-5">
                     <div class="col-10 shadow" id="login-box">
                         <div class="row flex-column flex-md-row flex-lg-row" id="login-box2">
                             <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center" id="login-left">

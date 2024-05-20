@@ -118,6 +118,13 @@
                             <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-account" id="add-logo"></i>
                         </div>  
                     </nav>
+                     <!-- Breadcrumb -->
+                     <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb ms-5 mt-5">
+                            <li class="breadcrumb-item fs-5"><a href="/crms-project/admin-instructor-dash">Instructors</a></li>
+                            <li class="breadcrumb-item fs-5" aria-current="page">Classes</li>
+                        </ol>
+                    </nav>
                     <div class="main-content-info container-fluid p-5">
                         <div class="row g-5 d-flex justify-content-between">
                             <div class="col-3 col-xl-4 col-lg-6 col-xxl-3">
