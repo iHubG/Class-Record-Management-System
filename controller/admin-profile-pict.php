@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
         $successMessage = 'Profile picture updated successfully.';
     } elseif (empty($errorMessage) && empty($successMessage)) {
         // Only set error message if no other error occurred and no success message is set
-        $errorMessage = 'Failed to upload profile picture.';
+        //$errorMessage = 'Failed to upload profile picture.';
     }
 }
 ?>
