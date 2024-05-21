@@ -66,7 +66,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
                     </div>
                     <meta http-equiv="refresh" content="5;url=/crms-project/admin-dashboard">
                 <?php endif; ?>
-            </div>
+
+               <!-- Display error message using JavaScript -->
+                <script>
+                    <?php if (!empty($errorMessage)) : ?>
+                        let confirmRedirect = confirm("<?php echo $errorMessage; ?> Click OK to go to the dashboard.");
+                        if (confirmRedirect) {
+                            window.location.href = '/crms-project/admin-dashboard'; // Redirect to the dashboard
+                        }
+                    <?php endif; ?>
+                </script>
+            </div>        
         </div>
     </div>
 

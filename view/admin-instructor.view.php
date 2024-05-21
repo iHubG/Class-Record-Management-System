@@ -88,24 +88,54 @@
                         </nav>
                     </div>
                 </div>
-
+  
                 <!-- Admin Account Modal -->
                 <div class="modal fade" id="admin-account" tabindex="-1" aria-labelledby="admin-account" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                        <div class="modal-header border-0">
-                            <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="p-5 text-center">
-                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                <h2>Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                            <div class="modal-header border-0">
+                                <h1 class="modal-title fs-5" id="admin-account">Admin <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        </div>
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
+                            <div class="modal-body">
+                                <div class="p-5 text-center">
+                                <?php
+                                                       
+                                    $adminId = $_SESSION['admin_id'];
+                                
+                                    // Require database connection
+                                    require './config/db.php';
+                                
+                                    // Retrieve profile picture filename from the database
+                                    $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
+                                    $stmt = $pdo->prepare($sql);
+                                    $stmt->execute([$adminId]);
+                                    $profilePictureFileName = $stmt->fetchColumn();
+                                
+                                    // If profile picture filename is found, construct image path and display the image
+                                    if ($profilePictureFileName) {
+                                        $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
+                                    } else {
+                                        // If no profile picture is found, display a default image or placeholder
+                                        echo '<i class="bi bi-person-circle fs-1"></i>';
+                                    }
+                                   
+                                ?>                                
+                                                                     
+                                    <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <!-- Profile Picture Form -->
+                                <form action="/crms-project/admin-profile-pict" method="post" enctype="multipart/form-data">
+                                    <div class="d-flex justify-content-center">
+                                        <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" required>
+                                        <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
+                                        <input type="submit" class="btn btn-primary" value="Update Profile">
+                                    </div>                                  
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,7 +147,15 @@
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
                             <h4>Instructors</h4>
-                            <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-account" id="add-logo"></i>
+                            <?php
+                                if ($profilePictureFileName) {
+                                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo" data-bs-toggle="modal" data-bs-target="#admin-account">';
+                                } else {
+                                    // If no profile picture is found, display a default image or placeholder
+                                    echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
+                                }
+                            ?>
                         </div>  
                     </nav>
                     <div class="main-content-info">

@@ -128,19 +128,17 @@
                                         echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
                                     } else {
                                         // If no profile picture is found, display a default image or placeholder
-                                        echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>';
+                                        echo '<i class="bi bi-person-circle fs-1"></i>';
                                     }
                                    
-                                ?>                                
-                                    
+                                ?>                                                                 
                                     
                                     <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                                 </div>
                             </div>
                             <div class="modal-footer border-0">
                                 <!-- Profile Picture Form -->
-                                <form action="/crms-project/admin-profile-pict" method="post" enctype="multipart/form-data">
-                                    <!-- Display existing profile picture (if available) -->
+                                <form action="/crms-project/admin-profile-pict" method="post" enctype="multipart/form-data">                        
                                     <div class="d-flex justify-content-center">
                                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" required>
                                         <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
@@ -158,8 +156,16 @@
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Welcome Admin <?php echo htmlspecialchars($_SESSION['username']);  ?>!</h4>
-                            <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-account" id="add-logo"></i>
+                            <h4>Dashboard</h4>
+                            <?php
+                                if ($profilePictureFileName) {
+                                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo" data-bs-toggle="modal" data-bs-target="#admin-account">';
+                                } else {
+                                    // If no profile picture is found, display a default image or placeholder
+                                    echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
+                                }
+                            ?>
                         </div>  
                     </nav>
                     <div class="main-content-info">
