@@ -12,6 +12,7 @@
         '/crms-project/admin-dashboard' => 'admin-dashboard',
         '/crms-project/admin-instructor-dash' => 'admin-instructor',
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
+        '/crms-project/admin-profile-pict' => 'admin-profilepict',
         '/crms-project/instructor-login-process' => 'instructor-process',
         '/crms-project/student-login-process' => 'student-process',
         '/crms-project/grading-sheets' => 'grades-sheet',
@@ -51,6 +52,9 @@
                 break;
             case 'admin-ins-class':
                 require ('./view/admin-instructor-class.view.php'); 
+                break;
+            case 'admin-profilepict':
+                require ('./controller/admin-profile-pict.php'); 
                 break;
             case 'instructor-login':
                 require ('./view/instructor.view.php'); 

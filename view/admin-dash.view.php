@@ -110,59 +110,42 @@
                             <div class="modal-body">
                                 <div class="p-5 text-center">
                                 <?php
-                                    function get_admin_profile_picture($adminId) {
-                                    // Assuming you have a function to connect to the database
-                                    require ('./config/db.php');
+                                                       
+                                    $adminId = $_SESSION['admin_id'];
                                 
-                                    // Prepare the SQL query to retrieve the profile picture
-                                    $sql = 'SELECT `profile_picture` FROM `admin` WHERE `id` = ?';
+                                    // Require database connection
+                                    require './config/db.php';
+                                
+                                    // Retrieve profile picture filename from the database
+                                    $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
                                     $stmt = $pdo->prepare($sql);
-                                    
-                                    // Execute the query with the provided admin ID
                                     $stmt->execute([$adminId]);
-                                    
-                                    // Fetch the result
-                                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                    
-                                    // Check if a profile picture exists for the admin
-                                    if ($result && $result['profile_picture']) {
-                                        // Return the profile picture data
-                                        return $result['profile_picture'];
+                                    $profilePictureFileName = $stmt->fetchColumn();
+                                
+                                    // If profile picture filename is found, construct image path and display the image
+                                    if ($profilePictureFileName) {
+                                        $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
                                     } else {
-                                        // Return null if no picture is found
-                                        return null;
+                                        // If no profile picture is found, display a default image or placeholder
+                                        echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>';
                                     }
-                                    }                                    
-                                    
-                                    if (isset($_SESSION['admin_id'])) {
-                                        $adminId = $_SESSION['admin_id'];
-                                        // Proceed with operations that require admin_id
-                                    } else {
-                                        // Handle the case where admin_id is not set
-                                        // Redirect to login page or show an error message
-                                    }
-                                    // Assuming you have a function to retrieve the profile picture
-                                    $profilePicture = get_admin_profile_picture($_SESSION['admin_id']);
-                                    if ($profilePicture) {
-                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($profilePicture) . '" alt="Profile Picture" width="100">';
-                                    } else {
-                                        echo '<i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>';
-                                    }
-                                    ?>
+                                   
+                                ?>                                
                                     
                                     
-                                    <h2><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                                    <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                                 </div>
                             </div>
                             <div class="modal-footer border-0">
                                 <!-- Profile Picture Form -->
-                                <form action="./controller/admin-profile-pict.php" method="post" enctype="multipart/form-data">
+                                <form action="/crms-project/admin-profile-pict" method="post" enctype="multipart/form-data">
                                     <!-- Display existing profile picture (if available) -->
-                                    
-                                    <br>
-                                    <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png">
-                                    <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
-                                    <input type="submit" class="btn btn-primary" value="Save changes">
+                                    <div class="d-flex justify-content-center">
+                                        <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" required>
+                                        <input type="hidden" name="admin_id" value="<?php echo $_SESSION['admin_id']; ?>">
+                                        <input type="submit" class="btn btn-primary" value="Update Profile">
+                                    </div>                                  
                                 </form>
                             </div>
                         </div>
@@ -204,25 +187,6 @@
                             </div>
                         </div>
                     </div>
-
-<!-- Success message for upload -->
-<?php if(isset($uploadMessages['upload'])): ?>
-    <div class="my-2 mt-xxl-3 text-center">
-        <div class="text-success">
-            <?php echo $uploadMessages['upload']; ?>
-        </div>
-    </div>
-<?php endif; ?>
-
-<!-- Error message for upload failure -->
-<?php if(isset($uploadErrors['upload'])): ?>
-    <div class="my-2 mt-xxl-3 text-center">
-        <div class="text-danger">
-            <?php echo $uploadErrors['upload']; ?>
-        </div>
-    </div>
-<?php endif; ?>
-
                 </div>
             </div>
         </section>
