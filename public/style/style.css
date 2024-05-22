@@ -263,6 +263,17 @@ img.admin-circle-logo {
     cursor: pointer;
 }
 
+/* Chat */
+#chat-box {
+    background-color: #ffff;
+    height: 70vh;
+}
+
+#chat-send-box {
+    background-color: #ffff;
+    height: 15vh;
+}
+
 
 
 

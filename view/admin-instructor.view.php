@@ -220,16 +220,16 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="/crms-project/instructor-login-process" method="post">
+                                <form action="/crms-project/instructor-registration" method="post">
 
                                     <!-- Name -->
                                     <div class="mb-3">
-                                        <label for="name" class="form-label fw-bold">Name:</label>
+                                        <label for="name" class="form-label fw-bold">Name</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-person-plus"></i>
                                             </span>
-                                            <input type="text" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo isset($formData['name']) ? htmlspecialchars($formData['name']) : ''; ?>" placeholder="Fullname" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo isset($formData['name']) ? htmlspecialchars($formData['name']) : ''; ?>" placeholder="Fullname" autocomplete="off">
                                         </div>
                                         <?php if (!empty($errors['name'])): ?>
                                             <div class="text-danger"><?php echo $errors['name']; ?></div>
@@ -238,12 +238,12 @@
 
                                     <!-- Email Address -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label fw-bold">Email address:</label>
+                                        <label for="email" class="form-label fw-bold">Username</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-envelope-at"></i>
                                             </span>
-                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="yourname@example.com" autocomplete="off" required>
+                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="yourname@example.com" autocomplete="off">
                                         </div>
                                         <?php if (!empty($errors['email'])): ?>
                                             <div class="text-danger"><?php echo $errors['email']; ?></div>
@@ -252,12 +252,12 @@
 
                                     <!-- Password -->
                                     <div class="mb-3 mb-lg-0 mb-xxl-3">
-                                        <label for="password" class="form-label fw-bold">Password:</label>
+                                        <label for="password" class="form-label fw-bold">Password</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off" required>
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off">
                                         </div>
 
                                         <?php if (!empty($errors['password'])): ?>
@@ -279,7 +279,7 @@
                                     <?php endif; ?>
 
                                     <div class="text-center">
-                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-5 px-5">Register</button>
+                                        <button type="submit" name="submit" value="Register" class="btn btn-primary my-5 px-5">Register</button>
                                     </div>
                                 </form>
                             </div>

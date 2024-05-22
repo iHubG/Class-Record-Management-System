@@ -14,8 +14,10 @@
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/admin-profile-pict' => 'admin-profilepict',
         '/crms-project/instructor-login-process' => 'instructor-process',
+        '/crms-project/instructor-registration' => 'instructor-registration',
         '/crms-project/student-login-process' => 'student-process',
         '/crms-project/grading-sheets' => 'grades-sheet',
+        '/crms-project/chat' => 'chat',
     ];
 
     // Get the current URL
@@ -62,6 +64,9 @@
             case 'instructor-process':
                 require ('./view/instructor-dash.view.php'); 
                 break;
+            case 'instructor-registration':
+                require ('./controller/instructor-registration-process.php'); 
+                break;
             case 'student-login':
                 require ('./view/student.view.php'); 
                 break;
@@ -70,6 +75,9 @@
                 break;
             case 'grades-sheet':
                 require ('./view/grading-sheets.view.php'); 
+                break;
+            case 'chat':
+                require ('./view/chat.view.php'); 
                 break;
             default:
                 // Handle 404 error

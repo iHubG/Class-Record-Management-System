@@ -32,7 +32,7 @@
                                 </p>
                                 <div class="d-flex justify-content-between">
                                     <a href="/crms-project/grading-sheets" class="btn btn-primary fs-6 cursor-pointer">Cloud Computing</a>
-                                    <i class="bi bi-chat fs-4"></i>
+                                    <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
                                 </div>
                             </div>
                             </div>

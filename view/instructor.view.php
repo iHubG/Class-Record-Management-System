@@ -22,15 +22,15 @@
                                 <form action="/crms-project/instructor-login-process" method="post">
                                     <!-- Email Address -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label fw-bold">Email address</label>
+                                        <label for="username" class="form-label fw-bold">Username</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-envelope-at"></i>
                                             </span>
-                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="yourname@example.com" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo isset($formData['username']) ? htmlspecialchars($formData['username']) : ''; ?>" placeholder="Username" autocomplete="off" required>
                                         </div>
-                                        <?php if (!empty($errors['email'])): ?>
-                                            <div class="text-danger"><?php echo $errors['email']; ?></div>
+                                        <?php if (!empty($errors['username'])): ?>
+                                            <div class="text-danger"><?php echo $errors['username']; ?></div>
                                         <?php endif; ?>
                                     </div>
 
