@@ -233,7 +233,7 @@ img#question-mark:hover, i.back:hover{
 
 }
 
-#admin-prof-logo, i#add-logo, a.cursor-pointer, i.cursor-pointer {
+#admin-prof-logo, i#add-logo, a.cursor-pointer, i.cursor-pointer, span.password-toggle-icon {
     cursor: pointer;
 }
 

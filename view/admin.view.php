@@ -62,6 +62,9 @@ $rememberedPassword = $rememberedCredentials['password'] ?? '';
                                                 <i class="bi bi-key"></i>
                                             </span>
                                             <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off">
+                                            <span class="input-group-text password-toggle-icon">
+                                                <i class="bi bi-eye" id="togglePassword"></i>
+                                            </span>
                                         </div>
                                         <?php if (!empty($errors['password'])): ?>
                                             <div class="text-danger"><?php echo $errors['password']; ?></div>

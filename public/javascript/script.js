@@ -24,3 +24,20 @@ window.onload = activateLink;
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+// Show Hide password
+$(document).ready(function() {
+  // Show/hide password functionality
+  $('#togglePassword').click(function() {
+      let passwordInput = $('#password');
+      let icon = $(this);
+
+      if (passwordInput.attr('type') === 'password') {
+          passwordInput.attr('type', 'text');
+          icon.removeClass('bi-eye').addClass('bi-eye-slash');
+      } else {
+          passwordInput.attr('type', 'password');
+          icon.removeClass('bi-eye-slash').addClass('bi-eye');
+      }
+  });
+});
+

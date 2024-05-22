@@ -160,7 +160,7 @@
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo" data-bs-toggle="modal" data-bs-target="#admin-account">';
+                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#admin-account">';
                                 } else {
                                     // If no profile picture is found, display a default image or placeholder
                                     echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';

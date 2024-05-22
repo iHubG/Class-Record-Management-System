@@ -150,7 +150,7 @@
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo" data-bs-toggle="modal" data-bs-target="#admin-account">';
+                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#admin-account">';
                                 } else {
                                     // If no profile picture is found, display a default image or placeholder
                                     echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
@@ -250,19 +250,21 @@
                                             <div id="username-error" class="text-danger"></div>
                                         </div>
 
-                                        <!-- Password -->
-                                        <div class="mb-3">
-                                            <div>
-                                                <label for="password" class="form-label fw-bold">Password</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-lock"></i>
-                                                    </span>
-                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div id="password-error" class="text-danger"></div>
+                                      <!-- Password -->
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label fw-bold">Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-lock"></i>
+                                            </span>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">                                                                    
+                                            <span class="input-group-text password-toggle-icon">
+                                                <i class="bi bi-eye" id="togglePassword"></i>
+                                            </span>
                                         </div>
+                                        <div id="password-error" class="text-danger"></div>
+                                    </div>
+
 
                                         <div class="text-center">
                                             <button type="submit" name="submit" value="Register" class="btn btn-primary my-5 px-5">Register</button>
