@@ -208,84 +208,71 @@
                     </div>
 
                     <!-- Add Prof Icon -->  
-                    <i class="bi bi-plus-circle text-end my-5 mx-2 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add-logo"></i>
+                    <i class="bi bi-plus-circle text-end my-5 mx-2 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#add-prof" id="add-logo"></i>
                    
 
                     <!-- Instructor Button Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="add-prof" tabindex="-1" aria-labelledby="add-prof" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                            <div class="modal-header border-0">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Instructor</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/crms-project/instructor-registration" method="post">
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5" id="add-prof">Add Instructor</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="registerForm" method="post">
 
-                                    <!-- Name -->
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label fw-bold">Name</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-person-plus"></i>
-                                            </span>
-                                            <input type="text" class="form-control <?php echo isset($errors['name']) ? 'is-invalid' : ''; ?>" id="name" name="name" value="<?php echo isset($formData['name']) ? htmlspecialchars($formData['name']) : ''; ?>" placeholder="Fullname" autocomplete="off">
-                                        </div>
-                                        <?php if (!empty($errors['name'])): ?>
-                                            <div class="text-danger"><?php echo $errors['name']; ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <!-- Email Address -->
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label fw-bold">Username</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-envelope-at"></i>
-                                            </span>
-                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="yourname@example.com" autocomplete="off">
-                                        </div>
-                                        <?php if (!empty($errors['email'])): ?>
-                                            <div class="text-danger"><?php echo $errors['email']; ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <!-- Password -->
-                                    <div class="mb-3 mb-lg-0 mb-xxl-3">
-                                        <label for="password" class="form-label fw-bold">Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-key"></i>
-                                            </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off">
-                                        </div>
-
-                                        <?php if (!empty($errors['password'])): ?>
-                                            <div class="text-danger"><?php echo $errors['password']; ?></div>
-                                        <?php elseif(isset($_POST['password']) && strlen($_POST['password']) < 8): ?>
-                                            <div class="invalid-feedback">
-                                                Password must be at least 8 characters long.
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <!-- Error message for login failure -->
-                                    <?php if(isset($errors['login'])): ?>
+                                        <!-- Name -->
                                         <div class="mb-3">
-                                            <div class="text-danger">
-                                                <?php echo $errors['login']; ?>
+                                            <div>
+                                                <label for="name" class="form-label fw-bold">Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-person"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" autocomplete="off">
+                                                </div>
                                             </div>
+                                            <div id="name-error" class="text-danger"></div>
                                         </div>
-                                    <?php endif; ?>
 
-                                    <div class="text-center">
-                                        <button type="submit" name="submit" value="Register" class="btn btn-primary my-5 px-5">Register</button>
-                                    </div>
-                                </form>
+                                        <!-- Username -->
+                                        <div class="mb-3">
+                                            <div>
+                                                <label for="username" class="form-label fw-bold">Username</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-person-circle"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div id="username-error" class="text-danger"></div>
+                                        </div>
+
+                                        <!-- Password -->
+                                        <div class="mb-3">
+                                            <div>
+                                                <label for="password" class="form-label fw-bold">Password</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-lock"></i>
+                                                    </span>
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div id="password-error" class="text-danger"></div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" name="submit" value="Register" class="btn btn-primary my-5 px-5">Register</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            </div>
-                        </div>
+                        </div>                    
                     </div>
+
 
                 </div>
             </div>
