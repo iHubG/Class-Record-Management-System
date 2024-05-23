@@ -168,23 +168,27 @@
                             ?>
                         </div>  
                     </nav>
+                    <?php 
+                        $stmt = $pdo->query("SELECT COUNT(*) AS total FROM instructor");
+                        $totalInstructors = $stmt->fetchColumn(); 
+                    ?>
                     <div class="main-content-info">
-                        <div class="row g-0 py-5 justify-content-around">
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
+                        <div class="row g-0 py-5 px-5 justify-content-center">
+                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Total Users</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
-                                <h2>200</h2>
+                                <h2>100</h2>
                             </div>
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
+                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Instructors</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
-                                <h2>20</h2>
+                                <h2><?php echo htmlspecialchars($totalInstructors); ?></h2>
                             </div>
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
+                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Students</h5>         
                                     <i class="bi bi-people fs-4"></i>
