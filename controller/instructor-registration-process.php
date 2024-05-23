@@ -31,8 +31,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If there are no validation errors, process the form submission
     if (empty($errors)) {
-        // Process form data (e.g., save to database)
-        // For demonstration purposes, let's just echo a success message
+        // Store the data into the database instructor table
+        // Function to check if name or username already exist
+        function instructorExists($pdo, $name, $username) {
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM instructor WHERE name = ? OR username = ?");
+            $stmt->execute([$name, $username]);
+            return $stmt->fetchColumn() > 0;
+        }
+
+        // Function to insert a new instructor record
+        function insertInstructor($pdo, $name, $username, $password) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("INSERT INTO instructor (name, username, password) VALUES (?, ?, ?)");
+            $stmt->execute([$name, $username, $hashedPassword]);
+            return $pdo->lastInsertId();
+        }
+
+         // Get the current date and time
+        $dateCreated = date('Y-m-d H:i:s');
+
+        // Check if instructor with the same name or username already exists
+        if (!instructorExists($pdo, $name, $username)) {
+            $instructor_credentials = array(
+                'name' => $name,
+                'username' => $username,
+                'password' => $password,
+                'date_created' => $dateCreated,
+            );
+    
+           // Read existing JSON data from credentials.json
+            $existing_data = file_get_contents('./credentials.json');
+            $existing_credentials = json_decode($existing_data, true);
+
+            // Append new instructor credentials to existing data
+            $existing_credentials[] = $instructor_credentials;
+
+            // Encode the combined data as JSON
+            $json_data = json_encode($existing_credentials, JSON_PRETTY_PRINT);
+
+            // Write JSON data back to credentials.json
+            $result = file_put_contents('./credentials.json', $json_data);
+
+            /*
+            if ($result !== false) {
+                echo "<script>console.log('Credentials successfully written to credentials.json')</script>";
+            } else {
+                echo "<script>console.log('Error writing credentials to credentials.json')</script>";
+            }*/
+            // Insert the new instructor record
+            $instructorId = insertInstructor($pdo, $name, $username, $password);
+            echo "success";
+            exit;
+        } else {
+            // Return error if instructor with the same name or username already exists
+            $errors['username'] = "Instructor with the same name or username already exists";
+            http_response_code(400); // Set HTTP response status code to 400 (Bad Request)
+            echo json_encode($errors); // Return validation errors as JSON
+        }
+        
         echo "success";
         exit;
     } else {

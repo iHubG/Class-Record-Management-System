@@ -171,21 +171,25 @@
                             </form>
                             </div>
                         </div>
+
+                        <?php 
+                            $stmt = $pdo->query("SELECT * FROM instructor");
+                            $instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);                                                
+                        ?>
                        
-                        <div class="row g-0 py-5 justify-content-around">
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
-                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                <h2>Prof 1</h2>
-                            </div>
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
-                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                                                    
-                                <h2>Prof 2</h2>
-                            </div>
-                            <div class="col-3 shadow bg-white rounded p-5 text-center">
-                                <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                                                                                            
-                                <h2>Prof 3</h2>
-                            </div>
-                        </div>
+                       <div class="container">
+
+                       </div>
+                        <div class="row g-0 py-3 px-3">
+                            <div class="container d-flex flex-wrap align-items-center justify-content-center">
+                                <?php foreach ($instructors as $instructor): ?>
+                                    <div class="col-3 shadow bg-white rounded p-5 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
+                                        <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
+                                        <h4><?php echo htmlspecialchars($instructor['name']); ?></h4>
+                                    </div>
+                                <?php endforeach; ?>   
+                            </div>                                                                                          
+                        </div>                 
 
                         <!-- Modal -->
                         <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
