@@ -177,17 +177,15 @@
                             $instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);                                                
                         ?>
                        
-                       <div class="container">
-
-                       </div>
+                       <!-- Display Instructors -->
                         <div class="row g-0 py-3 px-3">
-                            <div class="container d-flex flex-wrap align-items-center justify-content-center">
+                            <div class="container d-flex align-items-center justify-content-center">
                                 <?php foreach ($instructors as $instructor): ?>
                                     <div class="col-3 shadow bg-white rounded p-5 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
                                         <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
                                         <h4><?php echo htmlspecialchars($instructor['name']); ?></h4>
                                     </div>
-                                <?php endforeach; ?>   
+                                <?php endforeach; ?>                                
                             </div>                                                                                          
                         </div>                 
 
@@ -195,17 +193,20 @@
                         <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                <div class="modal-header border-0">
-                                    <h1 class="modal-title fs-5" id="admin-ins-label">Instructor</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body d-flex justify-content-center">
-                                    <i class="bi bi-person-circle fs-1"></i>                          
-                                </div>
-                                <div class="modal-footer d-flex justify-content-around border-0">
-                                    <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
-                                    <a href="#" class="btn btn-danger">Delete Account</a>
-                                </div>
+                                    <div class="modal-header border-0">
+                                        <h1 class="modal-title fs-5" id="admin-ins-label">Instructor</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body d-flex justify-content-center">
+                                        <i class="bi bi-person-circle fs-1"></i>                          
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-around border-0">
+                                        <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
+                                        <form action="/crms-project/instructor-delete" method="post">
+                                            <input type="hidden" name="id_delete" value="<?php echo $instructor['id']; ?>">
+                                            <input class="btn btn-danger" type="submit" name="delete" value="Delete Account"> 
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

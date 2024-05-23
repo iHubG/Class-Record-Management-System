@@ -173,22 +173,22 @@
                         $totalInstructors = $stmt->fetchColumn(); 
                     ?>
                     <div class="main-content-info">
-                        <div class="row g-0 py-5 px-5 justify-content-center">
-                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
+                        <div class="row g-0 py-2 px-2 justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Total Users</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
                                 <h2>100</h2>
                             </div>
-                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Instructors</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
                                 <h2><?php echo htmlspecialchars($totalInstructors); ?></h2>
                             </div>
-                            <div class="col-12 col-sm-6 col-lg-3 shadow bg-white rounded p-5 text-center mx-5 my-2">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
                                 <div class="d-flex justify-content-around align-items-baseline">
                                     <h5 class="text-muted">Students</h5>         
                                     <i class="bi bi-people fs-4"></i>

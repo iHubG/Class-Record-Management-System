@@ -15,6 +15,7 @@
         '/crms-project/admin-profile-pict' => 'admin-profilepict',
         '/crms-project/instructor-login-process' => 'instructor-process',
         '/crms-project/instructor-registration' => 'instructor-registration',
+        '/crms-project/instructor-delete' => 'instructor-delete',
         '/crms-project/student-login-process' => 'student-process',
         '/crms-project/grading-sheets' => 'grades-sheet',
         '/crms-project/chat' => 'chat',
@@ -66,6 +67,9 @@
                 break;
             case 'instructor-registration':
                 require ('./controller/instructor-registration-process.php'); 
+                break;
+            case 'instructor-delete':
+                require ('./controller/instructor-delete.php'); 
                 break;
             case 'student-login':
                 require ('./view/student.view.php'); 

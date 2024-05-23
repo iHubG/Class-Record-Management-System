@@ -25,5 +25,6 @@ require ('./controller/admin-profile-pict.php');
     <script src="./public/javascript/script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./public/javascript/instructor-validation.js"></script>
+    <script src="./public/javascript/delete-instructor.js"></script>
     </body>
 </html>
