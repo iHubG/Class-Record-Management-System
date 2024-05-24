@@ -6,14 +6,16 @@
         '/crms-project/view' => 'login',
         '/crms-project/admin-login' => 'admin-login',
         '/crms-project/admin-logout' => 'admin-logout',
-        '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/admin-login-process' => 'admin-process',
         '/crms-project/admin-dashboard' => 'admin-dashboard',
         '/crms-project/admin-instructor-dash' => 'admin-instructor',
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/admin-profile-pict' => 'admin-profilepict',
+        '/crms-project/instructor-login' => 'instructor-login',
+        '/crms-project/instructor-logout' => 'instructor-logout',
         '/crms-project/instructor-login-process' => 'instructor-process',
+        '/crms-project/instructor-dashboard' => 'instructor-dashboard',
         '/crms-project/instructor-registration' => 'instructor-registration',
         '/crms-project/instructor-delete' => 'instructor-delete',
         '/crms-project/student-login-process' => 'student-process',
@@ -62,7 +64,13 @@
             case 'instructor-login':
                 require ('./view/instructor.view.php'); 
                 break;
+            case 'instructor-logout':
+                require ('./controller/instructor-logout.php'); 
+                break;
             case 'instructor-process':
+                require ('./controller/instructor-login-process.php'); 
+                break;
+            case 'instructor-dashboard':
                 require ('./view/instructor-dash.view.php'); 
                 break;
             case 'instructor-registration':

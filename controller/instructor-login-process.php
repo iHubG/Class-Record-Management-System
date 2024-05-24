@@ -21,7 +21,7 @@ if (empty($_POST['password'])) {
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['form_data'] = $_POST;
-    header("Location: /crms-project/admin-login");
+    header("Location: /crms-project/instructor-login");
     exit(); // Exit immediately after redirection
 }
 
@@ -39,30 +39,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = test_input($_POST["password"]);
 
     try {
-        $stmt = $pdo->prepare("SELECT * FROM admin WHERE username = :username");
+        $stmt = $pdo->prepare("SELECT * FROM instructor WHERE username = :username");
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch();
 
-        if ($user && $password === $user['password']) {
+        if ($user && password_verify($password, $user['password'])) {
             // Password is correct, start a new session
-            $_SESSION['admin_id'] = $user['id'];
+            $_SESSION['instructor_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
 
             // Clear remember cookie
-            setcookie('admin_credentials', '', time() - 3600, '/');
+            setcookie('instructor_credentials', '', time() - 3600, '/');
 
             if (isset($_POST['rememberMe'])){
                 // Set a cookie to remember the username and password for a week
                 $cookieData = [
                     'username' => $username,
-                    'password' => $password 
+                    'password' => $password,
                 ];
                 $cookieValue = json_encode($cookieData);
-                setcookie('admin_credentials', $cookieValue, time() + (86400 * 7), "/"); // Cookie lasts for 7 days
+                setcookie('instructor_credentials', $cookieValue, time() + (86400 * 7), "/"); // Cookie lasts for 7 days
             }
 
             // Redirect to the dashboard
-            header('Location: /crms-project/admin-dashboard');
+            header('Location: /crms-project/instructor-dashboard');
             exit();
         } else {
             $errors['login'] = "Invalid username or password";
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['form_data'] = $_POST;
 
     // Redirect back to the login page
-    header("Location: /crms-project/admin-login");
+    header("Location: /crms-project/instructor-login");
     exit();
 }
 

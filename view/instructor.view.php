@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+
+$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+
+// Clear errors and form data from session
+unset($_SESSION['errors']);
+unset($_SESSION['form_data']);
+
+// Check if remember credentials cookie exists and decrypt it
+$rememberedCredentials = isset($_COOKIE['instructor_credentials']) ? json_decode($_COOKIE['instructor_credentials'], true) : null;
+$rememberedUsername = $rememberedCredentials['username'] ?? '';
+$rememberedPassword = $rememberedCredentials['password'] ?? '';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,14 +37,14 @@
                                 <h2 id="login-as" class="text-center">Instructor</h2>
                                 <div class="d-flex flex-column my-5 gap-lg-5 gap-4 px-5">
                                 <form action="/crms-project/instructor-login-process" method="post">
-                                    <!-- Email Address -->
+                                    <!-- Username -->
                                     <div class="mb-3">
                                         <label for="username" class="form-label fw-bold">Username</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
-                                                <i class="bi bi-envelope-at"></i>
+                                                <i class="bi bi-person"></i>                                             
                                             </span>
-                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo isset($formData['username']) ? htmlspecialchars($formData['username']) : ''; ?>" placeholder="Username" autocomplete="off" required>
+                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo (empty($_POST) && !isset($errors['username'])) ? htmlspecialchars($rememberedUsername) : (isset($formData['username']) ? htmlspecialchars($formData['username']) : ''); ?>" placeholder="Username" autocomplete="off">                                        
                                         </div>
                                         <?php if (!empty($errors['username'])): ?>
                                             <div class="text-danger"><?php echo $errors['username']; ?></div>
@@ -41,7 +58,7 @@
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off" required>
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off">                                        
                                             <span class="input-group-text password-toggle-icon">
                                                 <i class="bi bi-eye" id="togglePassword"></i>
                                             </span>
@@ -54,6 +71,13 @@
                                                 Password must be at least 8 characters long.
                                             </div>
                                         <?php endif; ?>
+                                    </div>
+
+                                    <div class="form-check my-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe" name="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">
+                                            Remember Me
+                                        </label>
                                     </div>
 
                                     <!-- Error message for login failure -->

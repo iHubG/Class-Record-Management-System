@@ -10,7 +10,7 @@ unset($_SESSION['errors']);
 unset($_SESSION['form_data']);
 
 // Check if remember credentials cookie exists and decrypt it
-$rememberedCredentials = isset($_COOKIE['remember_credentials']) ? json_decode($_COOKIE['remember_credentials'], true) : null;
+$rememberedCredentials = isset($_COOKIE['admin_credentials']) ? json_decode($_COOKIE['admin_credentials'], true) : null;
 $rememberedUsername = $rememberedCredentials['username'] ?? '';
 $rememberedPassword = $rememberedCredentials['password'] ?? '';
 
