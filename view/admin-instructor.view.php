@@ -112,16 +112,43 @@
                                     $stmt->execute([$adminId]);
                                     $profilePictureFileName = $stmt->fetchColumn();
                                 
-                                    // If profile picture filename is found, construct image path and display the image
-                                    if ($profilePictureFileName) {
-                                        $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150" >';
-                                    } else {
-                                        // If no profile picture is found, display a default image or placeholder
-                                        echo '<i class="bi bi-person-circle fs-1"></i>';
-                                    }
-                                   
-                                ?>                                
+                // If profile picture filename is found, construct image path and display the image
+                if ($profilePictureFileName) {
+                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                    echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150" class="img-thumbnail d-none" id="profilePicture" onload="showProfilePicture()">';
+                } else {
+                    // If no profile picture is found, display a default image or placeholder
+                    echo '<i class="bi bi-person-circle fs-1 img-thumbnail d-none" id="profilePlaceholder"></i>';
+                }
+                ?>
+
+                <!-- Placeholder for profile picture -->
+                <div id="placeholderContainer" class="d-none">
+                    <i class="bi bi-person-circle fs-1 img-thumbnail"></i>
+                </div>
+
+                <script>
+                    // Hide content until everything is loaded
+                    document.documentElement.style.visibility = "hidden";
+
+                    function showContent() {
+                        document.documentElement.style.visibility = "visible";
+                    }
+
+                    // Only apply delay if the page is initially loading
+                    if (document.readyState === "loading") {
+                        // Introduce a delay of 0.5 seconds before showing content
+                        setTimeout(showContent, 500); // Delay of 0.5 seconds (500 milliseconds)
+                    } else {
+                        // If the page is already loaded, immediately show the content
+                        showContent();
+                    }
+
+                        function showProfilePicture() {
+                            document.getElementById('profilePicture').classList.remove('d-none');
+                            document.getElementById('placeholderContainer').classList.add('d-none');
+                        }
+                </script>
                                                                      
                                     <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                                 </div>

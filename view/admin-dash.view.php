@@ -200,5 +200,23 @@
                 </div>
             </div>
         </section>
+        <script>
+            // Hide content until everything is loaded
+            document.documentElement.style.visibility = "hidden";
+
+            function showContent() {
+                document.documentElement.style.visibility = "visible";
+            }
+
+            // Only apply delay if the page is initially loading
+            if (document.readyState === "loading") {
+                // Introduce a delay of 0.5 seconds before showing content
+                setTimeout(showContent, 500); // Delay of 0.5 seconds (500 milliseconds)
+            } else {
+                // If the page is already loaded, immediately show the content
+                showContent();
+            }
+
+        </script>
     </body>
 </html>
