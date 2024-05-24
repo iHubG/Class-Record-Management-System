@@ -41,3 +41,47 @@ $(document).ready(function() {
   });
 });
 
+
+// Search for Instructor
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("searchInput").addEventListener("input", function() {
+      searchInstructors();
+  });
+
+  // Function to search instructors
+  function searchInstructors() {
+      const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+      const instructorCards = document.querySelectorAll(".instructor-card");
+      let found = false; // Variable to track if any results are found
+
+      instructorCards.forEach(function(card) {
+          const instructorName = card.querySelector("h5").textContent.trim().toLowerCase();
+          if (searchTerm === "") {
+              card.style.display = "block"; // Show all cards if search term is empty
+              found = true; // Update found to true because there are results
+          } else if (instructorName.includes(searchTerm)) {
+              card.style.display = "block";
+              found = true;
+          } else {
+              card.style.display = "none";
+          }
+      });
+
+      // Display message when no results are found
+      const noResultsMessage = document.getElementById("noResultsMessage");
+      const searchTermSpan = document.getElementById("searchTerm");
+      searchTermSpan.textContent = searchTerm;
+      if (searchTerm === "") {
+          noResultsMessage.style.display = "none"; // Hide message when search term is empty
+      } else if (!found) {
+          noResultsMessage.style.display = "block";
+      } else {
+          noResultsMessage.style.display = "none";
+      }
+  }
+});
+
+
+
+
+

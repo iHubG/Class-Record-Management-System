@@ -115,7 +115,7 @@
                                     // If profile picture filename is found, construct image path and display the image
                                     if ($profilePictureFileName) {
                                         $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
+                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150" >';
                                     } else {
                                         // If no profile picture is found, display a default image or placeholder
                                         echo '<i class="bi bi-person-circle fs-1"></i>';
@@ -163,14 +163,18 @@
                             <div class="col-8 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
                             <form>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search Instructor" aria-label="Search name" aria-describedby="button-addon2">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-search"></i>
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Search Instructor" aria-label="Search name" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="bi bi-search"></i></button>
                                     </div>
                                 </div>
                             </form>
+
                             </div>
                         </div>
+
+                        <!-- Message to display when no results are found -->
+                        <div id="noResultsMessage" class="mt-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
 
                         <?php 
                             $stmt = $pdo->query("SELECT * FROM instructor");
@@ -178,16 +182,17 @@
                         ?>
                        
                        <!-- Display Instructors -->
-                        <div class="row g-0 py-3 px-3">
-                            <div class="container d-flex align-items-center justify-content-center">
+                       <div class="container-lg mt-5">
+                            <div class="row g-0 py-1 px-1 justify-content-center" id="instructorContainer">
                                 <?php foreach ($instructors as $instructor): ?>
-                                    <div class="col-3 shadow bg-white rounded p-5 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
+                                    <div class="col-5 col-md-3 col-xxl-2 instructor-card shadow bg-white rounded p-5 px-3 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
                                         <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                        <h4><?php echo htmlspecialchars($instructor['name']); ?></h4>
+                                        <h5><?php echo htmlspecialchars($instructor['name']); ?></h5>
                                     </div>
                                 <?php endforeach; ?>                                
-                            </div>                                                                                          
-                        </div>                 
+                            </div>
+                        </div>
+                
 
                         <!-- Modal -->
                         <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
