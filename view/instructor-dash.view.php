@@ -21,37 +21,37 @@
     </head>
     <body>
         <!-- Instructor Account Modal -->
-        <div class="modal fade" id="admin-account" tabindex="-1" aria-labelledby="admin-account" aria-hidden="true">
+        <div class="modal fade" id="instructor-account" tabindex="-1" aria-labelledby="instructor-account" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="admin-account">Instructor <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+                        <h1 class="modal-title fs-5" id="instructor-account">Instructor <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="p-5 text-center">
                         <?php
-                                /*                  
-                            $adminId = $_SESSION['admin_id'];
+                                              
+                            $instructorId = $_SESSION['instructor_id'];
                         
                             // Require database connection
                             require './config/db.php';
                         
                             // Retrieve profile picture filename from the database
-                            $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
+                            $sql = 'SELECT profile_picture_filename FROM instructor WHERE id = ?';
                             $stmt = $pdo->prepare($sql);
-                            $stmt->execute([$adminId]);
+                            $stmt->execute([$instructorId]);
                             $profilePictureFileName = $stmt->fetchColumn();
                         
                             // If profile picture filename is found, construct image path and display the image
                             if ($profilePictureFileName) {
-                                $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
+                                $imagePath = "/crms-project/uploads-instructors/" . $profilePictureFileName; // Adjust path as necessary
+                                echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150">';
                             } else {
                                 // If no profile picture is found, display a default image or placeholder
-                                echo '<i class="bi bi-person-circle fs-1"></i>';
+                                echo '<i class="bi bi-person-circle fs-1 img-thumbnail px-5" id="profilePlaceholder"></i>';
                             }
-                            */
+                            
                         ?>                                                                 
                             
                             <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
@@ -60,7 +60,7 @@
                     <div class="modal-footer border-0">
                         <!-- Profile Picture Form -->
                         <form action="/crms-project/instructor-profile-pict" method="post" enctype="multipart/form-data">                        
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center align-items-center">
                                 <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" required>
                                 <input type="hidden" name="instructor_id" value="<?php echo $_SESSION['instructor_id']; ?>">
                                 <input type="submit" class="btn btn-primary" value="Update Profile">
@@ -81,15 +81,14 @@
             <nav class="bg-success-subtle">
                 <div class="container d-flex justify-content-between align-items-center p-3 ">
                     <h4>Instructor Dashboard</h4>
-                    <i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>
-                    <?php /*
+                    <?php 
                         if ($profilePictureFileName) {
-                            $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                            echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#admin-account">';
+                            $imagePath = "/crms-project/uploads-instructors/" . $profilePictureFileName; // Adjust path as necessary
+                            echo '<img src="' . $imagePath . '" alt="Profile Picture" class="instructor-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#instructor-account">';
                         } else {
                             // If no profile picture is found, display a default image or placeholder
-                            echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
-                        }*/
+                            echo '<i class="bi bi-person-circle fs-2" data-bs-toggle="modal" data-bs-target="#instructor-account" id="instructor-logo"></i>';
+                        }
                     ?>
                 </div>  
             </nav>
@@ -118,146 +117,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 2</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 3</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 4</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 my-5">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 1</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 my-5">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 2</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 my-5">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 3</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 my-5">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true">Class 4</a>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Add Instructor Button -->
                     <i class="bi bi-plus-circle my-5 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
@@ -279,10 +138,32 @@
                             </div>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div>                  
                 </div>
             </div>
         </section>
+        <script>
+             // Hide content until everything is loaded
+             document.documentElement.style.visibility = "hidden";
+
+            function showContent() {
+                document.documentElement.style.visibility = "visible";
+            }
+
+            // Only apply delay if the page is initially loading
+            if (document.readyState === "loading") {
+                // Introduce a delay of 0.5 seconds before showing content
+                setTimeout(showContent, 500); // Delay of 0.5 seconds (500 milliseconds)
+            } else {
+                // If the page is already loaded, immediately show the content
+                showContent();
+            }
+
+            function showProfilePicture() {
+                document.getElementById('profilePicture').classList.remove('d-none');
+                document.getElementById('placeholderContainer').classList.add('d-none');
+            }
+
+        </script>
     </body>
 </html>

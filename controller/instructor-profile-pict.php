@@ -3,10 +3,10 @@ $errorMessage = '';
 $successMessage = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
-    $adminId = $_POST['admin_id'];
+    $instructorId = $_POST['instructor_id'];
 
     // Handle file upload
-    $uploadDirectory = __DIR__ . '/../uploads-admin/'; // Adjust the path as necessary.
+    $uploadDirectory = __DIR__ . '/../uploads-instructors/'; // Adjust the path as necessary.
     $fileName = uniqid() . '_' . basename($_FILES["profile_picture"]["name"]);
     $targetFilePath = $uploadDirectory . $fileName;
 
@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     if (empty($errorMessage) && move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $targetFilePath)) {
         // File uploaded successfully, now update the database with the file name
         // Assuming you have a database connection
-        $sql = 'UPDATE admin SET profile_picture_filename = ? WHERE id = ?';
+        $sql = 'UPDATE instructor SET profile_picture_filename = ? WHERE id = ?';
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$fileName, $adminId]);
+        $stmt->execute([$fileName, $instructorId]);
 
         $successMessage = 'Profile picture updated successfully.';
     } elseif (empty($errorMessage) && empty($successMessage)) {
@@ -62,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
                     </div>
                     <!-- Redirect message -->
                     <div class="m-auto mt-5">
-                        <p>You will be redirected to the dashboard in 5 seconds. If not, click <a href="/crms-project/admin-dashboard">here</a>.</p>
+                        <p>You will be redirected to the dashboard in 5 seconds. If not, click <a href="/crms-project/instructor-dashboard">here</a>.</p>
                     </div>
-                    <meta http-equiv="refresh" content="5;url=/crms-project/admin-dashboard">
+                    <meta http-equiv="refresh" content="5;url=/crms-project/instructor-dashboard">
                 <?php endif; ?>
 
                <!-- Display error message using JavaScript -->
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
                     <?php if (!empty($errorMessage)) : ?>
                         let confirmRedirect = confirm("<?php echo $errorMessage; ?> Click OK to go to the dashboard.");
                         if (confirmRedirect) {
-                            window.location.href = '/crms-project/admin-dashboard'; // Redirect to the dashboard
+                            window.location.href = '/crms-project/instructor-dashboard'; // Redirect to the dashboard
                         }
                     <?php endif; ?>
                 </script>

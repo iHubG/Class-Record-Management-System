@@ -109,30 +109,34 @@
                             </div>
                             <div class="modal-body">
                                 <div class="p-5 text-center">
-                                <?php
-                                                       
-                                    $adminId = $_SESSION['admin_id'];
-                                
-                                    // Require database connection
-                                    require './config/db.php';
-                                
-                                    // Retrieve profile picture filename from the database
-                                    $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
-                                    $stmt = $pdo->prepare($sql);
-                                    $stmt->execute([$adminId]);
-                                    $profilePictureFileName = $stmt->fetchColumn();
-                                
-                                    // If profile picture filename is found, construct image path and display the image
-                                    if ($profilePictureFileName) {
-                                        $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                                        echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150">';
-                                    } else {
-                                        // If no profile picture is found, display a default image or placeholder
-                                        echo '<i class="bi bi-person-circle fs-1"></i>';
-                                    }
-                                   
-                                ?>                                                                 
+                                    <?php
+                                                        
+                                        $adminId = $_SESSION['admin_id'];
                                     
+                                        // Require database connection
+                                        require './config/db.php';
+                                    
+                                        // Retrieve profile picture filename from the database
+                                        $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute([$adminId]);
+                                        $profilePictureFileName = $stmt->fetchColumn();
+                                    
+                                        // If profile picture filename is found, construct image path and display the image
+                                        if ($profilePictureFileName) {
+                                            $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
+                                            echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150">';
+                                        } else {
+                                            // If no profile picture is found, display a default image or placeholder
+                                            echo '<i class="bi bi-person-circle fs-1 img-thumbnail px-5" id="profilePlaceholder"></i>';
+                                        }
+                                    ?>
+
+                                    <!-- Placeholder for profile picture -->
+                                    <div id="placeholderContainer" class="d-none">
+                                        <i class="bi bi-person-circle fs-1 img-thumbnail"></i>
+                                    </div>
+
                                     <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                                 </div>
                             </div>
@@ -159,11 +163,11 @@
                             <h4>Dashboard</h4>
                             <?php
                                 if ($profilePictureFileName) {
-                                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                    $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
                                     echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#admin-account">';
                                 } else {
                                     // If no profile picture is found, display a default image or placeholder
-                                    echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
+                                    echo '<i class="bi bi-person-circle fs-2" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
                                 }
                             ?>
                         </div>  
@@ -201,8 +205,8 @@
             </div>
         </section>
         <script>
-            // Hide content until everything is loaded
-            document.documentElement.style.visibility = "hidden";
+             // Hide content until everything is loaded
+             document.documentElement.style.visibility = "hidden";
 
             function showContent() {
                 document.documentElement.style.visibility = "visible";
@@ -216,6 +220,11 @@
                 // If the page is already loaded, immediately show the content
                 showContent();
             }
+
+                function showProfilePicture() {
+                    document.getElementById('profilePicture').classList.remove('d-none');
+                    document.getElementById('placeholderContainer').classList.add('d-none');
+                }
 
         </script>
     </body>

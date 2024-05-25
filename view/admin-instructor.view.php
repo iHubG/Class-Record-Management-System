@@ -99,57 +99,34 @@
                             </div>
                             <div class="modal-body">
                                 <div class="p-5 text-center">
-                                <?php
-                                                       
-                                    $adminId = $_SESSION['admin_id'];
-                                
-                                    // Require database connection
-                                    require './config/db.php';
-                                
-                                    // Retrieve profile picture filename from the database
-                                    $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
-                                    $stmt = $pdo->prepare($sql);
-                                    $stmt->execute([$adminId]);
-                                    $profilePictureFileName = $stmt->fetchColumn();
-                                
-                // If profile picture filename is found, construct image path and display the image
-                if ($profilePictureFileName) {
-                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
-                    echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150" class="img-thumbnail d-none" id="profilePicture" onload="showProfilePicture()">';
-                } else {
-                    // If no profile picture is found, display a default image or placeholder
-                    echo '<i class="bi bi-person-circle fs-1 img-thumbnail d-none" id="profilePlaceholder"></i>';
-                }
-                ?>
+                                    <?php
+                                                        
+                                        $adminId = $_SESSION['admin_id'];
+                                    
+                                        // Require database connection
+                                        require './config/db.php';
+                                    
+                                        // Retrieve profile picture filename from the database
+                                        $sql = 'SELECT profile_picture_filename FROM admin WHERE id = ?';
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute([$adminId]);
+                                        $profilePictureFileName = $stmt->fetchColumn();
+                                    
+                                        // If profile picture filename is found, construct image path and display the image
+                                        if ($profilePictureFileName) {
+                                            $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
+                                            echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150">';
+                                        } else {
+                                            // If no profile picture is found, display a default image or placeholder
+                                            echo '<i class="bi bi-person-circle fs-1 img-thumbnail px-5" id="profilePlaceholder"></i>';
+                                        }
+                                    ?>
 
-                <!-- Placeholder for profile picture -->
-                <div id="placeholderContainer" class="d-none">
-                    <i class="bi bi-person-circle fs-1 img-thumbnail"></i>
-                </div>
-
-                <script>
-                    // Hide content until everything is loaded
-                    document.documentElement.style.visibility = "hidden";
-
-                    function showContent() {
-                        document.documentElement.style.visibility = "visible";
-                    }
-
-                    // Only apply delay if the page is initially loading
-                    if (document.readyState === "loading") {
-                        // Introduce a delay of 0.5 seconds before showing content
-                        setTimeout(showContent, 500); // Delay of 0.5 seconds (500 milliseconds)
-                    } else {
-                        // If the page is already loaded, immediately show the content
-                        showContent();
-                    }
-
-                        function showProfilePicture() {
-                            document.getElementById('profilePicture').classList.remove('d-none');
-                            document.getElementById('placeholderContainer').classList.add('d-none');
-                        }
-                </script>
-                                                                     
+                                    <!-- Placeholder for profile picture -->
+                                    <div id="placeholderContainer" class="d-none">
+                                        <i class="bi bi-person-circle fs-1 img-thumbnail"></i>
+                                    </div>
+           
                                     <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
                                 </div>
                             </div>
@@ -176,11 +153,11 @@
                             <h4>Instructors</h4>
                             <?php
                                 if ($profilePictureFileName) {
-                                    $imagePath = "/crms-project/uploads/" . $profilePictureFileName; // Adjust path as necessary
+                                    $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
                                     echo '<img src="' . $imagePath . '" alt="Profile Picture" class="admin-circle-logo border border-primary-subtle" data-bs-toggle="modal" data-bs-target="#admin-account">';
                                 } else {
                                     // If no profile picture is found, display a default image or placeholder
-                                    echo '<i class="bi bi-person-circle fs-1" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
+                                    echo '<i class="bi bi-person-circle fs-2" data-bs-toggle="modal" data-bs-target="#admin-account" id="admin-prof-logo"></i>';
                                 }
                             ?>
                         </div>  
@@ -208,18 +185,24 @@
                             $instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);                                                
                         ?>
                        
-                       <!-- Display Instructors -->
-                       <div class="container-lg mt-5">
-                            <div class="row g-0 py-1 px-1 justify-content-center" id="instructorContainer">
-                                <?php foreach ($instructors as $instructor): ?>
-                                    <div class="col-5 col-md-3 col-xxl-2 instructor-card shadow bg-white rounded p-5 px-3 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
-                                        <i class="bi bi-person-circle fs-3" data-bs-toggle="modal" data-bs-target="#admin-ins-logo" id="admin-prof-logo"></i>                               
-                                        <h5><?php echo htmlspecialchars($instructor['name']); ?></h5>
-                                    </div>
-                                <?php endforeach; ?>                                
-                            </div>
+                     <!-- Display Instructors -->
+                    <div class="container-lg mt-5">
+                        <div class="row g-0 py-1 px-1 justify-content-center" id="instructorContainer">
+                            <?php foreach ($instructors as $instructor): ?>
+                                <div class="col-5 col-sm-5 col-md-3 col-xxl-2 instructor-card shadow bg-white rounded p-5 px-3 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
+                                    <!-- Icon or Profile Picture to trigger modal -->
+                                    <?php if ($instructor['profile_picture_filename']): ?>
+                                        <img src="/crms-project/uploads-instructors/<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>" alt="Instructor Picture" class="instructor-circle-logo border border-dark" data-bs-toggle="modal" data-bs-target="#admin-ins-logo">
+                                    <?php else: ?>
+                                        <i class="bi bi-person-circle fs-1 cursor-pointer" data-bs-toggle="modal" data-bs-target="#admin-ins-logo"></i>
+                                    <?php endif; ?>                                                                
+                                    <h5 class="mt-2 fs-5"><?php echo htmlspecialchars($instructor['name']); ?></h5>
+                                    <input type="hidden" id="profilePicture_<?php echo htmlspecialchars($instructor['id']); ?>" value="<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>">
+                                </div>
+                            <?php endforeach; ?>                                
                         </div>
-                
+                    </div>
+
 
                         <!-- Modal -->
                         <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
@@ -229,13 +212,19 @@
                                         <h1 class="modal-title fs-5" id="admin-ins-label">Instructor</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body d-flex justify-content-center">
-                                        <i class="bi bi-person-circle fs-1"></i>                          
+                                    <div class="modal-body d-flex justify-content-center flex-column align-items-center">
+                                        <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>
+                                        
+                                         <!-- Display instructor's picture -->
+                                        <img src="" alt="Instructor Picture" id="instructorPicture" width="150" height="150">
+
+                                        <h5 id="instructorNamePlaceholder" class="mt-2"></h5>
+                                                                 
                                     </div>
                                     <div class="modal-footer d-flex justify-content-around border-0">
                                         <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
                                         <form action="/crms-project/instructor-delete" method="post">
-                                            <input type="hidden" name="id_delete" value="<?php echo $instructor['id']; ?>">
+                                            <input type="hidden" name="id_delete" id="instructorIdInput" value="<?php echo $instructor['id']; ?>">
                                             <input class="btn btn-danger" type="submit" name="delete" value="Delete Account"> 
                                         </form>
                                     </div>
@@ -311,10 +300,103 @@
                             </div>
                         </div>                    
                     </div>
-
-
                 </div>
             </div>
         </section>
+        <script>
+            // Hide content until everything is loaded
+            document.documentElement.style.visibility = "hidden";
+
+            function showContent() {
+                document.documentElement.style.visibility = "visible";
+            }
+
+            // Only apply delay if the page is initially loading
+            if (document.readyState === "loading") {
+                // Introduce a delay of 0.5 seconds before showing content
+                setTimeout(showContent, 500); // Delay of 0.5 seconds (500 milliseconds)
+            } else {
+                // If the page is already loaded, immediately show the content
+                showContent();
+            }
+
+            function showProfilePicture() {
+                document.getElementById('profilePicture').classList.remove('d-none');
+                document.getElementById('placeholderContainer').classList.add('d-none');
+            }
+
+            // Search for Instructor
+            document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("searchInput").addEventListener("input", function() {
+                searchInstructors();
+            });
+
+            // Function to search instructors
+            function searchInstructors() {
+                const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+                const instructorCards = document.querySelectorAll(".instructor-card");
+                let found = false; // Variable to track if any results are found
+
+                instructorCards.forEach(function(card) {
+                    const instructorName = card.querySelector("h5").textContent.trim().toLowerCase();
+                    if (searchTerm === "") {
+                        card.style.display = "block"; // Show all cards if search term is empty
+                        found = true; // Update found to true because there are results
+                    } else if (instructorName.includes(searchTerm)) {
+                        card.style.display = "block";
+                        found = true;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                // Display message when no results are found
+                const noResultsMessage = document.getElementById("noResultsMessage");
+                const searchTermSpan = document.getElementById("searchTerm");
+                searchTermSpan.textContent = searchTerm;
+                if (searchTerm === "") {
+                    noResultsMessage.style.display = "none"; // Hide message when search term is empty
+                } else if (!found) {
+                    noResultsMessage.style.display = "block";
+                } else {
+                    noResultsMessage.style.display = "none";
+                }
+            }
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var instructorCards = document.querySelectorAll('.instructor-card');
+                instructorCards.forEach(function(card) {
+                    card.addEventListener('click', function() {
+                        var instructorId = this.id.split('_')[1]; // Extract the instructor id from the card id
+                        var instructorName = this.querySelector('h5').textContent; // Get the instructor's name from the h5 element
+                        var profilePicture = document.getElementById('profilePicture_' + instructorId).value; // Get the profile picture filename using the instructor id
+                        
+                        console.log("Clicked on instructor card. Name:", instructorName, "Picture:", profilePicture);
+                        
+                        // Update instructor's name placeholder
+                        document.getElementById('instructorNamePlaceholder').textContent = instructorName;
+                        
+                        // Update instructor's picture
+                        var instructorPictureElement = document.getElementById('instructorPicture');
+                        var personCircleIcon = document.getElementById('personCircleIcon');
+
+                        if (profilePicture) {
+                            instructorPictureElement.src = "/crms-project/uploads-instructors/" + profilePicture;
+                            instructorPictureElement.alt = "Instructor Picture";
+                            instructorPictureElement.style.display = "block"; // Show the image
+                            personCircleIcon.style.display = "none"; // Hide the icon
+                        } else {
+                            instructorPictureElement.src = ""; // Set empty source if no picture available
+                            instructorPictureElement.alt = ""; // Clear alt text
+                            instructorPictureElement.style.display = "none"; // Hide the image
+                            personCircleIcon.style.display = "block"; // Show the icon
+                        }
+                    });
+                });
+            });
+
+        </script>                                                       
     </body>
 </html>
