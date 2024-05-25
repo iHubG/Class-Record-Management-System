@@ -186,17 +186,17 @@
                         ?>
                        
                      <!-- Display Instructors -->
-                    <div class="container-lg mt-5">
-                        <div class="row g-0 py-1 px-1 justify-content-center" id="instructorContainer">
+                    <div class="container-lg mt-5 p-0">
+                        <div class="row g-0 py-1 px-0 px-md-1 justify-content-center" id="instructorContainer">
                             <?php foreach ($instructors as $instructor): ?>
-                                <div class="col-5 col-sm-5 col-md-3 col-xxl-2 instructor-card shadow bg-white rounded p-5 px-3 text-center mx-3 my-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
+                                <div class="col-5 col-sm-5 col-md-3 col-xxl-2 instructor-card shadow bg-white rounded p-5 px-3 py-4 py-sm-5 text-center mx-1 my-1 mx-sm-3 my-sm-3" id="instructor_<?php echo htmlspecialchars($instructor['id']); ?>">
                                     <!-- Icon or Profile Picture to trigger modal -->
                                     <?php if ($instructor['profile_picture_filename']): ?>
-                                        <img src="/crms-project/uploads-instructors/<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>" alt="Instructor Picture" class="instructor-circle-logo border border-dark" data-bs-toggle="modal" data-bs-target="#admin-ins-logo">
+                                        <img src="/crms-project/uploads-instructors/<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>" alt="Instructor Picture" class="instructor-circle-logo border border-dark mb-2" data-bs-toggle="modal" data-bs-target="#admin-ins-logo">
                                     <?php else: ?>
-                                        <i class="bi bi-person-circle fs-1 cursor-pointer" data-bs-toggle="modal" data-bs-target="#admin-ins-logo"></i>
+                                        <i class="bi bi-person-circle fs-1 cursor-pointer mb-2" data-bs-toggle="modal" data-bs-target="#admin-ins-logo"></i>
                                     <?php endif; ?>                                                                
-                                    <h5 class="mt-2 fs-5"><?php echo htmlspecialchars($instructor['name']); ?></h5>
+                                    <h5 class="fs-6 mt-2"><?php echo htmlspecialchars($instructor['name']); ?></h5>
                                     <input type="hidden" id="profilePicture_<?php echo htmlspecialchars($instructor['id']); ?>" value="<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>">
                                 </div>
                             <?php endforeach; ?>                                
@@ -209,17 +209,14 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header border-0">
-                                        <h1 class="modal-title fs-5" id="admin-ins-label">Instructor</h1>
+                                        <h1 class="modal-title fs-5 text-center" id="admin-ins-label">Instructor</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body d-flex justify-content-center flex-column align-items-center">
-                                        <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>
-                                        
+                                        <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>                                     
                                          <!-- Display instructor's picture -->
                                         <img src="" alt="Instructor Picture" id="instructorPicture" width="150" height="150">
-
-                                        <h5 id="instructorNamePlaceholder" class="mt-2"></h5>
-                                                                 
+                                        <h5 id="instructorNamePlaceholder" class="mt-3"></h5>                                      
                                     </div>
                                     <div class="modal-footer d-flex justify-content-around border-0">
                                         <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
