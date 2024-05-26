@@ -8,7 +8,7 @@
     }
 
     // Get the username from the session
-    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Instructor';
+    $username = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Instructor';
 
 ?>
 
@@ -25,7 +25,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h1 class="modal-title fs-5" id="instructor-account">Instructor <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+                        <h1 class="modal-title fs-5" id="instructor-account">Instructor <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -54,7 +54,20 @@
                             
                         ?>                                                                 
                             
-                            <h2 class="mt-2 h3"><?php echo htmlspecialchars($_SESSION['username']); ?></h2>
+                            <form action="">
+                                <input type="text" class="form-control my-3" name="name" value="<?php echo htmlspecialchars($_SESSION['name']); ?>">
+                                <select class="form-select" aria-label="Department">
+                                    <option selected>Select a Department</option>
+                                    <option value="SAS">SAS</option>
+                                    <option value="EDUC">EDUC</option>
+                                    <option value="CBM">CBM</option>
+                                    <option value="CCSICT">CCSICT</option>
+                                    <option value="IAT">IAT</option>
+                                    <option value="PS">PS</option>
+                                    <option value="CCJE">CCJE</option>
+                                </select>
+                                <input type="submit" class="btn btn-primary mt-3 w-100" value="Update Profile">
+                            </form>                        
                         </div>
                     </div>
                     <div class="modal-footer border-0">
@@ -63,7 +76,7 @@
                             <div class="d-flex justify-content-center align-items-center">
                                 <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" required>
                                 <input type="hidden" name="instructor_id" value="<?php echo $_SESSION['instructor_id']; ?>">
-                                <input type="submit" class="btn btn-primary" value="Update Profile">
+                                <input type="submit" class="btn btn-primary" value="Upload Picture">
                             </div>                                  
                         </form>
                         <hr class="bottom-rule">

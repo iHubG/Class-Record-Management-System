@@ -47,6 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, start a new session
             $_SESSION['instructor_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['name'] = $user['name'];
+
 
             // Clear remember cookie
             setcookie('instructor_credentials', '', time() - 3600, '/');
