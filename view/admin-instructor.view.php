@@ -182,7 +182,7 @@
 
                         <?php 
                             $stmt = $pdo->query("SELECT * FROM instructor");
-                            $instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);                                                
+                            $instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);                                              
                         ?>
                        
                      <!-- Display Instructors -->
@@ -197,7 +197,7 @@
                                         <i class="bi bi-person-circle fs-1 cursor-pointer mb-2" data-bs-toggle="modal" data-bs-target="#admin-ins-logo"></i>
                                     <?php endif; ?>                                                                
                                     <h5 class="fs-6 mt-2"><?php echo htmlspecialchars($instructor['name']); ?></h5>
-                                    <input type="hidden" id="profilePicture_<?php echo htmlspecialchars($instructor['id']); ?>" value="<?php echo htmlspecialchars($instructor['profile_picture_filename']); ?>">
+                                    <input type="hidden" id="profilePicture_<?php echo htmlspecialchars($instructor['id']); ?>" value="<?php echo isset($instructor['profile_picture_filename']) ? htmlspecialchars($instructor['profile_picture_filename']) : ''; ?>">
                                 </div>
                             <?php endforeach; ?>                                
                         </div>

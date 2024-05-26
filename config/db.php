@@ -1,8 +1,8 @@
 <?php
 $dbHost = 'localhost';
 $dbName = 'crms_project';
-$dbUsername = 'ian';
-$dbPassword = 'Admin1234';
+$dbUsername = 'root';
+$dbPassword = '';
 
 try {
     // Create a new PDO instance
