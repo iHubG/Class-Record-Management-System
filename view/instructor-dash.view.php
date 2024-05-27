@@ -7,8 +7,8 @@
         exit();
     }
 
-    // Get the username from the session
-    $username = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Instructor';
+    // Get the name from the session
+    $name = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Instructor';
 
 ?>
 
@@ -30,44 +30,89 @@
                     </div>
                     <div class="modal-body">
                         <div class="p-5 text-center">
-                        <?php
-                                              
-                            $instructorId = $_SESSION['instructor_id'];
-                        
-                            // Require database connection
-                            require './config/db.php';
-                        
-                            // Retrieve profile picture filename from the database
-                            $sql = 'SELECT profile_picture_filename FROM instructor WHERE id = ?';
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->execute([$instructorId]);
-                            $profilePictureFileName = $stmt->fetchColumn();
-                        
-                            // If profile picture filename is found, construct image path and display the image
-                            if ($profilePictureFileName) {
-                                $imagePath = "/crms-project/uploads-instructors/" . $profilePictureFileName; // Adjust path as necessary
-                                echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150">';
-                            } else {
-                                // If no profile picture is found, display a default image or placeholder
-                                echo '<i class="bi bi-person-circle fs-1 img-thumbnail px-5" id="profilePlaceholder"></i>';
-                            }
+                            <?php
+                                                
+                                $instructorId = $_SESSION['instructor_id'];
                             
-                        ?>                                                                 
+                                // Require database connection
+                                require './config/db.php';
                             
-                            <form action="">
-                                <input type="text" class="form-control my-3" name="name" value="<?php echo htmlspecialchars($_SESSION['name']); ?>">
-                                <select class="form-select" aria-label="Department">
-                                    <option selected>Select a Department</option>
-                                    <option value="SAS">SAS</option>
-                                    <option value="EDUC">EDUC</option>
-                                    <option value="CBM">CBM</option>
-                                    <option value="CCSICT">CCSICT</option>
-                                    <option value="IAT">IAT</option>
-                                    <option value="PS">PS</option>
-                                    <option value="CCJE">CCJE</option>
-                                </select>
-                                <input type="submit" class="btn btn-primary mt-3 w-100" value="Update Profile">
-                            </form>                        
+                                // Retrieve profile picture filename from the database
+                                $sql = 'SELECT profile_picture_filename FROM instructor WHERE id = ?';
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([$instructorId]);
+                                $profilePictureFileName = $stmt->fetchColumn();
+                            
+                                // If profile picture filename is found, construct image path and display the image
+                                if ($profilePictureFileName) {
+                                    $imagePath = "/crms-project/uploads-instructors/" . $profilePictureFileName; // Adjust path as necessary
+                                    echo '<img src="' . $imagePath . '" alt="Profile Picture" width="150" height="150">';
+                                } else {
+                                    // If no profile picture is found, display a default image or placeholder
+                                    echo '<i class="bi bi-person-circle fs-1 img-thumbnail px-5" id="profilePlaceholder"></i>';
+                                }
+                                
+                            ?>   
+                            
+                            <?php
+
+                                // Retrieve the instructor's name from the database
+                                $query = "SELECT name FROM Instructor WHERE id = :id";
+                                $statement = $pdo->prepare($query);
+                                $statement->execute(array(':id' => $_SESSION['instructor_id']));
+                                $instructor = $statement->fetch(PDO::FETCH_ASSOC);
+
+                                // Check if the instructor is found in the database
+                                if ($instructor) {
+                                    $instructorName = $instructor['name'];
+                                } else {
+                                    // Handle the case where the instructor is not found
+                                    $instructorName = 'Instructor Not Found';
+                                }
+
+                                $instructorID = $_SESSION['instructor_id'];
+                                $query = "SELECT department FROM Instructor WHERE id = :id";
+                                $statement = $pdo->prepare($query);
+                                $statement->execute(array(':id' => $instructorID));
+                                $instructor = $statement->fetch(PDO::FETCH_ASSOC);
+
+                                // Store the department information in a session variable
+                                if ($instructor && isset($instructor['department'])) {
+                                    $_SESSION['department'] = $instructor['department'];
+                                }
+
+                            ?>
+                            
+                            <form id="updateProfileForm" method="post">
+                                <!-- Input field for instructor's name with error message -->
+                                <div class="mb-3 mt-3">
+                                    <input type="text" class="form-control" id="nameInput" name="name" value="<?php echo htmlspecialchars($instructorName); ?>" autocomplete="off">
+                                    <div id="nameError" class="text-danger"></div>
+                                </div>
+                                
+                                <!-- Select field for selecting a department with error message -->
+                                <div class="mb-3">
+                                    <select class="form-select" aria-label="Department" name="department" id="departmentSelect">
+                                        <option value="" selected>Select a Department</option>
+                                        <option value="SAS"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'SAS') echo ' selected'; ?>>SAS</option>
+                                        <option value="EDUC"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'EDUC') echo ' selected'; ?>>EDUC</option>
+                                        <option value="CBM"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'CBM') echo ' selected'; ?>>CBM</option>
+                                        <option value="CCSICT"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'CCSICT') echo ' selected'; ?>>CCSICT</option>
+                                        <option value="IAT"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'IAT') echo ' selected'; ?>>IAT</option>
+                                        <option value="PS"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'PS') echo ' selected'; ?>>PS</option>
+                                        <option value="CCJE"<?php if (isset($_SESSION['department']) && $_SESSION['department'] == 'CCJE') echo ' selected'; ?>>CCJE</option>
+                                    </select>
+                                    <div id="departmentError" class="text-danger"></div>
+                                </div>
+
+                                <!-- Error messages will be displayed here -->
+                                <div id="errorMessages" class="alert alert-danger" style="display: none;"></div>
+                                <!-- Success message will be displayed here -->
+                                <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary mt-3 w-100">Update Profile</button>
+                            </form>
                         </div>
                     </div>
                     <div class="modal-footer border-0">
