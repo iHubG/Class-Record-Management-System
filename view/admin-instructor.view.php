@@ -203,28 +203,61 @@
                         </div>
                     </div>
 
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header border-0">
-                                        <h1 class="modal-title fs-5 text-center" id="admin-ins-label">Instructor</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body d-flex justify-content-center flex-column align-items-center">
-                                        <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>                                     
-                                         <!-- Display instructor's picture -->
+                    <!-- Modal for updating instructor information -->
+                    <div class="modal fade" id="admin-ins-logo" tabindex="-1" aria-labelledby="admin-ins-label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5 text-center" id="admin-ins-label">Update Instructor</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body d-flex justify-content-center flex-column align-items-center">
+                                    <!-- Placeholder for instructor's profile picture -->
+                                    <div class="profile-picture-container mb-3">
                                         <img src="" alt="Instructor Picture" id="instructorPicture" width="150" height="150">
-                                        <h5 id="instructorNamePlaceholder" class="mt-3"></h5>                                      
+                                        <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>
                                     </div>
-                                    <div class="modal-footer d-flex justify-content-around border-0">
-                                        <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
-                                        <form action="/crms-project/instructor-delete" method="post">
-                                            <input type="hidden" name="id_delete" id="instructorIdInput" value="<?php echo $instructor['id']; ?>">
-                                            <input class="btn btn-danger" type="submit" name="delete" value="Delete Account"> 
-                                        </form>
-                                    </div>
+                                    <!-- Display instructor's name -->
+                                    <h5 id="instructorNamePlaceholder" class="mt-3"></h5>
+                                    <!-- Form for updating instructor's information -->
+                                    <form id="adminUpdateInstructor" method="post">
+                                        <!-- Input field for instructor's name -->
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" id="nameInput" name="name" placeholder="Name" value="" autocomplete="off">
+                                            <div id="nameError" class="text-danger"></div>
+                                        </div>
+                                        <!-- Select field for selecting a department -->
+                                        <div class="mb-3">
+                                            <select class="form-select" aria-label="Department" name="department" id="departmentSelect">
+                                                <option value="" selected>Select a Department</option>
+                                                <option value="SAS">SAS</option>
+                                                <option value="EDUC">EDUC</option>
+                                                <option value="CBM">CBM</option>
+                                                <option value="CCSICT">CCSICT</option>
+                                                <option value="IAT">IAT</option>
+                                                <option value="PS">PS</option>
+                                                <option value="CCJE">CCJE</option>
+                                            </select>
+                                            <div id="departmentError" class="text-danger"></div>
+                                        </div>
+                                        <!-- Error messages will be displayed here -->
+                                        <div id="errorMessages" class="alert alert-danger" style="display: none;"></div>
+                                        <!-- Success message will be displayed here -->
+                                        <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+                                        <!-- Add a hidden input field to store the instructor's ID -->
+                                        <input type="hidden" name="instructor_id" value="<?php echo htmlspecialchars($instructor['id']); ?>">
+
+                                        <!-- Submit button -->
+                                        <button type="submit" class="btn btn-primary w-100">Update Instructor</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-around border-0">
+                                    <!-- Additional action buttons -->
+                                    <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
+                                    <form action="/crms-project/instructor-delete" method="post">
+                                        <input type="hidden" name="id_delete" id="instructorIdInput" value="<?php echo $instructor['id']; ?>">
+                                        <button type="submit" class="btn btn-danger" name="delete">Delete Account</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -363,36 +396,67 @@
 
 
             document.addEventListener('DOMContentLoaded', function() {
-                var instructorCards = document.querySelectorAll('.instructor-card');
-                instructorCards.forEach(function(card) {
-                    card.addEventListener('click', function() {
-                        var instructorId = this.id.split('_')[1]; // Extract the instructor id from the card id
-                        var instructorName = this.querySelector('h5').textContent; // Get the instructor's name from the h5 element
-                        var profilePicture = document.getElementById('profilePicture_' + instructorId).value; // Get the profile picture filename using the instructor id
-                        
-                        console.log("Clicked on instructor card. Name:", instructorName, "Picture:", profilePicture);
-                        
-                        // Update instructor's name placeholder
-                        document.getElementById('instructorNamePlaceholder').textContent = instructorName;
-                        
-                        // Update instructor's picture
-                        var instructorPictureElement = document.getElementById('instructorPicture');
-                        var personCircleIcon = document.getElementById('personCircleIcon');
+    var instructorCards = document.querySelectorAll('.instructor-card');
+    instructorCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+            var instructorId = this.id.split('_')[1]; // Extract the instructor id from the card id
+            var instructorName = this.querySelector('h5').textContent; // Get the instructor's name from the h5 element
+            var profilePicture = document.getElementById('profilePicture_' + instructorId).value; // Get the profile picture filename using the instructor id
 
-                        if (profilePicture) {
-                            instructorPictureElement.src = "/crms-project/uploads-instructors/" + profilePicture;
-                            instructorPictureElement.alt = "Instructor Picture";
-                            instructorPictureElement.style.display = "block"; // Show the image
-                            personCircleIcon.style.display = "none"; // Hide the icon
-                        } else {
-                            instructorPictureElement.src = ""; // Set empty source if no picture available
-                            instructorPictureElement.alt = ""; // Clear alt text
-                            instructorPictureElement.style.display = "none"; // Hide the image
-                            personCircleIcon.style.display = "block"; // Show the icon
+            console.log("Clicked on instructor card. Name:", instructorName, "Picture:", profilePicture);
+
+            // Update instructor's name placeholder
+            document.getElementById('instructorNamePlaceholder').textContent = instructorName;
+
+            // Update instructor's picture
+            var instructorPictureElement = document.getElementById('instructorPicture');
+            var personCircleIcon = document.getElementById('personCircleIcon');
+
+            if (profilePicture) {
+                instructorPictureElement.src = "/crms-project/uploads-instructors/" + profilePicture;
+                instructorPictureElement.alt = "Instructor Picture";
+                instructorPictureElement.style.display = "block"; // Show the image
+                personCircleIcon.style.display = "none"; // Hide the icon
+            } else {
+                instructorPictureElement.src = ""; // Set empty source if no picture available
+                instructorPictureElement.alt = ""; // Clear alt text
+                instructorPictureElement.style.display = "none"; // Hide the image
+                personCircleIcon.style.display = "block"; // Show the icon
+            }
+
+            
+            // Send AJAX request to fetch instructor's current information
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                // Populate input fields with instructor's information
+                                document.getElementById('nameInput').value = response.data.name;
+                                document.getElementById('departmentSelect').value = response.data.department;
+                                // Set the instructor ID for delete action
+                                document.getElementById('instructorIdInput').value = instructorId;
+                            } else {
+                                console.error('Failed to fetch instructor information:', response.error);
+                            }
+                        } catch (error) {
+                            console.error('Error parsing JSON:', error);
+                            console.log('Response Text:', xhr.responseText); // Log full response text
                         }
-                    });
-                });
-            });
+                    } else {
+                        console.error('Failed to fetch instructor information:', xhr.statusText);
+                    }
+                }
+            };
+            xhr.open('GET', '/crms-project/get-instructor-info?id=' + instructorId, true);
+            xhr.send();
+        });
+    });
+});
+
+
 
         </script>                                                       
     </body>
