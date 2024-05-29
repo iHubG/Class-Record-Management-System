@@ -218,7 +218,7 @@
                                         <i class="bi bi-person-circle fs-1" id="personCircleIcon"></i>
                                     </div>
                                     <!-- Display instructor's name -->
-                                    <h5 id="instructorNamePlaceholder" class="mt-3"></h5>
+                                    <h5 id="instructorNamePlaceholder" class="mt-3 d-none"></h5>
                                     <!-- Form for updating instructor's information -->
                                     <form id="adminUpdateInstructor" method="post">
                                         <!-- Input field for instructor's name -->
