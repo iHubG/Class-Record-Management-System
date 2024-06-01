@@ -45,6 +45,18 @@
                                 <h5>Students</h5>           
                             </div>
                         </a>   
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                <i class="bi bi-activity"></i>
+                                <h5>Activity Logs</h5>           
+                            </div>
+                        </a> 
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                <h5>Backup and Restore</h5>           
+                            </div>
+                        </a> 
                         <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
                             <hr class="bottom-rule">
                             <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
@@ -183,7 +195,7 @@
                                     <h5 class="text-muted">Total Users</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
-                                <h2>100</h2>
+                                <h2>186</h2>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
                                 <div class="d-flex justify-content-around align-items-baseline">

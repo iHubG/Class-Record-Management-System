@@ -403,7 +403,7 @@
             var instructorName = this.querySelector('h5').textContent; // Get the instructor's name from the h5 element
             var profilePicture = document.getElementById('profilePicture_' + instructorId).value; // Get the profile picture filename using the instructor id
 
-            console.log("Clicked on instructor card. Name:", instructorName, "Picture:", profilePicture);
+            //console.log("Clicked on instructor card. Name:", instructorName, "Picture:", profilePicture);
 
             // Update instructor's name placeholder
             document.getElementById('instructorNamePlaceholder').textContent = instructorName;

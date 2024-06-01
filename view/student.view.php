@@ -9,7 +9,7 @@
         <!-- Login -->
         <section id="login">
             <div class="container">
-                <a href="/crms-project/" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back home"  data-bs-custom-class="custom-tooltip"></i></a>
+            <a href="/crms-project/" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back home"  data-bs-custom-class="custom-tooltip"></i></a>
                 <div class="row justify-content-center my-2 my-lg-0 my-xxl-5">
                     <div class="col-10 shadow" id="login-box">
                         <div class="row flex-column flex-md-row flex-lg-row" id="login-box2">
@@ -20,17 +20,17 @@
                                 <h2 id="login-as" class="text-center">Student</h2>
                                 <div class="d-flex flex-column my-5 gap-lg-5 gap-4 px-5">
                                 <form action="/crms-project/student-login-process" method="post">
-                                    <!-- Email Address -->
+                                    <!-- Username -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label fw-bold">Email address</label>
+                                        <label for="username" class="form-label fw-bold">Username</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
-                                                <i class="bi bi-envelope-at"></i>
+                                                <i class="bi bi-person"></i>                                             
                                             </span>
-                                            <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($formData['email']) ? htmlspecialchars($formData['email']) : ''; ?>" placeholder="yourname@example.com" autocomplete="off" required>
+                                            <input type="text" class="form-control" placeholder="Username" autocomplete="off">                                        
                                         </div>
-                                        <?php if (!empty($errors['email'])): ?>
-                                            <div class="text-danger"><?php echo $errors['email']; ?></div>
+                                        <?php if (!empty($errors['username'])): ?>
+                                            <div class="text-danger"><?php echo $errors['username']; ?></div>
                                         <?php endif; ?>
                                     </div>
 
@@ -41,7 +41,7 @@
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off" required>
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off">                                        
                                             <span class="input-group-text password-toggle-icon">
                                                 <i class="bi bi-eye" id="togglePassword"></i>
                                             </span>
@@ -54,6 +54,13 @@
                                                 Password must be at least 8 characters long.
                                             </div>
                                         <?php endif; ?>
+                                    </div>
+
+                                    <div class="form-check my-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe" name="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">
+                                            Remember Me
+                                        </label>
                                     </div>
 
                                     <!-- Error message for login failure -->

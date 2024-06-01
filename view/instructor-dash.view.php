@@ -173,7 +173,30 @@
                                 </div>
                             </div>
                             </div>
-                        </div>
+                        </div>                 
+                    </div>
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card" aria-hidden="true">
+                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                                </h5>
+                                <p class="card-text placeholder-glow">
+                                <span class="placeholder col-7"></span>
+                                <span class="placeholder col-4"></span>
+                                <span class="placeholder col-4"></span>
+                                <span class="placeholder col-6"></span>
+                                <span class="placeholder col-8"></span>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="/crms-project/grading-sheets" class="btn btn-primary fs-6 cursor-pointer">Game Development</a>
+                                    <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>                 
                     </div>
 
                     <!-- Add Instructor Button -->
