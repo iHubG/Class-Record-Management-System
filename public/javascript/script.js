@@ -15,6 +15,8 @@ function activateLink() {
     document.getElementById('instructor-link').classList.add('active');
   } else if (path.includes('admin-activity-logs')) {
     document.getElementById('activity-logs-link').classList.add('active');
+  } else if (path.includes('admin-backup-restore')) {
+    document.getElementById('backup-restore-link').classList.add('active');
   }
 }
 

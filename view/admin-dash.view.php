@@ -51,7 +51,7 @@
                                 <h5>Activity Logs</h5>           
                             </div>
                         </a> 
-                        <a href="#" class="text-decoration-none text-white">
+                        <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-arrow-clockwise"></i>
                                 <h5>Backup and Restore</h5>           

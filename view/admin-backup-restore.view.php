@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Activity Logs</title>
+        <title>Backup & Restore</title>
     </head>
     <body id="login-body">
         <section id="admin-dash">
@@ -42,7 +42,7 @@
                             </div>
                         </a> 
                         <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="backup-restore-link">
                                 <i class="bi bi-arrow-clockwise"></i>
                                 <h5>Backup and Restore</h5>           
                             </div>
@@ -162,7 +162,7 @@
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Activity Logs</h4>
+                            <h4>Backup & Restore</h4>
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
@@ -178,44 +178,29 @@
                         
                     ?>
                     <div class="main-content-info">
-                        <div class="container-fluid p-2">
-                            <div class="row mt-2 g-0 justify-content-center mb-3">
-                                <div class="col-8 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="searchInput" placeholder="Search User" aria-label="Search name" aria-describedby="button-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="bi bi-search"></i></button>
-                                        </div>
-                                    </div>                         
+                        <div class="container d-flex justify-content-center mt-5">
+                            <form action="" method="post" id="backupButton" onsubmit="return confirm('Are you sure you want to backup the database?');">
+                                <button type="submit" name="backup" class="btn btn-primary me-2">Backup Database</button>
+                            </form>
+
+                            <form action="" method="post" id="restoreButton" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to restore the database?');">
+                                <div class="input-group mb-3">
+                                    <input type="file" name="backup_file" id="backupFile" class="form-control" accept=".sql" required>
+                                    <button type="submit" name="restore" class="btn btn-success ms-2">Restore Database</button>
                                 </div>
-                            </div>
-                            <?php
-                                // Fetch logs from the database
-                                $logs = $pdo->query("SELECT * FROM activity_logs ORDER BY timestamp DESC");
+                            </form>
+                        </div>   
+                        <!-- Error message div -->
+                        <div id="errorMessage" class="alert alert-danger" style="display: none;">Error occurred while processing the request.</div>
 
-                                // Start the table
-                                echo '<table class="table table-striped" id="logsTable">';
-                                echo '<thead>';
-                                echo '<tr>';
-                                echo '<th>Username</th>';
-                                echo '<th>Timestamp</th>';
-                                echo '</tr>';
-                                echo '</thead>';
-                                echo '<tbody>';
+                        <!-- Success message div -->
+                        <div id="successMessage" class="alert alert-success" style="display: none;">Backup Successful!</div>  
+                        
+                        <!-- Success message div -->
+                        <div id="restoreSuccessMessage" class="alert alert-success" style="display: none;">Restore Successful!</div>
 
-                                // Loop through the logs and generate table rows
-                                foreach ($logs as $log) {
-                                    echo '<tr>';
-                                    echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                    echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                    echo '</tr>';
-                                }
-
-                                // End the table
-                                echo '</tbody>';
-                                echo '</table>';
-                            ?>
-                        </div>
+                        <!-- Error message div -->
+                        <div id="restoreErrorMessage" class="alert alert-danger" style="display: none;">Error occurred during restore process.</div>
                     </div>
                 </div>
             </div>
@@ -242,31 +227,60 @@
                 document.getElementById('placeholderContainer').classList.add('d-none');
             }
 
-            //Search User logs
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("searchButton").addEventListener("click", searchLogs);
-                document.getElementById("searchInput").addEventListener("input", searchLogs);
 
-                function searchLogs() {
-                    var input, filter, table, tr, td, i, txtValue;
-                    input = document.getElementById("searchInput");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("logsTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[0];
-                        if (td) {
-                            txtValue = td.textContent || td.innerText;
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                tr[i].style.display = "";
-                            } else {
-                                tr[i].style.display = "none";
-                            }
-                        }
+           // For backup.php
+            document.getElementById("backupButton").addEventListener("click", function() {
+                // Send AJAX request to backup.php
+                $.ajax({
+                    url: "/crms-project/admin-backup",
+                    type: "POST",
+                    success: function(response) {
+                        // Always show success message after backup
+                        $("#successMessage").show();
+                        // Hide success message after 2 seconds
+                        setTimeout(function() {
+                            $("#successMessage").hide();
+                        }, 2000);
+                    },
+                    error: function(xhr, status, error) {
+                        // Hide success message if previously shown
+                        $("#successMessage").hide();
+                        // Show error message
+                        $("#errorMessage").show();
+                        console.error(error);
                     }
-                }
+                });
             });
+
+            // For restore.php
+            document.getElementById("restoreButton").addEventListener("click", function() {
+                // Create FormData object to send file data
+                var formData = new FormData();
+                formData.append("backup_file", $("#backupFile")[0].files[0]);
+
+                $.ajax({
+                    url: "/crms-project/admin-restore", // Path to your restore.php file
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);                 
+                        // Show success message only if the response indicates success
+                        $("#restoreSuccessMessage").show();
+                        // Hide success message after 3 seconds
+                        setTimeout(function() {
+                            $("#restoreSuccessMessage").hide();
+                        }, 3000);
+                    },
+                    error: function(xhr, status, error) {
+                        // Show error message
+                        $("#restoreErrorMessage").show();
+                        console.error(error);
+                    }
+                });
+            });
+
 
         </script>
     </body>

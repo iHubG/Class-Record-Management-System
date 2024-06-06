@@ -13,6 +13,9 @@
         '/crms-project/admin-profile-pict' => 'admin-profilepict',
         '/crms-project/admin-update-instructor' => 'admin-update-instructor',
         '/crms-project/admin-activity-logs' => 'admin-activity-logs',
+        '/crms-project/admin-backup-restore' => 'admin-backup-restore',
+        '/crms-project/admin-backup' => 'admin-backup-database',
+        '/crms-project/admin-restore' => 'admin-restore-database',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/instructor-logout' => 'instructor-logout',
         '/crms-project/instructor-login-process' => 'instructor-process',
@@ -71,6 +74,15 @@
                 break;
             case 'admin-activity-logs':
                 require ('./view/admin-activity-logs.view.php'); 
+                break;
+            case 'admin-backup-restore':
+                require ('./view/admin-backup-restore.view.php'); 
+                break;
+            case 'admin-backup-database':
+                require ('./controller/admin-backup.php'); 
+                break;
+            case 'admin-restore-database':
+                require ('./controller/admin-restore.php'); 
                 break;
             case 'instructor-login':
                 require ('./view/instructor.view.php'); 

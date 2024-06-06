@@ -12,10 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $department = $_POST['department'];
 
-    // Perform server-side validation as needed
-
-   
-
     // Start a transaction
     $pdo->beginTransaction();
 
