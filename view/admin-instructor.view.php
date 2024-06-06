@@ -16,7 +16,6 @@
                     <h2 class="h4 text-center">Admin</h2>
                     <nav id="dash-nav">
                         <hr>
-                        
                         <a href="/crms-project/admin-dashboard" class="text-decoration-none text-white"> 
                             <div class="dash-nav d-flex gap-2 mt-2 p-2 rounded" id="dashboard-link">
                                 <i class="bi bi-house"></i>
@@ -35,6 +34,18 @@
                                 <h5>Students</h5>           
                             </div>
                         </a>   
+                        <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="activity-logs-link">
+                                <i class="bi bi-activity"></i>
+                                <h5>Activity Logs</h5>           
+                            </div>
+                        </a> 
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                <h5>Backup and Restore</h5>           
+                            </div>
+                        </a> 
                         <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
                             <hr class="bottom-rule">
                             <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
@@ -46,7 +57,7 @@
                         </div>
                     </nav>
                 </div>
-
+                
                 <!-- OffCanvas -->
                 <div class="offcanvas offcanvas-start w-50" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                     <div class="offcanvas-header">
@@ -438,6 +449,7 @@
                                 document.getElementById('departmentSelect').value = response.data.department;
                                 // Set the instructor ID for delete action
                                 document.getElementById('instructorIdInput').value = instructorId;
+                                document.querySelector('#adminUpdateInstructor input[name="instructor_id"]').value = instructorId;
                             } else {
                                 console.error('Failed to fetch instructor information:', response.error);
                             }

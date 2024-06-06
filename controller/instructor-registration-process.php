@@ -1,6 +1,10 @@
 <?php  
-
+session_start();
 $errors = [];
+
+if(isset($_SESSION['username'])) {
+    $usernameAdmin = $_SESSION['username'];
+}
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -78,6 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo "<script>console.log('Error writing credentials to credentials.json')</script>";
             }*/
+            $logData = "Admin $usernameAdmin registered instructor $name"; // Customize as needed
+            $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+            $stmt->execute([$logData]);
+
             // Insert the new instructor record
             $instructorId = insertInstructor($pdo, $name, $username, $password);
             echo "success";

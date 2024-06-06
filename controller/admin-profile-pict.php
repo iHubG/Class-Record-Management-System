@@ -1,6 +1,11 @@
 <?php
+session_start();
 $errorMessage = '';
 $successMessage = '';
+
+if(isset($_SESSION['username'])) {
+    $usernameAdmin = $_SESSION['username'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
     $adminId = $_POST['admin_id'];
@@ -30,6 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
         $sql = 'UPDATE admin SET profile_picture_filename = ? WHERE id = ?';
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$fileName, $adminId]);
+
+        $logData = "Admin $usernameAdmin updated profile."; // Customize as needed
+        $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+        $stmt->execute([$logData]);
 
         $successMessage = 'Profile picture updated successfully.';
     } elseif (empty($errorMessage) && empty($successMessage)) {

@@ -48,6 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['admin_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
 
+            $logData = "Admin $username logged in."; // Customize as needed
+            $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+            $stmt->execute([$logData]);
+
             // Clear remember cookie
             setcookie('admin_credentials', '', time() - 3600, '/');
 

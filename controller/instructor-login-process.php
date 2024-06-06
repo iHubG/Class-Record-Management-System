@@ -48,7 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['instructor_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['name'] = $user['name'];
+            $name = $_SESSION['name'];
 
+            $logData = "Instructor $name logged in."; // Customize as needed
+            $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+            $stmt->execute([$logData]);
 
             // Clear remember cookie
             setcookie('instructor_credentials', '', time() - 3600, '/');

@@ -35,7 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Handle error if department update/insert fails
         // Log the error or display an appropriate message
     }
-
+    
+    $logData = "Instructor $name updated profile."; // Customize as needed
+    $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+    $stmt->execute([$logData]);
     echo "success";
     exit(); // Stop further execution
 }

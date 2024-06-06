@@ -13,6 +13,8 @@ function activateLink() {
     document.getElementById('dashboard-link').classList.add('active');
   } else if (path.includes('admin-instructor-dash')) {
     document.getElementById('instructor-link').classList.add('active');
+  } else if (path.includes('admin-activity-logs')) {
+    document.getElementById('activity-logs-link').classList.add('active');
   }
 }
 

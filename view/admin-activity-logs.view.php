@@ -1,15 +1,5 @@
 <?php
     session_start();
-
-    // Check if the user is logged in
-    if (!isset($_SESSION['admin_id'])) {
-        header('Location: /crms-project/admin-login');
-        exit();
-    }
-
-    // Get the username from the session
-    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Admin';
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Dashboard</title>
+        <title>Activity Logs</title>
     </head>
     <body id="login-body">
         <section id="admin-dash">
@@ -46,7 +36,7 @@
                             </div>
                         </a>   
                         <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="activity-logs-link">
                                 <i class="bi bi-activity"></i>
                                 <h5>Activity Logs</h5>           
                             </div>
@@ -172,7 +162,7 @@
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Dashboard</h4>
+                            <h4>Activity Logs</h4>
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
@@ -185,32 +175,36 @@
                         </div>  
                     </nav>
                     <?php 
-                        $stmt = $pdo->query("SELECT COUNT(*) AS total FROM instructor");
-                        $totalInstructors = $stmt->fetchColumn(); 
+                        
                     ?>
                     <div class="main-content-info">
-                        <div class="row g-0 py-2 px-2 justify-content-center">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
-                                <div class="d-flex justify-content-around align-items-baseline">
-                                    <h5 class="text-muted">Total Users</h5>         
-                                    <i class="bi bi-people fs-4"></i>
-                                </div>
-                                <h2>186</h2>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
-                                <div class="d-flex justify-content-around align-items-baseline">
-                                    <h5 class="text-muted">Instructors</h5>         
-                                    <i class="bi bi-people fs-4"></i>
-                                </div>
-                                <h2><?php echo htmlspecialchars($totalInstructors); ?></h2>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
-                                <div class="d-flex justify-content-around align-items-baseline">
-                                    <h5 class="text-muted">Students</h5>         
-                                    <i class="bi bi-people fs-4"></i>
-                                </div>
-                                <h2>180</h2>
-                            </div>
+                        <div class="container-fluid">
+                            <?php
+                                // Fetch logs from the database
+                                $logs = $pdo->query("SELECT * FROM activity_logs ORDER BY timestamp DESC");
+
+                                // Start the table
+                                echo '<table class="table table-striped">';
+                                echo '<thead>';
+                                echo '<tr>';
+                                echo '<th>Username</th>';
+                                echo '<th>Timestamp</th>';
+                                echo '</tr>';
+                                echo '</thead>';
+                                echo '<tbody>';
+
+                                // Loop through the logs and generate table rows
+                                foreach ($logs as $log) {
+                                    echo '<tr>';
+                                    echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
+                                    echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
+                                    echo '</tr>';
+                                }
+
+                                // End the table
+                                echo '</tbody>';
+                                echo '</table>';
+                            ?>
                         </div>
                     </div>
                 </div>
