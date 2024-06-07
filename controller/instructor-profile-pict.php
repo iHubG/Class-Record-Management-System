@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
                     </div>
                     <!-- Redirect message -->
                     <div class="m-auto mt-5">
-                        <p>You will be redirected to the dashboard in 5 seconds. If not, click <a href="/crms-project/instructor-dashboard">here</a>.</p>
+                        <p>You will be redirected to the dashboard in 3 seconds. If not, click <a href="/crms-project/instructor-dashboard">here</a>.</p>
                     </div>
-                    <meta http-equiv="refresh" content="5;url=/crms-project/instructor-dashboard">
+                    <meta http-equiv="refresh" content="3;url=/crms-project/instructor-dashboard">
                 <?php endif; ?>
 
                <!-- Display error message using JavaScript -->

@@ -189,31 +189,66 @@
                                     </div>                         
                                 </div>
                             </div>
-                            <?php
-                                // Fetch logs from the database
-                                $logs = $pdo->query("SELECT * FROM activity_logs ORDER BY timestamp DESC");
-
-                                // Start the table
-                                echo '<table class="table table-striped" id="logsTable">';
-                                echo '<thead>';
-                                echo '<tr>';
-                                echo '<th>Username</th>';
-                                echo '<th>Timestamp</th>';
-                                echo '</tr>';
-                                echo '</thead>';
-                                echo '<tbody>';
-
-                                // Loop through the logs and generate table rows
-                                foreach ($logs as $log) {
-                                    echo '<tr>';
-                                    echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                    echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                    echo '</tr>';
-                                }
-
-                                // End the table
-                                echo '</tbody>';
-                                echo '</table>';
+                            <?php                                                   
+                              // Fetch logs from the database with pagination
+                              $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+                              $perPage = 20;
+                              $offset = ($page - 1) * $perPage;
+                              
+                              // Query to fetch logs with pagination
+                              $logsQuery = $pdo->prepare("SELECT * FROM activity_logs ORDER BY timestamp DESC LIMIT :perPage OFFSET :offset");
+                              $logsQuery->bindParam(':perPage', $perPage, PDO::PARAM_INT);
+                              $logsQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
+                              $logsQuery->execute();
+                              $logs = $logsQuery->fetchAll(PDO::FETCH_ASSOC);
+                              
+                              // Total number of logs
+                              $totalLogs = $pdo->query("SELECT COUNT(*) FROM activity_logs")->fetchColumn();
+                              $totalPages = ceil($totalLogs / $perPage);
+                              
+                              // Start the table
+                              echo '<table class="table table-striped" id="logsTable">';
+                              echo '<thead>';
+                              echo '<tr>';
+                              echo '<th>Username</th>';
+                              echo '<th>Timestamp</th>';
+                              echo '</tr>';
+                              echo '</thead>';
+                              echo '<tbody>';
+                              
+                              // Loop through the logs and generate table rows
+                              foreach ($logs as $log) {
+                                  echo '<tr>';
+                                  echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
+                                  echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
+                                  echo '</tr>';
+                              }
+                              
+                              // End the table
+                              echo '</tbody>';
+                              echo '</table>';
+                              
+                              // Bootstrap Pagination
+                              echo '<div class="text-center m-auto">'; // Centering pagination links
+                              echo '<nav aria-label="Page navigation">';
+                              echo '<ul class="pagination justify-content-center">';
+                              
+                              // Previous page link
+                              $prevPage = ($page > 1) ? $page - 1 : 1;
+                              echo '<li class="page-item ' . ($page == 1 ? 'disabled' : '') . '"><a class="page-link" href="?page=' . $prevPage . '">Previous</a></li>';
+                              
+                              // Page links
+                              for ($i = 1; $i <= $totalPages; $i++) {
+                                  echo '<li class="page-item ' . ($page == $i ? 'active' : '') . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+                              }
+                              
+                              // Next page link
+                              $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
+                              echo '<li class="page-item ' . ($page == $totalPages ? 'disabled' : '') . '"><a class="page-link" href="?page=' . $nextPage . '">Next</a></li>';
+                              
+                              echo '</ul>';
+                              echo '</nav>';
+                              echo '</div>'; // End of centering div                                                                         
                             ?>
                         </div>
                     </div>

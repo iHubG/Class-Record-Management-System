@@ -9,7 +9,6 @@ function backupDatabase($pdo, $backupFilePath) {
     foreach ($tables as $table) {
         $stmt = $pdo->query("SELECT * FROM $table");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $output .= "DROP TABLE IF EXISTS `$table`;\n";
         $stmt = $pdo->query("SHOW CREATE TABLE $table");
         $createTable = $stmt->fetch(PDO::FETCH_ASSOC)['Create Table'];
         $output .= "$createTable;\n";
@@ -24,14 +23,8 @@ function backupDatabase($pdo, $backupFilePath) {
 
     // Write data to backup file
     file_put_contents($backupFilePath, $output);
-
-    // Optionally, you can provide a download link for the backup file
-    // header('Content-Type: application/octet-stream');
-    // header('Content-Disposition: attachment; filename="backup.sql"');
-    // readfile($backupFilePath);
 }
 
-// Define backup file path
 // Define backup folder path within the project directory
 $backupFolderPath =  __DIR__ . '/../backup/';
 
@@ -41,13 +34,11 @@ if (!file_exists($backupFolderPath)) {
 }
 
 // Define backup file path within the backup folder
-$backupFilePath = $backupFolderPath . 'backup.sql';
+// Add a timestamp to the backup file name to avoid overwriting existing backups
+$backupFileName = 'backup_' . date('Y-m-d_H-i-s') . '.sql';
+$backupFilePath = $backupFolderPath . $backupFileName;
 
 // Trigger backup process when backup button is clicked
+backupDatabase($pdo, $backupFilePath);
 
-
-    // Backup the database
-    backupDatabase($pdo, $backupFilePath);
-    
-    echo 'success';
-
+echo 'success';

@@ -179,14 +179,14 @@
                     ?>
                     <div class="main-content-info">
                         <div class="container d-flex justify-content-center mt-5">
-                            <form action="" method="post" id="backupButton" onsubmit="return confirm('Are you sure you want to backup the database?');">
-                                <button type="submit" name="backup" class="btn btn-primary me-2">Backup Database</button>
+                            <form action="" method="post" id="backupForm">
+                                <button type="submit" name="backup" class="btn btn-primary me-2" id="backupButton">Backup Database</button>
                             </form>
 
-                            <form action="" method="post" id="restoreButton" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to restore the database?');">
+                            <form action="" method="post" id="restoreForm" enctype="multipart/form-data">
                                 <div class="input-group mb-3">
                                     <input type="file" name="backup_file" id="backupFile" class="form-control" accept=".sql" required>
-                                    <button type="submit" name="restore" class="btn btn-success ms-2">Restore Database</button>
+                                    <button type="submit" id="restoreButton" class="btn btn-success ms-2">Restore Database</button>
                                 </div>
                             </form>
                         </div>   
@@ -195,12 +195,13 @@
 
                         <!-- Success message div -->
                         <div id="successMessage" class="alert alert-success" style="display: none;">Backup Successful!</div>  
-                        
+
                         <!-- Success message div -->
                         <div id="restoreSuccessMessage" class="alert alert-success" style="display: none;">Restore Successful!</div>
 
                         <!-- Error message div -->
                         <div id="restoreErrorMessage" class="alert alert-danger" style="display: none;">Error occurred during restore process.</div>
+
                     </div>
                 </div>
             </div>
@@ -228,14 +229,18 @@
             }
 
 
-           // For backup.php
             document.getElementById("backupButton").addEventListener("click", function() {
+                // Confirm backup action with the user
+                if (!confirm("Are you sure you want to backup the database?")) {
+                    return; // Exit the function if the user cancels the action
+                }
+
                 // Send AJAX request to backup.php
                 $.ajax({
                     url: "/crms-project/admin-backup",
                     type: "POST",
                     success: function(response) {
-                        // Always show success message after backup
+                        // Show success message after backup
                         $("#successMessage").show();
                         // Hide success message after 2 seconds
                         setTimeout(function() {
@@ -252,11 +257,24 @@
                 });
             });
 
-            // For restore.php
-            document.getElementById("restoreButton").addEventListener("click", function() {
+
+            document.getElementById("restoreButton").addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Check if a file is selected
+                var file = $("#backupFile")[0].files[0];
+                if (!file) {
+                    // Show error message if no file is selected
+                    $("#restoreErrorMessage").text("Please select a file for restoration.").show();
+                    setTimeout(function() {
+                            $("#restoreErrorMessage").hide();
+                    }, 3000);
+                    return; // Exit the function
+                }
+
                 // Create FormData object to send file data
                 var formData = new FormData();
-                formData.append("backup_file", $("#backupFile")[0].files[0]);
+                formData.append("backup_file", file);
 
                 $.ajax({
                     url: "/crms-project/admin-restore", // Path to your restore.php file
@@ -271,16 +289,19 @@
                         // Hide success message after 3 seconds
                         setTimeout(function() {
                             $("#restoreSuccessMessage").hide();
+                            location.reload();
                         }, 3000);
                     },
                     error: function(xhr, status, error) {
                         // Show error message
                         $("#restoreErrorMessage").show();
+                        setTimeout(function() {
+                            $("#restoreErrorMessage").hide();
+                        }, 3000);
                         console.error(error);
                     }
                 });
             });
-
 
         </script>
     </body>

@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo "<script>console.log('Error writing credentials to credentials.json')</script>";
             }*/
-            $logData = "Admin $usernameAdmin registered instructor $name"; // Customize as needed
+            $logData = "Admin $usernameAdmin registered instructor $name."; // Customize as needed
             $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
             $stmt->execute([$logData]);
 
