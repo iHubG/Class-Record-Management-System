@@ -244,8 +244,8 @@
                         $("#successMessage").show();
                         // Hide success message after 2 seconds
                         setTimeout(function() {
-                            $("#successMessage").hide();
-                        }, 2000);
+                            $("#successMessage").hide();                      
+                        },3000);
                     },
                     error: function(xhr, status, error) {
                         // Hide success message if previously shown

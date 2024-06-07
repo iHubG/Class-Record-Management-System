@@ -40,5 +40,6 @@ $backupFilePath = $backupFolderPath . $backupFileName;
 
 // Trigger backup process when backup button is clicked
 backupDatabase($pdo, $backupFilePath);
-
 echo 'success';
+
+
