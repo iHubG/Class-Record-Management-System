@@ -24,6 +24,7 @@
         '/crms-project/instructor-delete' => 'instructor-delete',
         '/crms-project/instructor-profile-pict' => 'instructor-profilepict',
         '/crms-project/instructor-update-profile' => 'instructor-update',
+        '/crms-project/instructor-add-subject' => 'instructor-add-subject',
         '/crms-project/get-instructor-info' => 'instructor-info',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/student-login-process' => 'student-process',
@@ -107,6 +108,9 @@
                 break;
             case 'instructor-update':
                 require ('./controller/instructor-update-profile.php'); 
+                break;
+            case 'instructor-add-subject':
+                require ('./controller/instructor-add-subject.php'); 
                 break;
             case 'instructor-info':
                 require ('./controller/get-instructor-info.php'); 

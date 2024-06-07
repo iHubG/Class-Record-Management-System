@@ -150,72 +150,68 @@
                     ?>
                 </div>  
             </nav>
+            <?php 
+                // Fetch subjects for the current instructor
+                $instructor_id = $_SESSION['instructor_id'];
+                $stmt = $pdo->prepare("SELECT * FROM subjects WHERE instructor_id = :instructor_id");
+                $stmt->execute(['instructor_id' => $instructor_id]);
+                $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ?>
             <div class="container">
                 <div class="row mt-5">
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <div class="d-flex justify-content-between">
-                                    <a href="/crms-project/grading-sheets" class="btn btn-primary fs-6 cursor-pointer">Cloud Computing</a>
-                                    <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
+                    <?php foreach ($subjects as $subject): ?>
+                    <div class="col-6 col-lg-3">
+                        <a href="/crms-project/grading-sheets" class="cursor-pointer text-decoration-none">
+                            <div class="card card-shadow">
+                                <div class="card" aria-hidden="true">
+                                    <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="text-black"><?php echo htmlspecialchars($subject['subject_name']); ?></h5>
+                                        <h5><?php echo htmlspecialchars($subject['subject_code']); ?></h5>
+                                        <h6 class="text-secondary"><?php echo htmlspecialchars($subject['section']); ?></h6>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                        </div>                 
+                            </div> 
+                        </a>                
                     </div>
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card" aria-hidden="true">
-                            <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title placeholder-glow">
-                                <span class="placeholder col-6"></span>
-                                </h5>
-                                <p class="card-text placeholder-glow">
-                                <span class="placeholder col-7"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-4"></span>
-                                <span class="placeholder col-6"></span>
-                                <span class="placeholder col-8"></span>
-                                </p>
-                                <div class="d-flex justify-content-between">
-                                    <a href="/crms-project/grading-sheets" class="btn btn-primary fs-6 cursor-pointer">Game Development</a>
-                                    <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
-                                </div>
-                            </div>
-                            </div>
-                        </div>                 
-                    </div>
+                <?php endforeach; ?>
 
-                    <!-- Add Instructor Button -->
-                    <i class="bi bi-plus-circle my-5 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                    <!-- Add Subject Button -->
+                    <i class="bi bi-plus-circle my-5 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#subject"></i>
 
-                    <!-- Instructor Button Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- Subject Button Modal -->
+                    <div class="modal fade" id="subject" tabindex="-1" aria-labelledby="subjectLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <div class="modal-header border-0">
+                                <h1 class="modal-title fs-5" id="subjectLabel">Add Subject</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <form id="addSubject" method="post">
+                                    <input id="subjectName" class="form-control" type="text" name="subjectName" placeholder="Subject Name" aria-label="subject name" autocomplete="off">
+                                    <div id="subjectNameError" class="text-danger mb-3"></div>
+                                    
+                                    <input id="subjectCode" class="form-control" type="text" name="subjectCode" placeholder="Subject Code" aria-label="subject code" autocomplete="off">
+                                    <div id="subjectCodeError" class="text-danger mb-3"></div>
+                                    
+                                    <input id="section" class="form-control" type="text" name="section" placeholder="Section" aria-label="section" autocomplete="off">
+                                    <div id="sectionError" class="text-danger mb-3"></div>
+                                    
+                                    <div id="errorMessagesubject" class="text-danger mb-2 text-center" style="display: none;"></div> <!-- Error message container -->
+                                    
+                                    <div id="successMessagesubject" class="text-success mb-2 text-center" style="display: none;"></div> <!-- Success message container -->
+
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary text-center" name="submit" onclick="handleFormSubmission();">Add</button>
+                                    </div>
+                                </form>                                                     
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="modal-footer border-0 d-flex justify-content-center">
+                                
                             </div>
                             </div>
                         </div>
@@ -243,6 +239,72 @@
             function showProfilePicture() {
                 document.getElementById('profilePicture').classList.remove('d-none');
                 document.getElementById('placeholderContainer').classList.add('d-none');
+            }
+
+           // Function to handle form submission
+            function handleFormSubmission() {
+                // Clear previous error messages
+                document.querySelectorAll('.text-danger').forEach(function(element) {
+                    element.textContent = '';
+                });
+
+                // Validate form fields
+                var subjectName = document.getElementById('subjectName').value.trim();
+                var subjectCode = document.getElementById('subjectCode').value.trim();
+                var section = document.getElementById('section').value.trim();
+                var isValid = true;
+
+                if (!subjectName) {
+                    document.getElementById('subjectNameError').textContent = 'Subject Name is required.';
+                    isValid = false;
+                }
+                if (!subjectCode) {
+                    document.getElementById('subjectCodeError').textContent = 'Subject Code is required.';
+                    isValid = false;
+                }
+                if (!section) {
+                    document.getElementById('sectionError').textContent = 'Section is required.';
+                    isValid = false;
+                }
+
+                // If form is not valid, return
+                if (!isValid) {
+                    return;
+                }
+
+                // Serialize form data
+                var formData = new FormData(document.getElementById('addSubject'));
+
+                // Submit the form data via AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/crms-project/instructor-add-subject');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Display success message below the add button                
+                        document.getElementById('successMessagesubject').innerHTML = 'Subject added successfully';
+                        document.getElementById('successMessagesubject').style.display = 'block';
+                        setTimeout(function() {
+                            document.getElementById('successMessagesubject').innerHTML = ''; // Clear the success message
+                            document.getElementById('successMessagesubject').style.display = 'none';                                
+                            document.getElementById('addSubject').reset(); 
+                            location.reload();
+                        }, 1000);                       
+                    } else {
+                        // Handle error response
+                        console.error('Error:', xhr.responseText);
+                        // Display error message below the add button
+                        document.getElementById('errorMessagesubject').textContent = xhr.responseText;
+                        document.getElementById('errorMessagesubject').style.display = 'block';
+                    }
+                };
+                xhr.onerror = function() {
+                    // Handle network errors
+                    console.error('Network Error');
+                    // Display generic error message below the add button
+                    document.getElementById('errorMessagesubject').textContent = 'Failed to add subject. Please try again later.';
+                    document.getElementById('errorMessagesubject').style.display = 'block';
+                };
+                xhr.send(formData);
             }
 
         </script>
