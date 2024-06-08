@@ -160,24 +160,24 @@
             <div class="container">
                 <div class="row mt-5">
                     <?php foreach ($subjects as $subject): ?>
-                    <div class="col-6 col-lg-3">
-                        <a href="/crms-project/grading-sheets" class="cursor-pointer text-decoration-none">
-                            <div class="card card-shadow">
-                                <div class="card" aria-hidden="true">
-                                    <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="text-black"><?php echo htmlspecialchars($subject['subject_name']); ?></h5>
-                                        <h5><?php echo htmlspecialchars($subject['subject_code']); ?></h5>
-                                        <h6 class="text-secondary"><?php echo htmlspecialchars($subject['section']); ?></h6>
-                                        <div class="d-flex justify-content-between">
-                                            <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
+                        <div class="col-6 col-lg-3">
+                            <a href="/crms-project/grading-sheets?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="cursor-pointer text-decoration-none">
+                                <div class="card card-shadow">
+                                    <div class="card" aria-hidden="true">
+                                        <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="text-black"><?php echo htmlspecialchars($subject['subject_name']); ?></h5>
+                                            <h5><?php echo htmlspecialchars($subject['subject_code']); ?></h5>
+                                            <h6 class="text-secondary"><?php echo htmlspecialchars($subject['section']); ?></h6>
+                                            <div class="d-flex justify-content-between">
+                                                <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
-                        </a>                
-                    </div>
-                <?php endforeach; ?>
+                                </div> 
+                            </a>                
+                        </div>
+                    <?php endforeach; ?>
 
                     <!-- Add Subject Button -->
                     <i class="bi bi-plus-circle my-5 fs-1 add-icon" data-bs-toggle="modal" data-bs-target="#subject"></i>
@@ -192,7 +192,8 @@
                             </div>
                             <div class="modal-body">
                                 <form id="addSubject" method="post">
-                                    <input id="subjectName" class="form-control" type="text" name="subjectName" placeholder="Subject Name" aria-label="subject name" autocomplete="off">
+                                    <small class="text-danger">Note: Use UPPERCASE for every first letter of the subject name, and all UPPERCASE for both the subject code and section.</small>
+                                    <input id="subjectName" class="form-control mt-3" type="text" name="subjectName" placeholder="Subject Name" aria-label="subject name" autocomplete="off">
                                     <div id="subjectNameError" class="text-danger mb-3"></div>
                                     
                                     <input id="subjectCode" class="form-control" type="text" name="subjectCode" placeholder="Subject Code" aria-label="subject code" autocomplete="off">

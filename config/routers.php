@@ -29,6 +29,7 @@
         '/crms-project/student-login' => 'student-login',
         '/crms-project/student-login-process' => 'student-process',
         '/crms-project/student-dashboard' => 'student-dashboard',
+        '/crms-project/student-registration' => 'student-registration',
         '/crms-project/grading-sheets' => 'grades-sheet',
         '/crms-project/chat' => 'chat',
     ];
@@ -124,6 +125,9 @@
                 break;
             case 'student-dashboard':
                 require ('./view/student-dash.view.php'); 
+                break;
+            case 'student-registration':
+                require ('./controller/student-registration-process.php'); 
                 break;
             case 'grades-sheet':
                 require ('./view/grading-sheets.view.php'); 

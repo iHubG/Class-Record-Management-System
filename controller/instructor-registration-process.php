@@ -76,12 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Write JSON data back to credentials.json
             $result = file_put_contents('./credentials.json', $json_data);
 
-            /*
-            if ($result !== false) {
-                echo "<script>console.log('Credentials successfully written to credentials.json')</script>";
-            } else {
-                echo "<script>console.log('Error writing credentials to credentials.json')</script>";
-            }*/
             $logData = "Admin $usernameAdmin registered instructor $name."; // Customize as needed
             $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
             $stmt->execute([$logData]);

@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = test_input($_POST["password"]);
 
     try {
-        $stmt = $pdo->prepare("SELECT * FROM instructor WHERE username = :username");
+        $stmt = $pdo->prepare("SELECT * FROM student WHERE username = :username");
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch();
 
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $user['username'];
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['last_name'] = $user['last_name'];
-            $name = $_SESSION['first_name'] . $SESSION_['last_name'];
+            $name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
 
             $logData = "Student $name logged in."; // Customize as needed
             $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");

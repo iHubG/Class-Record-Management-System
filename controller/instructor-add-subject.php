@@ -2,6 +2,9 @@
 // Start or resume the session
 session_start();
 
+$name = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Instructor';
+
+
 // Check if the instructor is logged in
 if (isset($_SESSION['instructor_id'])) {
     // Get the instructor ID from the session
@@ -28,6 +31,9 @@ if (isset($_SESSION['instructor_id'])) {
             // Execute the statement
             if ($stmt->execute()) {
                 // Return success message
+                $logData = "Instructor $name added subject."; // Customize as needed
+                $stmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
+                $stmt->execute([$logData]);    
                 echo "Subject added successfully!";
             } else {
                 // Return error message if insertion fails
