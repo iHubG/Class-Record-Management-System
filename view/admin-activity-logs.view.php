@@ -210,6 +210,7 @@
                               echo '<table class="table table-striped" id="logsTable">';
                               echo '<thead>';
                               echo '<tr>';
+                              echo '<th>Id</th>';
                               echo '<th>Username</th>';
                               echo '<th>Timestamp</th>';
                               echo '</tr>';
@@ -219,6 +220,7 @@
                               // Loop through the logs and generate table rows
                               foreach ($logs as $log) {
                                   echo '<tr>';
+                                  echo '<td>' . htmlspecialchars($log['id']) . '</td>'; // Use htmlspecialchars to prevent XSS
                                   echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
                                   echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
                                   echo '</tr>';

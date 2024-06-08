@@ -82,7 +82,7 @@ $rememberedPassword = $rememberedCredentials['password'] ?? '';
 
                                     <!-- Error message for login failure -->
                                     <?php if(isset($errors['login'])): ?>
-                                        <div class="mb-3">
+                                        <div class="my-2 mt-xxl-3 text-center">
                                             <div class="text-danger">
                                                 <?php echo $errors['login']; ?>
                                             </div>
@@ -90,7 +90,7 @@ $rememberedPassword = $rememberedCredentials['password'] ?? '';
                                     <?php endif; ?>
 
                                     <div class="text-center">
-                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-5 px-5">Login</button>
+                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-0 px-5">Login</button>
                                     </div>
                                 </form>
                                 </div>

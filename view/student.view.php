@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+
+$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$formData = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+
+// Clear errors and form data from session
+unset($_SESSION['errors']);
+unset($_SESSION['form_data']);
+
+// Check if remember credentials cookie exists and decrypt it
+$rememberedCredentials = isset($_COOKIE['student_credentials']) ? json_decode($_COOKIE['student_credentials'], true) : null;
+$rememberedUsername = $rememberedCredentials['username'] ?? '';
+$rememberedPassword = $rememberedCredentials['password'] ?? '';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,7 +44,7 @@
                                             <span class="input-group-text">
                                                 <i class="bi bi-person"></i>                                             
                                             </span>
-                                            <input type="text" class="form-control" placeholder="Username" autocomplete="off">                                        
+                                            <input type="text" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?php echo (empty($_POST) && !isset($errors['username'])) ? htmlspecialchars($rememberedUsername) : (isset($formData['username']) ? htmlspecialchars($formData['username']) : ''); ?>" placeholder="Username" autocomplete="off">                                        
                                         </div>
                                         <?php if (!empty($errors['username'])): ?>
                                             <div class="text-danger"><?php echo $errors['username']; ?></div>
@@ -41,7 +58,7 @@
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i>
                                             </span>
-                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" placeholder="Password" autocomplete="off">                                        
+                                            <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" value="<?php echo htmlspecialchars($rememberedPassword); ?>" placeholder="Password" autocomplete="off">                                        
                                             <span class="input-group-text password-toggle-icon">
                                                 <i class="bi bi-eye" id="togglePassword"></i>
                                             </span>
@@ -65,7 +82,7 @@
 
                                     <!-- Error message for login failure -->
                                     <?php if(isset($errors['login'])): ?>
-                                        <div class="mb-3">
+                                        <div class="my-2 mt-xxl-3 text-center">
                                             <div class="text-danger">
                                                 <?php echo $errors['login']; ?>
                                             </div>
@@ -73,7 +90,7 @@
                                     <?php endif; ?>
 
                                     <div class="text-center">
-                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-5 px-5">Login</button>
+                                        <button type="submit" name="submit" value="Submit" class="btn btn-primary my-0 px-5">Login</button>
                                     </div>
                                 </form>
                                 </div>

@@ -162,7 +162,7 @@
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Backup & Restore</h4>
+                            <h4>Backup and Restore</h4>
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
