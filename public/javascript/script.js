@@ -13,6 +13,10 @@ function activateLink() {
     document.getElementById('dashboard-link').classList.add('active');
   } else if (path.includes('admin-instructor-dash')) {
     document.getElementById('instructor-link').classList.add('active');
+  } else if (path.includes('admin-student')) {
+    document.getElementById('student-link').classList.add('active');
+  } else if (path.includes('admin-subject')) {
+    document.getElementById('subject-link').classList.add('active');
   } else if (path.includes('admin-activity-logs')) {
     document.getElementById('activity-logs-link').classList.add('active');
   } else if (path.includes('admin-backup-restore')) {

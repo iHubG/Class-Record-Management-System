@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Activity Logs</title>
+        <title>Subjects</title>
     </head>
     <body id="login-body">
         <section id="admin-dash">
@@ -34,13 +34,13 @@
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
-                        </a>   
+                        </a> 
                         <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="subject-link">
                                 <i class="bi bi-compass"></i>
                                 <h5>Subjects</h5>           
                             </div>
-                        </a>  
+                        </a>    
                         <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="activity-logs-link">
                                 <i class="bi bi-activity"></i>
@@ -48,7 +48,7 @@
                             </div>
                         </a> 
                         <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="backup-restore-link">
                                 <i class="bi bi-arrow-clockwise"></i>
                                 <h5>Backup and Restore</h5>           
                             </div>
@@ -168,7 +168,7 @@
                     <nav class="bg-success-subtle">
                         <div class="d-flex justify-content-between align-items-center p-3 px-3 ">
                             <i class="bi bi-list d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none fs-3 pe-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" id="burger-menu"></i>
-                            <h4>Activity Logs</h4>
+                            <h4>Subjects</h4>
                             <?php
                                 if ($profilePictureFileName) {
                                     $imagePath = "/crms-project/uploads-admin/" . $profilePictureFileName; // Adjust path as necessary
@@ -181,84 +181,70 @@
                         </div>  
                     </nav>
                     <?php 
-                        
                     ?>
                     <div class="main-content-info">
-                        <div class="container-fluid p-2">
-                            <div class="row mt-3 g-0 justify-content-center mb-3">
+                       <div class="container-fluid">
+                            <div class="row mt-4 g-0 justify-content-center mb-3">
                                 <div class="col-8 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="searchInput" placeholder="Search User" aria-label="Search name" aria-describedby="button-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="bi bi-search"></i></button>
+                                    <form>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchInput" placeholder="Search Subject" aria-label="Search name" aria-describedby="button-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="bi bi-search"></i></button>
+                                            </div>
                                         </div>
-                                    </div>                         
+                                    </form>
                                 </div>
                             </div>
-                            <?php                                                   
-                              // Fetch logs from the database with pagination
-                              $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-                              $perPage = 20;
-                              $offset = ($page - 1) * $perPage;
-                              
-                              // Query to fetch logs with pagination
-                              $logsQuery = $pdo->prepare("SELECT * FROM activity_logs ORDER BY timestamp DESC LIMIT :perPage OFFSET :offset");
-                              $logsQuery->bindParam(':perPage', $perPage, PDO::PARAM_INT);
-                              $logsQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
-                              $logsQuery->execute();
-                              $logs = $logsQuery->fetchAll(PDO::FETCH_ASSOC);
-                              
-                              // Total number of logs
-                              $totalLogs = $pdo->query("SELECT COUNT(*) FROM activity_logs")->fetchColumn();
-                              $totalPages = ceil($totalLogs / $perPage);
-                              
-                              // Start the table
-                              echo '<table class="table table-striped" id="logsTable">';
-                              echo '<thead>';
-                              echo '<tr>';
-                              echo '<th>#</th>';
-                              echo '<th>Username</th>';
-                              echo '<th>Timestamp</th>';
-                              echo '</tr>';
-                              echo '</thead>';
-                              echo '<tbody>';
-                              
-                              // Loop through the logs and generate table rows
-                              foreach ($logs as $log) {
-                                  echo '<tr>';
-                                  echo '<td>' . htmlspecialchars($log['id']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                  echo '<td>' . htmlspecialchars($log['log_data']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                  echo '<td>' . htmlspecialchars($log['timestamp']) . '</td>'; // Use htmlspecialchars to prevent XSS
-                                  echo '</tr>';
-                              }
-                              
-                              // End the table
-                              echo '</tbody>';
-                              echo '</table>';
-                              
-                              // Bootstrap Pagination
-                              echo '<div class="text-center m-auto">'; // Centering pagination links
-                              echo '<nav aria-label="Page navigation">';
-                              echo '<ul class="pagination justify-content-center">';
-                              
-                              // Previous page link
-                              $prevPage = ($page > 1) ? $page - 1 : 1;
-                              echo '<li class="page-item ' . ($page == 1 ? 'disabled' : '') . '"><a class="page-link" href="?page=' . $prevPage . '">Previous</a></li>';
-                              
-                              // Page links
-                              for ($i = 1; $i <= $totalPages; $i++) {
-                                  echo '<li class="page-item ' . ($page == $i ? 'active' : '') . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-                              }
-                              
-                              // Next page link
-                              $nextPage = ($page < $totalPages) ? $page + 1 : $totalPages;
-                              echo '<li class="page-item ' . ($page == $totalPages ? 'disabled' : '') . '"><a class="page-link" href="?page=' . $nextPage . '">Next</a></li>';
-                              
-                              echo '</ul>';
-                              echo '</nav>';
-                              echo '</div>'; // End of centering div                                                                         
-                            ?>
-                        </div>
+
+                            <!-- Message to display when no results are found -->
+                            <div id="noResultsMessage" class="mt-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Instructor Name</th>
+                                                <th>Subject Name</th>
+                                                <th>Subject Code</th>
+                                                <th>Section</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Assuming $pdo is your PDO connection and the SQL query retrieves instructor name, subject name, subject code, and section
+                                            $sql = "SELECT instructor.name AS instructor_name, subjects.subject_name, subjects.subject_code, subjects.section
+                                                    FROM subjects
+                                                    INNER JOIN instructor ON subjects.instructor_id = instructor.id";
+                                            $stmt = $pdo->query($sql);
+                                            $rowNumber = 1;
+                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $rowNumber . "</td>";
+                                                echo "<td>" . $row['instructor_name'] . "</td>";
+                                                echo "<td>" . $row['subject_name'] . "</td>";
+                                                echo "<td>" . $row['subject_code'] . "</td>";
+                                                echo "<td>" . $row['section'] . "</td>";
+                                                echo "<td>";
+                                                // Edit button with primary color
+                                                echo "<button class='btn btn-primary mx-1'>Edit</button>";
+                                                // Update button with success color
+                                                echo "<button class='btn btn-success mx-1'>Update</button>";
+                                                // Delete button with danger color
+                                                echo "<button class='btn btn-danger mx-1'>Delete</button>";
+                                                echo "</td>";
+                                                echo "</tr>";
+                                                $rowNumber++;
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                       </div>
                     </div>
                 </div>
             </div>
@@ -284,32 +270,6 @@
                 document.getElementById('profilePicture').classList.remove('d-none');
                 document.getElementById('placeholderContainer').classList.add('d-none');
             }
-
-            //Search User logs
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("searchButton").addEventListener("click", searchLogs);
-                document.getElementById("searchInput").addEventListener("input", searchLogs);
-
-                function searchLogs() {
-                    var input, filter, table, tr, td, i, txtValue;
-                    input = document.getElementById("searchInput");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("logsTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    for (i = 0; i < tr.length; i++) {
-                        td = tr[i].getElementsByTagName("td")[0];
-                        if (td) {
-                            txtValue = td.textContent || td.innerText;
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                tr[i].style.display = "";
-                            } else {
-                                tr[i].style.display = "none";
-                            }
-                        }
-                    }
-                }
-            });
 
         </script>
     </body>

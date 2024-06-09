@@ -29,14 +29,14 @@
                                 <h5>Instructors</h5>           
                             </div>
                         </a>   
-                        <a href="#" class="text-decoration-none text-white">
+                        <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
                         </a> 
-                        <a href="#" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                        <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="subject-link">
                                 <i class="bi bi-compass"></i>
                                 <h5>Subjects</h5>           
                             </div>

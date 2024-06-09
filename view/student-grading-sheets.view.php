@@ -64,12 +64,12 @@ if (!$subject) {
                 // Display the student's details
                 echo "<table class='table table-striped'>";
                 echo "<thead class='thead-dark'>";
-                echo "<tr><th>First Name</th><th>Last Name</th></tr>";
+                echo "<tr><th>Last Name</th><th>First Name</th></tr>";
                 echo "</thead>";
                 echo "<tbody>";
                 echo "<tr>";
-                echo "<td>" . $student['first_name'] . "</td>";
                 echo "<td>" . $student['last_name'] . "</td>";
+                echo "<td>" . $student['first_name'] . "</td>";
                 echo "</tr>";
                 echo "</tbody>";
                 echo "</table>";

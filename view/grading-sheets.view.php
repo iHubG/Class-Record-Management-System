@@ -35,15 +35,26 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Grading Sheets</title>
+        <title>Class Record</title>
     </head>
     <body>
         <section id="grading-sheets">
             <a href="/crms-project/instructor-dashboard" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back"  data-bs-custom-class="custom-tooltip"></i></a>
-            <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Grading Sheet</h2>
+            <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Class Record</h2>
 
             <div class="container-fluid">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center gap-5 mb-3">
+                    <a href="/crms-project/instructor-grading-sheets?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="btn btn-success">Grading Sheets</a>
+                    <div class="col-8 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
+                        <form>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Search Student" aria-label="Search name" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="searchButton"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <!-- Register Student Button Modal -->
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register-student">Register Student</button>
                     <!-- Add Student Button Modal -->
@@ -167,14 +178,51 @@
                         
                         echo "<table class='table table-striped'>";
                         echo "<thead class='thead-dark'>";
-                        echo "<tr><th>First Name</th><th>Last Name</th></tr>";
+                        echo "<tr>
+                                <th>#</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Attitude</th>
+                                <th>Attendance</th>
+                                <th>Recitation</th>
+                                <th>Assignment</th>
+                                <th>Quiz</th>
+                                <th>Project</th>
+                                <th>Prelim</th>
+                                <th>Midterm</th>
+                                <th>Final</th>
+                                <th></th>
+                            </tr>";
                         echo "</thead>";
                         echo "<tbody>";
+
+                        $rowNumber = 1;
+
                         foreach ($students as $student) {
                             echo "<tr>";
-                            echo "<td>" . $student['first_name'] . "</td>";
+                            echo "<td>" . $rowNumber . "</td>";
                             echo "<td>" . $student['last_name'] . "</td>";
+                            echo "<td>" . $student['first_name'] . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>" . "</td>";
+                            echo "<td>";
+                            // Edit button with primary color
+                            echo "<button class='btn btn-primary mx-1'>Edit</button>";
+                            // Update button with success color
+                            echo "<button class='btn btn-success mx-1'>Update</button>";
+                            // Delete button with danger color
+                            echo "<button class='btn btn-danger mx-1'>Delete</button>";
+                            echo "</td>";
                             echo "</tr>";
+
+                            $rowNumber++;
                         }
                         echo "</tbody>";
                         echo "</table>";

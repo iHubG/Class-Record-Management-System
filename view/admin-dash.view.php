@@ -39,14 +39,14 @@
                                 <h5>Instructors</h5>           
                             </div>
                         </a>   
-                        <a href="#" class="text-decoration-none text-white">
+                        <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
                         </a>  
-                        <a href="#" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                        <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="subject-link">
                                 <i class="bi bi-compass"></i>
                                 <h5>Subjects</h5>           
                             </div>
@@ -193,6 +193,15 @@
                     <?php 
                         $stmt = $pdo->query("SELECT COUNT(*) AS total FROM instructor");
                         $totalInstructors = $stmt->fetchColumn(); 
+
+                        $stmt = $pdo->query("SELECT COUNT(*) AS total FROM student");
+                        $totalStudents = $stmt->fetchColumn(); 
+
+                        $stmt = $pdo->query("SELECT COUNT(*) AS total FROM admin");
+                        $totalAdmins = $stmt->fetchColumn(); 
+
+                        $stmt = $pdo->query("SELECT COUNT(*) AS total FROM subjects");
+                        $totalSubjects = $stmt->fetchColumn(); 
                     ?>
                     <div class="main-content-info">
                         <div class="row g-0 py-2 px-2 justify-content-center">
@@ -201,7 +210,7 @@
                                     <h5 class="text-muted">Total Users</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
-                                <h2>186</h2>
+                                <h2><?php echo htmlspecialchars($totalInstructors + $totalStudents + $totalAdmins); ?></h2>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
                                 <div class="d-flex justify-content-around align-items-baseline">
@@ -215,7 +224,21 @@
                                     <h5 class="text-muted">Students</h5>         
                                     <i class="bi bi-people fs-4"></i>
                                 </div>
-                                <h2>180</h2>
+                                <h2><?php echo htmlspecialchars($totalStudents); ?></h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
+                                <div class="d-flex justify-content-around align-items-baseline">
+                                    <h5 class="text-muted">Admins</h5>         
+                                    <i class="bi bi-people fs-4"></i>
+                                </div>
+                                <h2><?php echo htmlspecialchars($totalAdmins); ?></h2>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 shadow bg-white rounded p-5 text-center mx-5 my-4">
+                                <div class="d-flex justify-content-around align-items-baseline">
+                                    <h5 class="text-muted">Subjects</h5>         
+                                    <i class="bi bi-people fs-4"></i>
+                                </div>
+                                <h2><?php echo htmlspecialchars($totalSubjects); ?></h2>
                             </div>
                         </div>
                     </div>

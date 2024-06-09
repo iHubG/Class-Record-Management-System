@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Instructor</title>
+        <title>Instructors</title>
     </head>
     <body id="login-body">
         <section id="admin-dash">
@@ -28,14 +28,14 @@
                                 <h5>Instructors</h5>           
                             </div>
                         </a>   
-                        <a href="#" class="text-decoration-none text-white">
+                        <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
                         </a>   
-                        <a href="#" class="text-decoration-none text-white">
-                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                        <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="subject-link">
                                 <i class="bi bi-compass"></i>
                                 <h5>Subjects</h5>           
                             </div>
@@ -180,7 +180,7 @@
                         </div>  
                     </nav>
                     <div class="main-content-info">
-                        <div class="row mt-5 g-0 justify-content-center">
+                        <div class="row mt-4 g-0 justify-content-center">
                             <div class="col-8 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
                             <form>
                                 <div class="input-group">
@@ -270,7 +270,6 @@
                                 </div>
                                 <div class="modal-footer d-flex justify-content-around border-0">
                                     <!-- Additional action buttons -->
-                                    <a href="/crms-project/admin-instructor-class" class="btn btn-primary">View Classes</a>
                                     <form action="/crms-project/instructor-delete" method="post">
                                         <input type="hidden" name="id_delete" id="instructorIdInput" value="<?php echo $instructor['id']; ?>">
                                         <button type="submit" class="btn btn-danger" name="delete">Delete Account</button>
