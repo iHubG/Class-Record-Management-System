@@ -233,7 +233,7 @@ img#question-mark:hover, i.back:hover{
 
 }
 
-#admin-prof-logo, i#add-logo, a.cursor-pointer, i.cursor-pointer, span.password-toggle-icon, #instructor-logo {
+#admin-prof-logo, i#add-logo, a.cursor-pointer, i.cursor-pointer, span.password-toggle-icon, #instructor-logo, #student-logo {
     cursor: pointer;
 }
 
@@ -256,7 +256,7 @@ i.add-icon {
     --bs-tooltip-bg: var(--bs-primary);
 }
 
-img.admin-circle-logo, img.instructor-circle-logo {
+img.admin-circle-logo, img.instructor-circle-logo, img.student-circle-logo {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -283,12 +283,12 @@ img.admin-circle-logo, img.instructor-circle-logo {
 }
 
 /* Hover logout */
-a#instructor-logout {
+a#instructor-logout, a#student-logout  {
     background-color: #36454F;
     opacity: 0.9;
 }
 
-a#instructor-logout:hover {
+a#instructor-logout:hover, a#student-logout:hover {
     background-color: #36454F;
     opacity: 1;
 }
