@@ -44,7 +44,13 @@
                                 <i class="bi bi-backpack2"></i>
                                 <h5>Students</h5>           
                             </div>
-                        </a>   
+                        </a>  
+                        <a href="#" class="text-decoration-none text-white">
+                            <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                <i class="bi bi-compass"></i>
+                                <h5>Subjects</h5>           
+                            </div>
+                        </a> 
                         <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
                             <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                 <i class="bi bi-activity"></i>

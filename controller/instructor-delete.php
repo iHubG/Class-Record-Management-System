@@ -11,29 +11,40 @@ if (isset($_POST['delete'])) {
             $username = $_SESSION['username'];
         }
 
-        // Prepare a SELECT query to retrieve the instructor's name
-        $selectStmt = $pdo->prepare("SELECT name FROM instructor WHERE id = :instructor_id");
-        $selectStmt->bindParam(':instructor_id', $instructor_id, PDO::PARAM_INT);
-        $selectStmt->execute();
-
-        // Fetch the instructor's name
-        $instructorName = $selectStmt->fetchColumn();
-
         try {
+            // Begin a transaction
+            $pdo->beginTransaction();
+
+            // Prepare a DELETE statement to remove associated subjects
+            $deleteSubjectsStmt = $pdo->prepare("DELETE FROM subjects WHERE instructor_id = :instructor_id");
+            $deleteSubjectsStmt->bindParam(':instructor_id', $instructor_id, PDO::PARAM_INT);
+            $deleteSubjectsStmt->execute();
+
+            // Prepare a SELECT query to retrieve the instructor's name
+            $selectStmt = $pdo->prepare("SELECT name FROM instructor WHERE id = :instructor_id");
+            $selectStmt->bindParam(':instructor_id', $instructor_id, PDO::PARAM_INT);
+            $selectStmt->execute();
+
+            // Fetch the instructor's name
+            $instructorName = $selectStmt->fetchColumn();
+
             // Prepare a DELETE statement to remove the instructor record
-            $stmt = $pdo->prepare("DELETE FROM instructor WHERE id = :instructor_id");
-            $stmt->bindParam(':instructor_id', $instructor_id, PDO::PARAM_INT);
+            $deleteInstructorStmt = $pdo->prepare("DELETE FROM instructor WHERE id = :instructor_id");
+            $deleteInstructorStmt->bindParam(':instructor_id', $instructor_id, PDO::PARAM_INT);
+
+            // Execute the DELETE statement
+            $deleteInstructorStmt->execute();
 
             // Log the deletion event
             $logData = "Admin $username deleted instructor $instructorName."; // Customize as needed
             $logStmt = $pdo->prepare("INSERT INTO activity_logs (log_data) VALUES (?)");
             $logStmt->execute([$logData]);
 
-            // Execute the DELETE statement
-            $stmt->execute();
+            // Commit the transaction
+            $pdo->commit();
 
             // Check if any rows were affected
-            if ($stmt->rowCount() > 0) {
+            if ($deleteInstructorStmt->rowCount() > 0) {
                 // Instructor deleted successfully
                 header('Location: /crms-project/admin-instructor-dash');
                 exit;
@@ -42,6 +53,9 @@ if (isset($_POST['delete'])) {
                 $status = 'No instructor found with the specified ID.';
             }
         } catch (PDOException $e) {
+            // Roll back the transaction
+            $pdo->rollBack();
+
             // Handle database errors
             $status = 'Error deleting instructor: ' . $e->getMessage();
         }
