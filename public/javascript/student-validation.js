@@ -69,7 +69,65 @@ $(document).ready(function() {
                         displayErrors(response);
                     } else {
                         console.error('Error:', error);
-                        $('#password-error').html("<div class='text-danger text-center mt-5'>Error</div>");
+                        $('#password-error').html("<div class='text-danger text-center mt-5'>Student with this username already registered and enrolled in this subject.</div>");
+                    }
+                }
+            });
+        }
+    });
+});
+
+// Function to display validation errors
+function displayErrors(errors) {
+    $.each(errors, function(key, value) {
+        $('#' + key + '-error').text(value);
+    });
+}
+
+
+// Add Student
+$(document).ready(function() {
+    // Handle form submission using AJAX
+    $('#addStudent').submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Clear previous error messages
+        $('#addStudent .text-danger').text('');
+
+        // Validate form fields
+        var username = $('#usernameAdd').val();
+        var errors = {};
+
+        // Validate username
+        if (!username.trim()) {
+            errors['usernameAdd'] = "Username is required";
+        }
+
+        // If there are validation errors, display them
+        if (Object.keys(errors).length > 0) {
+            displayErrors(errors);
+        } else {
+            // If no validation errors, submit the form via AJAX
+            $.ajax({
+                type: 'POST',
+                url: '/crms-project/student-add-subject', // PHP script for form handling
+                data: $(this).serialize(), // Serialize form data
+                success: function(response) {
+                    // Handle success response
+                    $('#add-validation').html("<div class='text-success text-center mt-5'>Added successfully!</div>");
+                    // Reload the page after a short delay (e.g., 1 second)
+                    setTimeout(function() {
+                        location.reload(); // Reload the current page
+                    }, 1000); // 1000 milliseconds = 1 second
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    var response = xhr.responseJSON;
+                    if (response) {
+                        displayErrors(response);
+                    } else {
+                        // Display a generic error message
+                        $('#add-validation').html("<div class='text-danger text-center mt-5'>Student with this username doesn't exist or is already enrolled.</div>");
                     }
                 }
             });

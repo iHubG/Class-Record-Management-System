@@ -43,16 +43,18 @@
             <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Grading Sheet</h2>
 
             <div class="container-fluid">
-                 <!-- Student Button Modal -->
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-between">
+                    <!-- Register Student Button Modal -->
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register-student">Register Student</button>
+                    <!-- Add Student Button Modal -->
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-student">Add Student</button>
                 </div>
-                 <!-- Student Button Modal -->
-                    <div class="modal fade" id="add-student" tabindex="-1" aria-labelledby="add-student" aria-hidden="true">
+                 <!-- Register Student Button Modal -->
+                    <div class="modal fade" id="register-student" tabindex="-1" aria-labelledby="register-student" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header border-0">
-                                    <h1 class="modal-title fs-5" id="add-student">Add Student</h1>
+                                    <h1 class="modal-title fs-5" id="register-student">Register Student</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -114,6 +116,41 @@
 
                                         <div class="text-center">
                                             <button type="submit" name="submit" value="Register" class="btn btn-primary my-5 px-5">Register</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+
+                     <!-- Register Student Button Modal -->
+                     <div class="modal fade" id="add-student" tabindex="-1" aria-labelledby="add-student" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5" id="add-student">Add Student</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addStudent" method="post">
+                    
+                                        <!-- Username -->
+                                        <div class="mb-3">
+                                            <div>           
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-person-circle"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control" id="usernameAdd" name="username" placeholder="Username" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div id="usernameAdd-error" class="text-danger"></div>
+                                        </div>
+
+                                        <div id="add-validation" class="text-danger"></div>
+                                                                        
+                                        <div class="text-center">
+                                            <button type="submit" name="submit" value="Add" class="btn btn-primary my-5 px-5">Add</button>
                                         </div>
                                     </form>
                                 </div>

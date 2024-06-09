@@ -17,6 +17,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return $pdo->lastInsertId();
     }
 
+      // Function to check if username already exists
+      function isUsernameExists($pdo, $username) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM student WHERE username = ?");
+        $stmt->execute([$username]);
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+    // Check if username already exists
+    if (isUsernameExists($pdo, $username)) {
+        // Username already exists, return an error message
+        http_response_code(400); // Bad Request
+        echo "Username already exists";
+        exit;
+    }
+
     // Get the current date and time
     $dateCreated = date('Y-m-d H:i:s');
 
