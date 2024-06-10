@@ -23,7 +23,7 @@
                                     <a href="/crms-project/instructor-login" class="login-button">Instructor</a>
                                     <a href="/crms-project/student-login" class="login-button">Student</a>
                                 </div>
-                                <img id="question-mark" src="./public/img/question-mark.png" alt="question mark">
+                                <!--<img id="question-mark" src="./public/img/question-mark.png" alt="question mark">-->
                             </div>
                         </div>
                     </div>
