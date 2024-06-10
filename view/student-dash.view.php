@@ -74,7 +74,7 @@ $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_na
                             <?php
 
                                 // Retrieve the student's name from the database
-                                $query = "SELECT first_name, last_name FROM student WHERE id = :id";
+                                $query = "SELECT first_name, last_name, school_id, course, year_level FROM student WHERE id = :id";
                                 $statement = $pdo->prepare($query);
                                 $statement->execute(array(':id' => $_SESSION['student_id']));
                                 $student = $statement->fetch(PDO::FETCH_ASSOC);
@@ -83,6 +83,9 @@ $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_na
                                 if ($student) {
                                     $firstName = $student['first_name'];
                                     $lastName = $student['last_name'];
+                                    $schoolId = $student['school_id'];
+                                    $course = $student['course'];
+                                    $year = $student['year_level'];
                                 } else {
                                     // Handle the case where the student is not found
                                     $firstName = 'Student Not Found';
@@ -90,40 +93,35 @@ $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_na
                                 }
                             ?>
 
-                            <form id="updateProfileForm" method="post">
+                            <form id="updateStudentForm" method="post">
                                 <!-- Input field for student's first name with error message -->
                                 <div class="mb-3 mt-3">
-                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" autocomplete="off">
+                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" placeholder="First Name" autocomplete="off">
                                     <div id="firstNameError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Input field for student's last name with error message -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" autocomplete="off">
+                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" placeholder="Last Name" autocomplete="off">
                                     <div id="lastNameError" class="text-danger"></div>
                                 </div>
 
                                 <!-- School Id Number -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="school_idInput" name="school_id" value="" placeholder="School Id Number" autocomplete="off">
-                                    <div id="school_idError" class="text-danger"></div>
+                                    <input type="text" class="form-control" id="schoolIdInput" name="schoolId" value="<?php echo htmlspecialchars($schoolId); ?>" placeholder="School Id Number" autocomplete="off">
+                                    <div id="schoolIdError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Course -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="courseInput" name="course" value="" placeholder="Course (e.g., BSIT)" autocomplete="off">
+                                    <input type="text" class="form-control" id="courseInput" name="course" value="<?php echo htmlspecialchars($course); ?>" placeholder="Course (e.g., BSIT)" autocomplete="off">
                                     <div id="courseError" class="text-danger"></div>
                                 </div>
 
-                                <!-- Year -->
+                                <!-- Year -->                             
                                 <div class="mb-3">
-                                <select class="form-select" aria-label="year">
-                                    <option selected>Select a Year</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="yearInput" name="year" value="<?php echo htmlspecialchars($year); ?>" placeholder="Year (e.g., 3)" autocomplete="off">
+                                    <div id="yearError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Error messages will be displayed here -->
