@@ -88,12 +88,30 @@
                                     <h5>Instructors</h5>           
                                 </div>
                             </a>   
-                            <a href="#" class="text-decoration-none text-white">
+                            <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                                 <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                     <i class="bi bi-backpack2"></i>
                                     <h5>Students</h5>           
                                 </div>
                             </a>   
+                            <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-compass"></i>                                  
+                                    <h5>Subjects</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-activity"></i>                                                         
+                                    <h5>Activity Logs</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-arrow-clockwise"></i>                                  
+                                    <h5>Backup and Restore</h5>           
+                                </div>
+                            </a> 
                             <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
                                 <hr class="bottom-rule">
                                 <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
@@ -228,19 +246,28 @@
                                             $rowNumber = 1;
                                             foreach ($students as $student) {
                                                 echo "<tr id='row_$rowNumber'>"; // Add unique identifier to each row
-                                                echo "<td>" . $rowNumber . "</td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['school_id']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['first_name']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['last_name']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['course']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['year_level']) . "' readonly></td>";
+                                                echo "<td>" . $rowNumber . "</td>"; 
+                                                echo "<form action='/crms-project/admin-update-student' method='post'>";           
+                                                echo "<td><input type='text' class='form-control' name='schoolId' value='" . (isset($student['school_id']) ? htmlspecialchars($student['school_id']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='course' value='" . (isset($student['course']) ? htmlspecialchars($student['course']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='year' value='" . (isset($student['year_level']) ? htmlspecialchars($student['year_level']) : '') . "' readonly autocomplete='off'></td>";                                                
                                                 echo "<td>";
-                                                // Edit button with primary color
-                                                echo "<button class='btn btn-primary mx-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
+                                               
                                                 // Update button with success color
-                                                echo "<button class='btn btn-success mx-1'>Update</button>";
+                                                echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                                                    <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
                                                 // Delete button with danger color
-                                                echo "<button class='btn btn-danger mx-1'>Delete</button>";
+                                                echo "</form>";
+
+                                                 // Edit button with primary color
+                                                 echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
+                                                
+                                                echo "<form action='/crms-project/admin-student-delete' method='post'>
+                                                        <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                                                        <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
+                                                    </form>";
                                                 echo "</td>";
                                                 echo "</tr>";
                                                 $rowNumber++;
@@ -271,48 +298,33 @@
                                                     }
                                                 }
 
-                                                 // Function to perform live search
+                                               // Function to perform live search for students
                                                 function performSearch() {
                                                     var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
-                                                    var students = <?php echo json_encode($students); ?>; // Assuming $students contains the student data
+                                                    var rows = document.getElementById("searchResults").getElementsByTagName("tr");
+                                                    var hasResults = false;
 
-                                                    // Filter students based on the search term
-                                                    var filteredStudents = students.filter(function(student) {
-                                                        return student.first_name.toLowerCase().includes(searchTerm) ||
-                                                            student.last_name.toLowerCase().includes(searchTerm) ||
-                                                            student.school_id.toLowerCase().includes(searchTerm) ||
-                                                            student.course.toLowerCase().includes(searchTerm) ||
-                                                            student.year_level.toString().includes(searchTerm);
-                                                    });
+                                                    for (var i = 0; i < rows.length; i++) {
+                                                        var studentId = rows[i].getElementsByTagName("td")[1].querySelector("input").value.trim().toLowerCase();
+                                                        var firstName = rows[i].getElementsByTagName("td")[2].querySelector("input").value.trim().toLowerCase();
+                                                        var lastName = rows[i].getElementsByTagName("td")[3].querySelector("input").value.trim().toLowerCase();
+                                                        var course = rows[i].getElementsByTagName("td")[4].querySelector("input").value.trim().toLowerCase();
+                                                        var year = rows[i].getElementsByTagName("td")[5].querySelector("input").value.trim().toLowerCase();
+                                                        var rowText = studentId + " " + firstName + " " + lastName + " " + course + " " + year;
 
-                                                    // Display search results or no results message
-                                                    var searchResultsContainer = document.getElementById("searchResults");
+                                                        if (rowText.includes(searchTerm)) {
+                                                            rows[i].style.display = "";
+                                                            hasResults = true;
+                                                        } else {
+                                                            rows[i].style.display = "none";
+                                                        }
+                                                    }
+
+                                                    // Show or hide no results message
                                                     var noResultsMessage = document.getElementById("noResultsMessage");
-                                                    if (filteredStudents.length > 0) {
-                                                        // Clear previous search results
-                                                        searchResultsContainer.innerHTML = "";
-                                                        // Append search results to the table
-                                                        filteredStudents.forEach(function(student, index) {
-                                                            var rowNumber = index + 1;
-                                                            var row = "<tr>" +
-                                                                "<td>" + rowNumber + "</td>" +
-                                                                "<td><input type='text' class='form-control' value='" + student.school_id + "' readonly></td>" +
-                                                                "<td><input type='text' class='form-control' value='" + student.first_name + "' readonly></td>" +
-                                                                "<td><input type='text' class='form-control' value='" + student.last_name + "' readonly></td>" +
-                                                                "<td><input type='text' class='form-control' value='" + student.course + "' readonly></td>" +
-                                                                "<td><input type='text' class='form-control' value='" + student.year_level + "' readonly></td>" +
-                                                                "<td>" +
-                                                                    "<button class='btn btn-primary mx-1 edit-button' data-row='" + rowNumber + "'>Edit</button>" +
-                                                                    "<button class='btn btn-success mx-1'>Update</button>" +
-                                                                    "<button class='btn btn-danger mx-1'>Delete</button>" +
-                                                                "</td>" +
-                                                            "</tr>";
-                                                            searchResultsContainer.innerHTML += row;
-                                                        });
-                                                        // Hide the no results message
+                                                    if (searchTerm === "" || hasResults) {
                                                         noResultsMessage.style.display = "none";
                                                     } else {
-                                                        // Display no results message
                                                         noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
                                                         noResultsMessage.style.display = "block";
                                                     }
@@ -322,6 +334,7 @@
                                                 document.getElementById("searchInput").addEventListener("input", function() {
                                                     performSearch();
                                                 });
+
                                             </script>
                                         </tbody>
                                     </table>

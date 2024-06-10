@@ -98,12 +98,30 @@
                                     <h5>Instructors</h5>           
                                 </div>
                             </a>   
-                            <a href="#" class="text-decoration-none text-white">
+                            <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                                 <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                     <i class="bi bi-backpack2"></i>
                                     <h5>Students</h5>           
                                 </div>
                             </a>   
+                            <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-compass"></i>                                  
+                                    <h5>Subjects</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-activity"></i>                                                         
+                                    <h5>Activity Logs</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-arrow-clockwise"></i>                                  
+                                    <h5>Backup and Restore</h5>           
+                                </div>
+                            </a> 
                             <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
                                 <hr class="bottom-rule">
                                 <a href="/crms-project/admin-logout" class="text-decoration-none text-white">

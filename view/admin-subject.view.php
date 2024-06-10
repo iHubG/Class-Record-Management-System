@@ -88,12 +88,30 @@
                                     <h5>Instructors</h5>           
                                 </div>
                             </a>   
-                            <a href="#" class="text-decoration-none text-white">
+                            <a href="/crms-project/admin-student" class="text-decoration-none text-white">
                                 <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
                                     <i class="bi bi-backpack2"></i>
                                     <h5>Students</h5>           
                                 </div>
                             </a>   
+                            <a href="/crms-project/admin-subject" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-compass"></i>                                  
+                                    <h5>Subjects</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-activity-logs" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-activity"></i>                                                         
+                                    <h5>Activity Logs</h5>           
+                                </div>
+                            </a>  
+                            <a href="/crms-project/admin-backup-restore" class="text-decoration-none text-white">
+                                <div class="dash-nav d-flex gap-2 my-1 p-2 rounded" id="student-link">
+                                    <i class="bi bi-arrow-clockwise"></i>                                  
+                                    <h5>Backup and Restore</h5>           
+                                </div>
+                            </a> 
                             <div class="logout-box rounded position-absolute bottom-0 start-0 d-flex justify-content-center align-items-center flex-column p-3 p-xxl-4 px-2">
                                 <hr class="bottom-rule">
                                 <a href="/crms-project/admin-logout" class="text-decoration-none text-white">
@@ -216,7 +234,7 @@
                                         <tbody id="searchResults">
                                         <?php
                                             // Assuming $pdo is your PDO connection and the SQL query retrieves instructor name, subject name, subject code, and section
-                                            $sql = "SELECT instructor.name AS instructor_name, subjects.subject_name, subjects.subject_code, subjects.section
+                                            $sql = "SELECT instructor.name AS instructor_name, subjects.id, subjects.subject_name, subjects.subject_code, subjects.section
                                                     FROM subjects
                                                     INNER JOIN instructor ON subjects.instructor_id = instructor.id";
                                             $stmt = $pdo->query($sql);
@@ -226,17 +244,25 @@
                                                 $subjects[] = $row;
                                                 echo "<tr id='row_$rowNumber'>"; // Add unique identifier to each row
                                                 echo "<td>" . $rowNumber . "</td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($row['instructor_name']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($row['subject_name']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($row['subject_code']) . "' readonly></td>";
-                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($row['section']) . "' readonly></td>";
+                                                echo "<form action='/crms-project/admin-update-subject' method='post'>";           
+                                                echo "<td><input type='text' class='form-control' name='instructorName' value='" . (isset($row['instructor_name']) ? htmlspecialchars($row['instructor_name']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='subjectName' value='" . (isset($row['subject_name']) ? htmlspecialchars($row['subject_name']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='subjectCode' value='" . (isset($row['subject_code']) ? htmlspecialchars($row['subject_code']) : '') . "' readonly autocomplete='off'></td>";
+                                                echo "<td><input type='text' class='form-control' name='section' value='" . (isset($row['section']) ? htmlspecialchars($row['section']) : '') . "' readonly autocomplete='off'></td>";                                                
                                                 echo "<td>";
                                                 // Edit button with primary color
-                                                echo "<button class='btn btn-primary mx-1 ' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
                                                 // Update button with success color
-                                                echo "<button class='btn btn-success mx-1'>Update</button>";
+                                                echo "<input type='hidden' name='id_update' id='subjectInput' value='" . htmlspecialchars($row['id']) . "''>
+                                                    <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
+                                                echo "</form>";
+
+
+                                                echo "<button class='btn btn-primary mx-1 my-1' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
                                                 // Delete button with danger color
-                                                echo "<button class='btn btn-danger mx-1'>Delete</button>";
+                                                echo "<form action='/crms-project/admin-subject-delete' method='post'>
+                                                        <input type='hidden' name='id_delete' id='subjectIdInput' value='" . htmlspecialchars($row['id']) . "''>
+                                                        <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
+                                                    </form>";
                                                 echo "</td>";
                                                 echo "</tr>";
                                                 $rowNumber++;
@@ -268,50 +294,34 @@
                                                             input.readOnly = !input.readOnly;
                                                         });
                                                     }
-                                                }
-
-
-                                                // Function to perform live search for subjects
+                                                }                                            
+                                                
                                                 function performSearch() {
                                                     var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
-                                                    var subjects = <?php echo json_encode($subjects); ?>; // Assuming $subjects contains the subject data
+                                                    var rows = document.getElementById("searchResults").getElementsByTagName("tr");
+                                                    var hasResults = false;
 
-                                                    // Filter subjects based on the search term
-                                                    var filteredSubjects = subjects.filter(function(subject) {
-                                                        return subject.instructor_name.toLowerCase().includes(searchTerm) ||
-                                                            subject.subject_name.toLowerCase().includes(searchTerm) ||
-                                                            subject.subject_code.toLowerCase().includes(searchTerm) ||
-                                                            subject.section.toLowerCase().includes(searchTerm);
-                                                    });
+                                                    for (var i = 0; i < rows.length; i++) {
+                                                        var instructorCell = rows[i].getElementsByTagName("td")[1].querySelector("input") ? rows[i].getElementsByTagName("td")[1].querySelector("input").value.trim().toLowerCase() : '';
+                                                        var subjectCell = rows[i].getElementsByTagName("td")[2].querySelector("input") ? rows[i].getElementsByTagName("td")[2].querySelector("input").value.trim().toLowerCase() : '';
+                                                        var codeCell = rows[i].getElementsByTagName("td")[3].querySelector("input") ? rows[i].getElementsByTagName("td")[3].querySelector("input").value.trim().toLowerCase() : '';
+                                                        var sectionCell = rows[i].getElementsByTagName("td")[4].querySelector("input") ? rows[i].getElementsByTagName("td")[4].querySelector("input").value.trim().toLowerCase() : '';
 
-                                                    // Display search results or no results message
-                                                    var searchResultsContainer = document.getElementById("searchResults");
+                                                        var rowText = instructorCell + " " + subjectCell + " " + codeCell + " " + sectionCell;
+
+                                                        if (rowText.includes(searchTerm)) {
+                                                            rows[i].style.display = "";
+                                                            hasResults = true;
+                                                        } else {
+                                                            rows[i].style.display = "none";
+                                                        }
+                                                    }
+
+                                                    // Show or hide no results message
                                                     var noResultsMessage = document.getElementById("noResultsMessage");
-                                                    if (filteredSubjects.length > 0) {
-                                                        // Clear previous search results
-                                                        searchResultsContainer.innerHTML = "";
-                                                        // Append search results to the table
-                                                        filteredSubjects.forEach(function(subject, index) {
-                                                            var rowNumber = index + 1;
-                                                            var row = "<tr>" +
-                                                                            "<td>" + rowNumber + "</td>" +
-                                                                            "<td><input type='text' class='form-control' value='" + subject.instructor_name + "' readonly></td>" +
-                                                                            "<td><input type='text' class='form-control' value='" + subject.subject_name + "' readonly></td>" +
-                                                                            "<td><input type='text' class='form-control' value='" + subject.subject_code + "' readonly></td>" +
-                                                                            "<td><input type='text' class='form-control' value='" + subject.section + "' readonly></td>" +
-                                                                            "<td>" +
-                                                                                "<button class='btn btn-primary mx-1 edit-button'>Edit</button>" +
-                                                                                "<button class='btn btn-success mx-1'>Update</button>" +
-                                                                                "<button class='btn btn-danger mx-1'>Delete</button>" +
-                                                                            "</td>" +
-                                                                        "</tr>";
-
-                                                            searchResultsContainer.innerHTML += row;
-                                                        });
-                                                        // Hide the no results message
+                                                    if (searchTerm === "" || hasResults) {
                                                         noResultsMessage.style.display = "none";
                                                     } else {
-                                                        // Display no results message
                                                         noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
                                                         noResultsMessage.style.display = "block";
                                                     }
@@ -321,6 +331,7 @@
                                                 document.getElementById("searchInput").addEventListener("input", function() {
                                                     performSearch();
                                                 });
+
                                             </script>
                                         </tbody>
                                     </table>

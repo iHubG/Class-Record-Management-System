@@ -12,12 +12,16 @@
         '/crms-project/admin-instructor-class' => 'admin-ins-class',
         '/crms-project/admin-profile-pict' => 'admin-profilepict',
         '/crms-project/admin-update-instructor' => 'admin-update-instructor',
+        '/crms-project/admin-update-student' => 'admin-update-student',
+        '/crms-project/admin-update-subject' => 'admin-update-subject',
         '/crms-project/admin-student' => 'admin-student',
         '/crms-project/admin-subject' => 'admin-subject',
         '/crms-project/admin-activity-logs' => 'admin-activity-logs',
         '/crms-project/admin-backup-restore' => 'admin-backup-restore',
         '/crms-project/admin-backup' => 'admin-backup-database',
         '/crms-project/admin-restore' => 'admin-restore-database',
+        '/crms-project/admin-student-delete' => 'admin-student-delete',
+        '/crms-project/admin-subject-delete' => 'admin-subject-delete',
         '/crms-project/instructor-login' => 'instructor-login',
         '/crms-project/instructor-logout' => 'instructor-logout',
         '/crms-project/instructor-login-process' => 'instructor-process',
@@ -83,6 +87,12 @@
             case 'admin-update-instructor':
                 require ('./controller/admin-update-instructor.php'); 
                 break;
+            case 'admin-update-student':
+                require ('./controller/admin-update-student.php'); 
+                break;
+            case 'admin-update-subject':
+                require ('./controller/admin-update-subject.php'); 
+                break;
             case 'admin-activity-logs':
                 require ('./view/admin-activity-logs.view.php'); 
                 break;
@@ -100,6 +110,12 @@
                 break;
             case 'admin-restore-database':
                 require ('./controller/admin-restore.php'); 
+                break;
+            case 'admin-student-delete':
+                require ('./controller/admin-student-delete.php'); 
+                break;
+            case 'admin-subject-delete':
+                require ('./controller/admin-subject-delete.php'); 
                 break;
             case 'instructor-login':
                 require ('./view/instructor.view.php'); 
