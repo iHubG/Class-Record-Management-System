@@ -207,7 +207,7 @@
                             </div>
 
                             <!-- Message to display when no results are found -->
-                            <div id="noResultsMessage" class="mt-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
+                            <div id="noResultsMessage" class="mt-3 mb-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -223,20 +223,20 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="searchResults">
                                             <?php
                                             $rowNumber = 1;
                                             foreach ($students as $student) {
-                                                echo "<tr>";
+                                                echo "<tr id='row_$rowNumber'>"; // Add unique identifier to each row
                                                 echo "<td>" . $rowNumber . "</td>";
-                                                echo "<td>" . $student['school_id'] . "</td>";
-                                                echo "<td>" . $student['first_name'] . "</td>";
-                                                echo "<td>" . $student['last_name'] . "</td>";
-                                                echo "<td>" . $student['course'] . "</td>";
-                                                echo "<td>" . $student['year_level'] . "</td>";
+                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['school_id']) . "' readonly></td>";
+                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['first_name']) . "' readonly></td>";
+                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['last_name']) . "' readonly></td>";
+                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['course']) . "' readonly></td>";
+                                                echo "<td><input type='text' class='form-control' value='" . htmlspecialchars($student['year_level']) . "' readonly></td>";
                                                 echo "<td>";
                                                 // Edit button with primary color
-                                                echo "<button class='btn btn-primary mx-1'>Edit</button>";
+                                                echo "<button class='btn btn-primary mx-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
                                                 // Update button with success color
                                                 echo "<button class='btn btn-success mx-1'>Update</button>";
                                                 // Delete button with danger color
@@ -246,6 +246,83 @@
                                                 $rowNumber++;
                                             }
                                             ?>
+
+                                            <script>
+                                                 // Delegate event handling for "Edit" buttons
+                                                 document.addEventListener("click", function(event) {
+                                                    var target = event.target;
+                                                    if (target.classList.contains("edit-button")) {
+                                                        var rowNumber = target.dataset.row; // Get the row number from data attribute
+                                                        enableEditing(rowNumber);
+                                                    }
+                                                });
+
+                                                // Function to enable editing for a specific row
+                                                function enableEditing(rowNumber) {
+                                                    // Get the row element
+                                                    var row = document.getElementById('row_' + rowNumber);
+                                                    if (row) { // Check if the row element exists
+                                                        // Find all input fields within the row using querySelectorAll
+                                                        var inputs = row.querySelectorAll('input[type="text"]');
+                                                        // Toggle the readonly attribute for each input field
+                                                        inputs.forEach(function(input) {
+                                                            input.readOnly = !input.readOnly;
+                                                        });
+                                                    }
+                                                }
+
+                                                 // Function to perform live search
+                                                function performSearch() {
+                                                    var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+                                                    var students = <?php echo json_encode($students); ?>; // Assuming $students contains the student data
+
+                                                    // Filter students based on the search term
+                                                    var filteredStudents = students.filter(function(student) {
+                                                        return student.first_name.toLowerCase().includes(searchTerm) ||
+                                                            student.last_name.toLowerCase().includes(searchTerm) ||
+                                                            student.school_id.toLowerCase().includes(searchTerm) ||
+                                                            student.course.toLowerCase().includes(searchTerm) ||
+                                                            student.year_level.toString().includes(searchTerm);
+                                                    });
+
+                                                    // Display search results or no results message
+                                                    var searchResultsContainer = document.getElementById("searchResults");
+                                                    var noResultsMessage = document.getElementById("noResultsMessage");
+                                                    if (filteredStudents.length > 0) {
+                                                        // Clear previous search results
+                                                        searchResultsContainer.innerHTML = "";
+                                                        // Append search results to the table
+                                                        filteredStudents.forEach(function(student, index) {
+                                                            var rowNumber = index + 1;
+                                                            var row = "<tr>" +
+                                                                "<td>" + rowNumber + "</td>" +
+                                                                "<td><input type='text' class='form-control' value='" + student.school_id + "' readonly></td>" +
+                                                                "<td><input type='text' class='form-control' value='" + student.first_name + "' readonly></td>" +
+                                                                "<td><input type='text' class='form-control' value='" + student.last_name + "' readonly></td>" +
+                                                                "<td><input type='text' class='form-control' value='" + student.course + "' readonly></td>" +
+                                                                "<td><input type='text' class='form-control' value='" + student.year_level + "' readonly></td>" +
+                                                                "<td>" +
+                                                                    "<button class='btn btn-primary mx-1 edit-button' data-row='" + rowNumber + "'>Edit</button>" +
+                                                                    "<button class='btn btn-success mx-1'>Update</button>" +
+                                                                    "<button class='btn btn-danger mx-1'>Delete</button>" +
+                                                                "</td>" +
+                                                            "</tr>";
+                                                            searchResultsContainer.innerHTML += row;
+                                                        });
+                                                        // Hide the no results message
+                                                        noResultsMessage.style.display = "none";
+                                                    } else {
+                                                        // Display no results message
+                                                        noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
+                                                        noResultsMessage.style.display = "block";
+                                                    }
+                                                }
+
+                                                // Event listener for live search
+                                                document.getElementById("searchInput").addEventListener("input", function() {
+                                                    performSearch();
+                                                });
+                                            </script>
                                         </tbody>
                                     </table>
                                 </div>
