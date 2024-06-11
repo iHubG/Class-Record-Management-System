@@ -36,6 +36,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Class Record</title>
+        <style>
+            .table-container {
+                overflow-x: auto;
+                max-width: 100%; /* Adjust this to limit the maximum width of the table */
+            }
+        </style>
     </head>
     <body>
         <section id="grading-sheets">
@@ -170,12 +176,13 @@
                     </div>
                     <?php 
                         // Query to retrieve student details for the given subject ID
-                        $stmt = $pdo->prepare("SELECT student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ?");
+                        $stmt = $pdo->prepare("SELECT student.id, student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ?");
                         $stmt->execute([$subject_id]);
 
                         // Fetch student details from the database
                         $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         
+                        echo "<div class='table-container'>";
                         echo "<table class='table table-striped'>";
                         echo "<thead class='thead-dark'>";
                         echo "<tr>
@@ -195,38 +202,71 @@
                             </tr>";
                         echo "</thead>";
                         echo "<tbody>";
-
+                        
                         $rowNumber = 1;
-
+                        
                         foreach ($students as $student) {
-                            echo "<tr>";
+                            echo "<tr id='row_$rowNumber'>";
                             echo "<td>" . $rowNumber . "</td>";
-                            echo "<td>" . $student['last_name'] . "</td>";
-                            echo "<td>" . $student['first_name'] . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
-                            echo "<td>" . "</td>";
+                            echo "<form action='/crms-project/instructor-update-student' method='post'>";           
+                            echo "<td><input type='text' class='form-control w-auto' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='attitude' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='attendance' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='recitation' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
+                            echo "<td><input type='text' class='form-control w-auto' name='assignment' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='quiz' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='project' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='prelim' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
+                            echo "<td><input type='text' class='form-control w-auto' name='midterm' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
+                            echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
                             echo "<td>";
-                            // Edit button with primary color
-                            echo "<button class='btn btn-primary mx-1'>Edit</button>";
                             // Update button with success color
-                            echo "<button class='btn btn-success mx-1'>Update</button>";
-                            // Delete button with danger color
-                            echo "<button class='btn btn-danger mx-1'>Delete</button>";
+                            echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                                <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
+                            
+                            echo "</form>";
+
+                            // Edit button with primary color
+                            echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
+                            
+                            echo "<form action='/crms-project/instructor-student-delete' method='post'>
+                                <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                                <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
+                            </form>";
                             echo "</td>";
                             echo "</tr>";
-
+                        
                             $rowNumber++;
                         }
                         echo "</tbody>";
                         echo "</table>";
+                        echo "</div>";                     
                     ?>
+                    <script>
+                        // Delegate event handling for "Edit" buttons
+                        document.addEventListener("click", function(event) {
+                            var target = event.target;
+                            if (target.classList.contains("edit-button")) {
+                                var rowNumber = target.dataset.row; // Get the row number from data attribute
+                                enableEditing(rowNumber);
+                            }
+                        });
+
+                        // Function to enable editing for a specific row
+                        function enableEditing(rowNumber) {
+                            // Get the row element
+                            var row = document.getElementById('row_' + rowNumber);
+                            if (row) { // Check if the row element exists
+                                // Find all input fields within the row using querySelectorAll
+                                var inputs = row.querySelectorAll('input[type="text"]');
+                                // Toggle the readonly attribute for each input field
+                                inputs.forEach(function(input) {
+                                    input.readOnly = !input.readOnly;
+                                });
+                            }
+                        }
+                    </script>
             </div>
         </section>
     </body>

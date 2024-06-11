@@ -161,7 +161,7 @@
                 <div class="row mt-5">
                     <?php foreach ($subjects as $subject): ?>
                         <div class="col-6 col-lg-3">
-                            <a href="/crms-project/grading-sheets?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="cursor-pointer text-decoration-none">
+                            <a href="/crms-project/class-record?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="cursor-pointer text-decoration-none">
                                 <div class="card card-shadow">
                                     <div class="card" aria-hidden="true">
                                         <img src="./public/img/isu-blur.png" class="card-img-top" alt="...">

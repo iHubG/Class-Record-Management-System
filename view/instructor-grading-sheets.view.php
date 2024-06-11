@@ -39,7 +39,7 @@
     </head>
     <body>
         <section id="grading-sheets">
-            <a href="/crms-project/grading-sheets?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back"  data-bs-custom-class="custom-tooltip"></i></a>
+            <a href="/crms-project/class-record?subject_id=<?php echo htmlspecialchars($subject['id']); ?>" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back"  data-bs-custom-class="custom-tooltip"></i></a>
             <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Grade Sheet</h2>
 
             <div class="container-fluid">

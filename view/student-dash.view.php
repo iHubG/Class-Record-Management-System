@@ -96,31 +96,31 @@ $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_na
                             <form id="updateStudentForm" method="post">
                                 <!-- Input field for student's first name with error message -->
                                 <div class="mb-3 mt-3">
-                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" placeholder="First Name" autocomplete="off">
+                                    <input type="text" class="form-control" id="firstNameInput" name="firstName" value="<?php echo isset($firstName) ? htmlspecialchars($firstName) : ''; ?>" placeholder="First Name" autocomplete="off">
                                     <div id="firstNameError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Input field for student's last name with error message -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" placeholder="Last Name" autocomplete="off">
+                                    <input type="text" class="form-control" id="lastNameInput" name="lastName" value="<?php echo isset($lastName) ? htmlspecialchars($lastName) : ''; ?>" placeholder="Last Name" autocomplete="off">
                                     <div id="lastNameError" class="text-danger"></div>
                                 </div>
 
                                 <!-- School Id Number -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="schoolIdInput" name="schoolId" value="<?php echo htmlspecialchars($schoolId); ?>" placeholder="School Id Number" autocomplete="off">
+                                    <input type="text" class="form-control" id="schoolIdInput" name="schoolId" value="<?php echo isset($schoolId) ? htmlspecialchars($schoolId) : ''; ?>" placeholder="School Id Number" autocomplete="off">
                                     <div id="schoolIdError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Course -->
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="courseInput" name="course" value="<?php echo htmlspecialchars($course); ?>" placeholder="Course (e.g., BSIT)" autocomplete="off">
+                                    <input type="text" class="form-control" id="courseInput" name="course" value="<?php echo isset($course) ? htmlspecialchars($course) : ''; ?>" placeholder="Course (e.g., BSIT)" autocomplete="off">
                                     <div id="courseError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Year -->                             
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" id="yearInput" name="year" value="<?php echo htmlspecialchars($year); ?>" placeholder="Year (e.g., 3)" autocomplete="off">
+                                    <input type="text" class="form-control" id="yearInput" name="year" value="<?php echo isset($year) ? htmlspecialchars($year) : ''; ?>" placeholder="Year (e.g., 3)" autocomplete="off">
                                     <div id="yearError" class="text-danger"></div>
                                 </div>
 
@@ -182,7 +182,7 @@ $last_name = isset($_SESSION['last_name']) ? htmlspecialchars($_SESSION['last_na
                                             <h5><?php echo htmlspecialchars($subject['subject_code']); ?></h5>
                                             <h6 class="text-secondary"><?php echo htmlspecialchars($subject['section']); ?></h6>
                                             <div class="d-flex justify-content-between">
-                                                <a href="/student-dashboard/chat"><i class="bi bi-chat fs-4"></i></a>
+                                                <a href="/crms-project/chat"><i class="bi bi-chat fs-4"></i></a>
                                             </div>
                                         </div>
                                     </div>

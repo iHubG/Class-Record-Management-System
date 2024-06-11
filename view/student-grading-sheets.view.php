@@ -46,11 +46,11 @@ if (!$subject) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Grading Sheets</title>
+    <title>Student Class Record & Grade Sheet</title>
 </head>
 <body>
     <a href="/crms-project/student-dashboard" class="text-black"><i class="bi bi-arrow-left-circle fs-1 ms-2 ms-lg-5 mt-5 cursor-pointer back" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Go back"  data-bs-custom-class="custom-tooltip"></i></a>
-    <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Grading Sheet</h2>
+    <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Class Record and Grade Sheet</h2>
     <div class="container-fluid">
         <?php 
             // Query to retrieve student details for the logged-in student and the given subject ID
