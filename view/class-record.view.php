@@ -66,6 +66,7 @@
                     <!-- Add Student Button Modal -->
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-student">Add Student</button>
                 </div>
+
                  <!-- Register Student Button Modal -->
                     <div class="modal fade" id="register-student" tabindex="-1" aria-labelledby="register-student" aria-hidden="true">
                         <div class="modal-dialog">
@@ -174,6 +175,10 @@
                             </div>
                         </div>                    
                     </div>
+
+                    <!-- Message to display when no results are found -->
+                    <div id="noResultsMessage" class="mt-3 mb-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
+
                     <?php 
                         // Query to retrieve student details for the given subject ID
                         $stmt = $pdo->prepare("SELECT student.id, student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ?");
@@ -201,7 +206,7 @@
                                 <th></th>
                             </tr>";
                         echo "</thead>";
-                        echo "<tbody>";
+                        echo "<tbody id='searchResults'>";
                         
                         $rowNumber = 1;
                         
@@ -266,6 +271,59 @@
                                 });
                             }
                         }
+
+                        // Function to perform live search for students
+function performSearch() {
+    var searchResults = document.getElementById("searchResults");
+    if (searchResults !== null) {
+        var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+        var rows = searchResults.getElementsByTagName("tr");
+        var hasResults = false;
+
+        for (var i = 0; i < rows.length; i++) {
+            var studentId = rows[i].getElementsByTagName("td")[1].querySelector("input").value.trim().toLowerCase();
+            var firstName = rows[i].getElementsByTagName("td")[2].querySelector("input").value.trim().toLowerCase();
+            var lastName = rows[i].getElementsByTagName("td")[3].querySelector("input").value.trim().toLowerCase();
+            var attitude = rows[i].getElementsByTagName("td")[4].querySelector("input").value.trim().toLowerCase();
+            var attendance = rows[i].getElementsByTagName("td")[5].querySelector("input").value.trim().toLowerCase();
+            var recitation = rows[i].getElementsByTagName("td")[6].querySelector("input").value.trim().toLowerCase();
+            var assignment = rows[i].getElementsByTagName("td")[7].querySelector("input").value.trim().toLowerCase();
+            var quiz = rows[i].getElementsByTagName("td")[8].querySelector("input").value.trim().toLowerCase();
+            var project = rows[i].getElementsByTagName("td")[9].querySelector("input").value.trim().toLowerCase();
+            var prelim = rows[i].getElementsByTagName("td")[10].querySelector("input").value.trim().toLowerCase();
+            var midterm = rows[i].getElementsByTagName("td")[11].querySelector("input").value.trim().toLowerCase();
+            var final = rows[i].getElementsByTagName("td")[12].querySelector("input").value.trim().toLowerCase();
+
+            var rowText = studentId + " " + firstName + " " + lastName + " " + attitude + " " + attendance + " " + recitation + " " + assignment + " " + quiz + " " + project + " " + prelim + " " + midterm + " " + final;
+
+            if (rowText.includes(searchTerm)) {
+                rows[i].style.display = "";
+                hasResults = true;
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+
+        // Show or hide no results message
+        var noResultsMessage = document.getElementById("noResultsMessage");
+        if (searchTerm === "" || hasResults) {
+            noResultsMessage.style.display = "none";
+        } else {
+            noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
+            noResultsMessage.style.display = "block";
+        }
+    } else {
+        console.error("Element with ID 'searchResults' not found.");
+    }
+}
+
+// Event listener for live search
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("searchInput").addEventListener("input", performSearch);
+});
+
+
+
                     </script>
             </div>
         </section>
