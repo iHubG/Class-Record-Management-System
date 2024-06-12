@@ -180,73 +180,93 @@
                     <div id="noResultsMessage" class="mt-3 mb-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
 
                     <?php 
-                        // Query to retrieve student details for the given subject ID
-                        $stmt = $pdo->prepare("SELECT student.id, student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ?");
+                      // Query to retrieve student details for the given subject ID
+                        $query = "SELECT
+                        student.id,
+                        student.first_name,
+                        student.last_name,
+                        class.attitude,
+                        class.attendance,
+                        class.recitation,
+                        class.assignment,
+                        class.quiz,
+                        class.project,
+                        class.prelim,
+                        class.midterm,
+                        class.final
+                        FROM
+                        student
+                        INNER JOIN
+                        class ON student.id = class.student_id
+                        WHERE
+                        class.subject_id = ?";
+
+                        $stmt = $pdo->prepare($query);
                         $stmt->execute([$subject_id]);
 
-                        // Fetch student details from the database
+                        // Fetch student details and scores from the database
                         $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        
+
                         echo "<div class='table-container'>";
                         echo "<table class='table table-striped'>";
                         echo "<thead class='thead-dark'>";
                         echo "<tr>
-                                <th>#</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Attitude</th>
-                                <th>Attendance</th>
-                                <th>Recitation</th>
-                                <th>Assignment</th>
-                                <th>Quiz</th>
-                                <th>Project</th>
-                                <th>Prelim</th>
-                                <th>Midterm</th>
-                                <th>Final</th>
-                                <th></th>
-                            </tr>";
+                        <th>#</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Attitude</th>
+                        <th>Attendance</th>
+                        <th>Recitation</th>
+                        <th>Assignment</th>
+                        <th>Quiz</th>
+                        <th>Project</th>
+                        <th>Prelim</th>
+                        <th>Midterm</th>
+                        <th>Final</th>
+                        <th></th>
+                        </tr>";
                         echo "</thead>";
                         echo "<tbody id='searchResults'>";
-                        
-                        $rowNumber = 1;
-                        
-                        foreach ($students as $student) {
-                            echo "<tr id='row_$rowNumber'>";
-                            echo "<td>" . $rowNumber . "</td>";
-                            echo "<form action='/crms-project/instructor-update-student' method='post'>";           
-                            echo "<td><input type='text' class='form-control w-auto' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='attitude' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='attendance' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='recitation' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
-                            echo "<td><input type='text' class='form-control w-auto' name='assignment' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='quiz' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='project' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='prelim' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='midterm' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
-                            echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>"; 
-                            echo "<td>";
-                            // Update button with success color
-                            echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
-                                <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
-                            
-                            echo "</form>";
 
-                            // Edit button with primary color
-                            echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
-                            
-                            echo "<form action='/crms-project/instructor-student-delete' method='post'>
-                                <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
-                                <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
-                            </form>";
-                            echo "</td>";
-                            echo "</tr>";
-                        
-                            $rowNumber++;
+                        $rowNumber = 1;
+
+                        foreach ($students as $student) {
+                        echo "<tr id='row_$rowNumber'>";
+                        echo "<td>" . $rowNumber . "</td>";
+                        echo "<form action='/crms-project/instructor-update-student' method='post'>";           
+                        echo "<td><input type='text' class='form-control w-auto' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='attitude' value='" . (isset($student['attitude']) ? htmlspecialchars($student['attitude']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='attendance' value='" . (isset($student['attendance']) ? htmlspecialchars($student['attendance']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='recitation' value='" . (isset($student['recitation']) ? htmlspecialchars($student['recitation']) : '') . "' readonly autocomplete='off'></td>"; 
+                        echo "<td><input type='text' class='form-control w-auto' name='assignment' value='" . (isset($student['assignment']) ? htmlspecialchars($student['assignment']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='quiz' value='" . (isset($student['quiz']) ? htmlspecialchars($student['quiz']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='project' value='" . (isset($student['project']) ? htmlspecialchars($student['project']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='prelim' value='" . (isset($student['prelim']) ? htmlspecialchars($student['prelim']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='midterm' value='" . (isset($student['midterm']) ? htmlspecialchars($student['midterm']) : '') . "' readonly autocomplete='off'></td>"; 
+                        echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['final']) ? htmlspecialchars($student['final']) : '') . "' readonly autocomplete='off'></td>"; 
+                        echo "<td>";
+                        // Update button with success color
+                        echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                        <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
+
+                        echo "</form>";
+
+                        // Edit button with primary color
+                        echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
+
+                        echo "<form action='/crms-project/instructor-delete-student' method='post'>
+                        <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                        <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
+                        </form>";
+                        echo "</td>";
+                        echo "</tr>";
+
+                        $rowNumber++;
                         }
                         echo "</tbody>";
                         echo "</table>";
-                        echo "</div>";                     
+                        echo "</div>";
                     ?>
                     <script>
                         // Delegate event handling for "Edit" buttons

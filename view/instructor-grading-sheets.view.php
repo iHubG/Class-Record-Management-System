@@ -75,7 +75,6 @@
                                 <th>First Name</th>
                                 <th>Final Grade</th>
                                 <th>Remarks</th>
-                                <th></th>
                             </tr>";
                         echo "</thead>";
                         echo "<tbody class='searchResults'>";
@@ -90,22 +89,7 @@
                             echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
                             echo "<td><input type='text' class='form-control w-auto' name='finalGrade' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
                             echo "<td><input type='text' class='form-control w-auto' name='Remarks' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td>";
-
-                            echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
-                            <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";                     
-                            echo "</form>";
-
-                             // Edit button with primary color
-                             echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
-
-                             echo "<form action='/crms-project/instructor-student-delete' method='post'>
-                                        <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
-                                        <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
-                                    </form>";
-                            echo "</td>";
                             echo "</tr>";
-
                             $rowNumber++;
                         }
                         echo "</tbody>";

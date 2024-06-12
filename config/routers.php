@@ -33,6 +33,8 @@
         '/crms-project/instructor-add-subject' => 'instructor-add-subject',
         '/crms-project/get-instructor-info' => 'instructor-info',
         '/crms-project/instructor-grading-sheets' => 'instructor-grading-sheets',
+        '/crms-project/instructor-update-student' => 'instructor-update-student',
+        '/crms-project/instructor-delete-student' => 'instructor-delete-student',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/student-logout' => 'student-logout',
         '/crms-project/student-login-process' => 'student-process',
@@ -149,6 +151,12 @@
                 break;
             case 'instructor-grading-sheets':
                 require ('./view/instructor-grading-sheets.view.php'); 
+                break;
+            case 'instructor-update-student':
+                require ('./controller/instructor-update-student.php'); 
+                break;
+            case 'instructor-delete-student':
+                require ('./controller/instructor-delete-student.php'); 
                 break;
             case 'student-login':
                 require ('./view/student.view.php'); 
