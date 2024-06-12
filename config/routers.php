@@ -35,6 +35,7 @@
         '/crms-project/instructor-grading-sheets' => 'instructor-grading-sheets',
         '/crms-project/instructor-update-student' => 'instructor-update-student',
         '/crms-project/instructor-delete-student' => 'instructor-delete-student',
+        '/crms-project/instructor-update-score' => 'instructor-update-score',
         '/crms-project/student-login' => 'student-login',
         '/crms-project/student-logout' => 'student-logout',
         '/crms-project/student-login-process' => 'student-process',
@@ -157,6 +158,9 @@
                 break;
             case 'instructor-delete-student':
                 require ('./controller/instructor-delete-student.php'); 
+                break;
+            case 'instructor-update-score':
+                require ('./controller/instructor-update-score.php'); 
                 break;
             case 'student-login':
                 require ('./view/student.view.php'); 

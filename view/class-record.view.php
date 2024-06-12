@@ -193,7 +193,8 @@
                         class.project,
                         class.prelim,
                         class.midterm,
-                        class.final
+                        class.final,
+                        class.category
                         FROM
                         student
                         INNER JOIN
@@ -223,6 +224,7 @@
                         <th>Prelim</th>
                         <th>Midterm</th>
                         <th>Final</th>
+                        <th>Category</th>
                         <th></th>
                         </tr>";
                         echo "</thead>";
@@ -244,10 +246,11 @@
                         echo "<td><input type='text' class='form-control w-auto' name='project' value='" . (isset($student['project']) ? htmlspecialchars($student['project']) : '') . "' readonly autocomplete='off'></td>";
                         echo "<td><input type='text' class='form-control w-auto' name='prelim' value='" . (isset($student['prelim']) ? htmlspecialchars($student['prelim']) : '') . "' readonly autocomplete='off'></td>";
                         echo "<td><input type='text' class='form-control w-auto' name='midterm' value='" . (isset($student['midterm']) ? htmlspecialchars($student['midterm']) : '') . "' readonly autocomplete='off'></td>"; 
-                        echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['final']) ? htmlspecialchars($student['final']) : '') . "' readonly autocomplete='off'></td>"; 
+                        echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['final']) ? htmlspecialchars($student['final']) : '') . "' readonly autocomplete='off'></td>";
+                        echo "<td><input type='text' class='form-control w-auto' name='category' value='" . (isset($student['category']) ? htmlspecialchars($student['category']) : '') . "' readonly autocomplete='off' placeholder='e.g. 'minor' or 'major''></td>"; 
                         echo "<td>";
                         // Update button with success color
-                        echo "<input type='hidden' name='id_update' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                        echo "<input type='hidden' name='id_update' value='" . htmlspecialchars($student['id']) . "'>
                         <button type='submit' name='update' class='btn btn-success mx-1 my-1'>Update</button>";
 
                         echo "</form>";
@@ -256,17 +259,43 @@
                         echo "<button class='btn btn-primary mx-1 my-1 edit-button' onclick='enableEditing($rowNumber)'>Edit</button>"; // Add onclick event
 
                         echo "<form action='/crms-project/instructor-delete-student' method='post'>
-                        <input type='hidden' name='id_delete' id='studentIdInput' value='" . htmlspecialchars($student['id']) . "''>
+                        <input type='hidden' name='id_delete' value='" . htmlspecialchars($student['id']) . "'>
                         <button type='submit' name='delete' class='btn btn-danger mx-1 my-1'>Delete</button>
                         </form>";
+
+                        echo "<td>";
+                        echo '<!-- Add Score Modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addScore_' . $rowNumber . '">Add Score</button>';
+
                         echo "</td>";
                         echo "</tr>";
+
+                        // Add the modal for adding score
+                        echo "<div class='modal fade' id='addScore_$rowNumber' tabindex='-1' aria-labelledby='addScoreLabel' aria-hidden='true'>";
+                        echo "<div class='modal-dialog'>";
+                        echo "<div class='modal-content'>";
+                        echo "<div class='modal-header'>";
+                        echo "<h1 class='modal-title fs-5' id='addScoreLabel'>Add Score</h1>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
+                        echo "</div>";
+                        echo "<div class='modal-body text-center'>";
+                        echo "<form action='/crms-project/instructor-update-score' method='post'>";
+                        echo "<input class='form-control mb-3' type='text' name='addScore' placeholder='Quiz score' aria-label='quiz-score' autocomplete='off'>";
+                        echo "<input class='form-control mb-3' type='text' name='addProject' placeholder='Project score' aria-label='project-score' autocomplete='off'>";
+                        echo "<input type='hidden' name='id_addScore' value='" . htmlspecialchars($student['id']) . "'>";
+                        echo "<button type='submit' name='score' class='btn btn-primary'>Add</button>";
+                        echo "</form>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
 
                         $rowNumber++;
                         }
                         echo "</tbody>";
                         echo "</table>";
                         echo "</div>";
+
                     ?>
                     <script>
                         // Delegate event handling for "Edit" buttons
@@ -293,59 +322,61 @@
                         }
 
                         // Function to perform live search for students
-function performSearch() {
-    var searchResults = document.getElementById("searchResults");
-    if (searchResults !== null) {
-        var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
-        var rows = searchResults.getElementsByTagName("tr");
-        var hasResults = false;
+                            function performSearch() {
+                                var searchResults = document.getElementById("searchResults");
+                                if (searchResults !== null) {
+                                    var searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+                                    var rows = searchResults.getElementsByTagName("tr");
+                                    var hasResults = false;
 
-        for (var i = 0; i < rows.length; i++) {
-            var studentId = rows[i].getElementsByTagName("td")[1].querySelector("input").value.trim().toLowerCase();
-            var firstName = rows[i].getElementsByTagName("td")[2].querySelector("input").value.trim().toLowerCase();
-            var lastName = rows[i].getElementsByTagName("td")[3].querySelector("input").value.trim().toLowerCase();
-            var attitude = rows[i].getElementsByTagName("td")[4].querySelector("input").value.trim().toLowerCase();
-            var attendance = rows[i].getElementsByTagName("td")[5].querySelector("input").value.trim().toLowerCase();
-            var recitation = rows[i].getElementsByTagName("td")[6].querySelector("input").value.trim().toLowerCase();
-            var assignment = rows[i].getElementsByTagName("td")[7].querySelector("input").value.trim().toLowerCase();
-            var quiz = rows[i].getElementsByTagName("td")[8].querySelector("input").value.trim().toLowerCase();
-            var project = rows[i].getElementsByTagName("td")[9].querySelector("input").value.trim().toLowerCase();
-            var prelim = rows[i].getElementsByTagName("td")[10].querySelector("input").value.trim().toLowerCase();
-            var midterm = rows[i].getElementsByTagName("td")[11].querySelector("input").value.trim().toLowerCase();
-            var final = rows[i].getElementsByTagName("td")[12].querySelector("input").value.trim().toLowerCase();
+                                    for (var i = 0; i < rows.length; i++) {
+                                        var studentId = rows[i].getElementsByTagName("td")[1].querySelector("input").value.trim().toLowerCase();
+                                        var firstName = rows[i].getElementsByTagName("td")[2].querySelector("input").value.trim().toLowerCase();
+                                        var lastName = rows[i].getElementsByTagName("td")[3].querySelector("input").value.trim().toLowerCase();
+                                        var attitude = rows[i].getElementsByTagName("td")[4].querySelector("input").value.trim().toLowerCase();
+                                        var attendance = rows[i].getElementsByTagName("td")[5].querySelector("input").value.trim().toLowerCase();
+                                        var recitation = rows[i].getElementsByTagName("td")[6].querySelector("input").value.trim().toLowerCase();
+                                        var assignment = rows[i].getElementsByTagName("td")[7].querySelector("input").value.trim().toLowerCase();
+                                        var quiz = rows[i].getElementsByTagName("td")[8].querySelector("input").value.trim().toLowerCase();
+                                        var project = rows[i].getElementsByTagName("td")[9].querySelector("input").value.trim().toLowerCase();
+                                        var prelim = rows[i].getElementsByTagName("td")[10].querySelector("input").value.trim().toLowerCase();
+                                        var midterm = rows[i].getElementsByTagName("td")[11].querySelector("input").value.trim().toLowerCase();
+                                        var final = rows[i].getElementsByTagName("td")[12].querySelector("input").value.trim().toLowerCase();
 
-            var rowText = studentId + " " + firstName + " " + lastName + " " + attitude + " " + attendance + " " + recitation + " " + assignment + " " + quiz + " " + project + " " + prelim + " " + midterm + " " + final;
+                                        var rowText = studentId + " " + firstName + " " + lastName + " " + attitude + " " + attendance + " " + recitation + " " + assignment + " " + quiz + " " + project + " " + prelim + " " + midterm + " " + final;
 
-            if (rowText.includes(searchTerm)) {
-                rows[i].style.display = "";
-                hasResults = true;
-            } else {
-                rows[i].style.display = "none";
-            }
-        }
+                                        if (rowText.includes(searchTerm)) {
+                                            rows[i].style.display = "";
+                                            hasResults = true;
+                                        } else {
+                                            rows[i].style.display = "none";
+                                        }
+                                    }
 
-        // Show or hide no results message
-        var noResultsMessage = document.getElementById("noResultsMessage");
-        if (searchTerm === "" || hasResults) {
-            noResultsMessage.style.display = "none";
-        } else {
-            noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
-            noResultsMessage.style.display = "block";
-        }
-    } else {
-        console.error("Element with ID 'searchResults' not found.");
-    }
-}
+                                    // Show or hide no results message
+                                    var noResultsMessage = document.getElementById("noResultsMessage");
+                                    if (searchTerm === "" || hasResults) {
+                                        noResultsMessage.style.display = "none";
+                                    } else {
+                                        noResultsMessage.innerHTML = "No results found for \"" + searchTerm + "\".";
+                                        noResultsMessage.style.display = "block";
+                                    }
+                                } else {
+                                    console.error("Element with ID 'searchResults' not found.");
+                                }
+                            }
 
-// Event listener for live search
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("searchInput").addEventListener("input", performSearch);
-});
+                            // Event listener for live search
+                            document.addEventListener("DOMContentLoaded", function() {
+                                document.getElementById("searchInput").addEventListener("input", performSearch);
+                            });
 
 
 
                     </script>
             </div>
+
+          
         </section>
     </body>
 </html>

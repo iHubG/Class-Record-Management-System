@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $prelim = !empty($_POST["prelim"]) ? $_POST["prelim"] : null;
     $midterm = !empty($_POST["midterm"]) ? $_POST["midterm"] : null;
     $final = !empty($_POST["final"]) ? $_POST["final"] : null;
-    $subjectId = $_SESSION['subject_id']; 
+    $category = !empty($_POST["category"]) ? $_POST["category"] : null;
+    $subjectId = $_SESSION['subject_id'];
 
     // Fetch first name and last name from the student table
     $queryName = "SELECT first_name, last_name FROM student WHERE id = ?";
@@ -48,38 +49,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
                   ($midterm / 50 * 100 * $weights["midterm"]) +
                   ($final / 50 * 100 * $weights["final"]);
 
-    // Determine if the subject is minor or major
-    $subjectType = "major"; // Set to "minor" or "major" based on your system
-
-    // Calculate the final grade
-    if ($subjectType == "minor") {
-        $finalGrade = ($totalScore * 0.5) + 50;
-    } elseif ($subjectType == "major") {
-        $finalGrade = ($totalScore * 0.625) + 37.5;
+    // Determine the equivalent final grade based on the provided grading scale
+    if ($totalScore >= 98) {
+        $finalGrade = 1.0;
+    } elseif ($totalScore >= 95) {
+        $finalGrade = 1.25;
+    } elseif ($totalScore >= 92) {
+        $finalGrade = 1.5;
+    } elseif ($totalScore >= 89) {
+        $finalGrade = 1.75;
+    } elseif ($totalScore >= 86) {
+        $finalGrade = 2.0;
+    } elseif ($totalScore >= 83) {
+        $finalGrade = 2.25;
+    } elseif ($totalScore >= 80) {
+        $finalGrade = 2.5;
+    } elseif ($totalScore >= 77) {
+        $finalGrade = 2.75;
+    } elseif ($totalScore >= 75) {
+        $finalGrade = 3.0;
+    } elseif ($totalScore >= 70) {
+        $finalGrade = 4.0;
     } else {
-        // Handle other cases
+        $finalGrade = 5.0;
     }
 
-    // Check if a record already exists for this student and subject
-    $queryCheck = "SELECT id FROM class WHERE student_id = ? AND subject_id = ?";
-    $stmtCheck = $pdo->prepare($queryCheck);
-    $stmtCheck->execute([$studentId, $subjectId]);
-    $existingRecord = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+// Determine remarks based on final grade
+$remarks = ($finalGrade >= 1.0 && $finalGrade <= 3.0) ? "Passed" : "Failed";
 
-    if ($existingRecord) {
-        // If a record exists, update it
-        $queryClass = "UPDATE class 
-                       SET attitude = ?, attendance = ?, recitation = ?, assignment = ?, quiz = ?, project = ?, prelim = ?, midterm = ?, final = ?, final_grade = ?
-                       WHERE id = ?";
-        $stmtClass = $pdo->prepare($queryClass);
-        $stmtClass->execute([$attitude, $attendance, $recitation, $assignment, $quiz, $project, $prelim, $midterm, $final, $finalGrade, $existingRecord['id']]);
-    } else {
-        // If no record exists, insert a new one
-        $queryClass = "INSERT INTO class (id, student_id, subject_id, attitude, attendance, recitation, assignment, quiz, project, prelim, midterm, final, final_grade) 
-                      VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmtClass = $pdo->prepare($queryClass);
-        $stmtClass->execute([$studentId, $subjectId, $attitude, $attendance, $recitation, $assignment, $quiz, $project, $prelim, $midterm, $final, $finalGrade]);
-    }
+// Check if a record already exists for this student and subject
+$queryCheck = "SELECT id FROM class WHERE student_id = ? AND subject_id = ?";
+$stmtCheck = $pdo->prepare($queryCheck);
+$stmtCheck->execute([$studentId, $subjectId]);
+$existingRecord = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+if ($existingRecord) {
+    // If a record exists, update it
+    $queryClass = "UPDATE class 
+                   SET attitude = ?, attendance = ?, recitation = ?, assignment = ?, quiz = ?, project = ?, prelim = ?, midterm = ?, final = ?, final_grade = ?, remarks = ?, category = ?
+                   WHERE id = ?";
+    $stmtClass = $pdo->prepare($queryClass);
+    $stmtClass->execute([$attitude, $attendance, $recitation, $assignment, $quiz, $project, $prelim, $midterm, $final, $finalGrade, $remarks, $category, $existingRecord['id']]);
+} else {
+    // If no record exists, insert a new one
+    $queryClass = "INSERT INTO class (id, student_id, subject_id, attitude, attendance, recitation, assignment, quiz, project, prelim, midterm, final, final_grade, remarks, category) 
+                  VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmtClass = $pdo->prepare($queryClass);
+    $stmtClass->execute([$studentId, $subjectId, $attitude, $attendance, $recitation, $assignment, $quiz, $project, $prelim, $midterm, $final, $finalGrade, $remarks, $category]);
+}
+
 
     // Perform an UPDATE query for first_name and last_name in the student table
     $queryUpdateName = "UPDATE student SET first_name = ?, last_name = ? WHERE id = ?";
@@ -90,10 +108,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     header("Location: /crms-project/class-record?subject_id=" . urlencode($subjectId));
     exit();
 }
-
-
-
-
-
-
 
