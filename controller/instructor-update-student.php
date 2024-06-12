@@ -39,36 +39,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         "final" => 0.25
     ];
 
-    $totalScore = ($attitude / 50 * 100 * $weights["attitude"]) +
-                  ($attendance / 50 * 100 * $weights["attendance"]) +
-                  ($recitation / 50 * 100 * $weights["recitation"]) +
-                  ($assignment / 50 * 100 * $weights["assignment"]) +
-                  ($quiz / 50 * 100 * $weights["quiz"]) +
-                  ($project / 50 * 100 * $weights["project"]) +
-                  ($prelim / 50 * 100 * $weights["prelim"]) +
-                  ($midterm / 50 * 100 * $weights["midterm"]) +
-                  ($final / 50 * 100 * $weights["final"]);
+  // Retrieve the score amounts from the database
+$query = "SELECT attitude_amount, attendance_amount, recitation_amount, assignment_amount, quiz_amount, project_amount, prelim_amount, midterm_amount, final_amount FROM class WHERE subject_id = ?";
+$stmt = $pdo->prepare($query);
+$stmt->execute([$subjectId]);
+$scoreAmounts = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Use the retrieved score amounts to calculate the total score
+$totalScore = ($attitude / $scoreAmounts['attitude_amount'] * 100 * $weights["attitude"]) +
+              ($attendance / $scoreAmounts['attendance_amount'] * 100 * $weights["attendance"]) +
+              ($recitation / $scoreAmounts['recitation_amount'] * 100 * $weights["recitation"]) +
+              ($assignment / $scoreAmounts['assignment_amount'] * 100 * $weights["assignment"]) +
+              ($quiz / $scoreAmounts['quiz_amount'] * 100 * $weights["quiz"]) +
+              ($project / $scoreAmounts['project_amount'] * 100 * $weights["project"]) +
+              ($prelim / $scoreAmounts['prelim_amount'] * 100 * $weights["prelim"]) +
+              ($midterm / $scoreAmounts['midterm_amount'] * 100 * $weights["midterm"]) +
+              ($final / $scoreAmounts['final_amount'] * 100 * $weights["final"]);
+
+  
+  $subjectType = $category;
+  // Calculate the final grade based on the subject type
+  if ($subjectType == "minor") {
+    $rawGrade = ($totalScore * 0.5) + 50;
+  } elseif ($subjectType == "major") {
+    $rawGrade = ($totalScore * 0.625) + 37.5;
+  } else {
+    // Handle other cases
+  }
+                  
     // Determine the equivalent final grade based on the provided grading scale
-    if ($totalScore >= 98) {
+    if ($rawGrade >= 98) {
         $finalGrade = 1.0;
-    } elseif ($totalScore >= 95) {
+    } elseif ($rawGrade >= 95) {
         $finalGrade = 1.25;
-    } elseif ($totalScore >= 92) {
+    } elseif ($rawGrade >= 92) {
         $finalGrade = 1.5;
-    } elseif ($totalScore >= 89) {
+    } elseif ($rawGrade >= 89) {
         $finalGrade = 1.75;
-    } elseif ($totalScore >= 86) {
+    } elseif ($rawGrade >= 86) {
         $finalGrade = 2.0;
-    } elseif ($totalScore >= 83) {
+    } elseif ($rawGrade >= 83) {
         $finalGrade = 2.25;
-    } elseif ($totalScore >= 80) {
+    } elseif ($rawGrade >= 80) {
         $finalGrade = 2.5;
-    } elseif ($totalScore >= 77) {
+    } elseif ($rawGrade >= 77) {
         $finalGrade = 2.75;
-    } elseif ($totalScore >= 75) {
+    } elseif ($rawGrade >= 75) {
         $finalGrade = 3.0;
-    } elseif ($totalScore >= 70) {
+    } elseif ($rawGrade >= 70) {
         $finalGrade = 4.0;
     } else {
         $finalGrade = 5.0;

@@ -60,40 +60,43 @@
                  <div id="noResultsMessage" class="mt-3 mb-3 text-muted text-center" style="display: none;">No results found for "<span id="searchTerm"></span>".</div>
 
                     <?php 
-                        // Query to retrieve student details for the given subject ID
-                        $stmt = $pdo->prepare("SELECT student.id, student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ?");
-                        $stmt->execute([$subject_id]);
+                        // Query to retrieve student details including final grade and remarks for the given subject ID
+$stmt = $pdo->prepare("SELECT student.id, student.first_name, student.last_name, class.final_grade, class.remarks 
+FROM student 
+INNER JOIN class ON student.id = class.student_id 
+WHERE class.subject_id = ?");
+$stmt->execute([$subject_id]);
 
-                        // Fetch student details from the database
-                        $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        
-                        echo "<table class='table table-striped'>";
-                        echo "<thead class='thead-dark'>";
-                        echo "<tr>
-                                <th>#</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Final Grade</th>
-                                <th>Remarks</th>
-                            </tr>";
-                        echo "</thead>";
-                        echo "<tbody class='searchResults'>";
+// Fetch student details from the database
+$students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        $rowNumber = 1;
+echo "<table class='table table-striped'>";
+echo "<thead class='thead-dark'>";
+echo "<tr>
+<th>#</th>
+<th>Last Name</th>
+<th>First Name</th>
+<th>Final Grade</th>
+<th>Remarks</th>
+</tr>";
+echo "</thead>";
+echo "<tbody class='searchResults'>";
 
-                        foreach ($students as $student) {
-                            echo "<tr id='row_$rowNumber'>";
-                            echo "<td>" . $rowNumber . "</td>";
-                            echo "<form action='/crms-project/instructor-update-student' method='post'>";           
-                            echo "<td><input type='text' class='form-control w-auto' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='finalGrade' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "<td><input type='text' class='form-control w-auto' name='Remarks' value='" . (isset($student['']) ? htmlspecialchars($student['']) : '') . "' readonly autocomplete='off'></td>";
-                            echo "</tr>";
-                            $rowNumber++;
-                        }
-                        echo "</tbody>";
-                        echo "</table>";
+$rowNumber = 1;
+
+foreach ($students as $student) {
+echo "<tr id='row_$rowNumber'>";
+echo "<td>" . $rowNumber . "</td>";
+echo "<form action='/crms-project/instructor-update-student' method='post'>";           
+echo "<td><input type='text' class='form-control w-auto' name='lastName' value='" . (isset($student['last_name']) ? htmlspecialchars($student['last_name']) : '') . "' readonly autocomplete='off'></td>";
+echo "<td><input type='text' class='form-control w-auto' name='firstName' value='" . (isset($student['first_name']) ? htmlspecialchars($student['first_name']) : '') . "' readonly autocomplete='off'></td>";
+echo "<td><input type='text' class='form-control w-auto' name='finalGrade' value='" . (isset($student['final_grade']) ? htmlspecialchars($student['final_grade']) : '') . "' readonly autocomplete='off'></td>";
+echo "<td><input type='text' class='form-control w-auto' name='Remarks' value='" . (isset($student['remarks']) ? htmlspecialchars($student['remarks']) : '') . "' readonly autocomplete='off'></td>";
+echo "</tr>";
+$rowNumber++;
+}
+echo "</tbody>";
+echo "</table>";
                     ?>
 
                     <script>

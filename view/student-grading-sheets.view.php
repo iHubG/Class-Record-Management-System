@@ -53,29 +53,57 @@ if (!$subject) {
     <h2 class="text-center mt-3 mb-5"><?php echo htmlspecialchars($subject['subject_name'] . ' ' . $subject['section'] ); ?> Class Record and Grade Sheet</h2>
     <div class="container-fluid">
         <?php 
-            // Query to retrieve student details for the logged-in student and the given subject ID
-            $stmt = $pdo->prepare("SELECT student.first_name, student.last_name FROM student INNER JOIN class ON student.id = class.student_id WHERE class.subject_id = ? AND class.student_id = ?");
+           // Query to retrieve student details for the logged-in student and the given subject ID
+            $stmt = $pdo->prepare("SELECT student.first_name, student.last_name, class.attitude, class.attendance, class.recitation, class.assignment, class.quiz, class.project, class.prelim, class.midterm, class.final, class.final_grade, class.remarks
+            FROM student 
+            INNER JOIN class ON student.id = class.student_id 
+            WHERE class.subject_id = ? AND class.student_id = ?");
             $stmt->execute([$subject_id, $student_id]);
 
             // Fetch student details from the database
             $student = $stmt->fetch(PDO::FETCH_ASSOC);
-            
+
             if ($student) {
-                // Display the student's details
-                echo "<table class='table table-striped'>";
-                echo "<thead class='thead-dark'>";
-                echo "<tr><th>Last Name</th><th>First Name</th></tr>";
-                echo "</thead>";
-                echo "<tbody>";
-                echo "<tr>";
-                echo "<td>" . $student['last_name'] . "</td>";
-                echo "<td>" . $student['first_name'] . "</td>";
-                echo "</tr>";
-                echo "</tbody>";
-                echo "</table>";
+            // Display the student's details
+            echo "<table class='table table-striped'>";
+            echo "<thead class='thead-dark'>";
+            echo "<tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Attitude</th>
+            <th>Attendance</th>
+            <th>Recitation</th>
+            <th>Assignment</th>
+            <th>Quiz</th>
+            <th>Project</th>
+            <th>Prelim</th>
+            <th>Midterm</th>
+            <th>Final</th>
+            <th>Final Grade</th>
+            <th>Remarks</th>
+            </tr>";
+            echo "</thead>";
+            echo "<tbody>";
+            echo "<tr>";
+            echo "<td>" . $student['last_name'] . "</td>";
+            echo "<td>" . $student['first_name'] . "</td>";
+            echo "<td>" . $student['attitude'] . "</td>";
+            echo "<td>" . $student['attendance'] . "</td>";
+            echo "<td>" . $student['recitation'] . "</td>";
+            echo "<td>" . $student['assignment'] . "</td>";
+            echo "<td>" . $student['quiz'] . "</td>";
+            echo "<td>" . $student['project'] . "</td>";
+            echo "<td>" . $student['prelim'] . "</td>";
+            echo "<td>" . $student['midterm'] . "</td>";
+            echo "<td>" . $student['final'] . "</td>";
+            echo "<td>" . $student['final_grade'] . "</td>";
+            echo "<td>" . $student['remarks'] . "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
             } else {
-                // Handle the case when the student record is not found (unlikely scenario)
-                echo "Student record not found.";
+            // Handle the case when the student record is not found (unlikely scenario)
+            echo "Student record not found.";
             }
         ?>
     </div>

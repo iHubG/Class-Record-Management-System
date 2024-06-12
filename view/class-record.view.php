@@ -17,6 +17,29 @@
   $instructor_id = $_SESSION['instructor_id'];
 
   $_SESSION['subject_id'] = $subject_id;
+
+  $subjectId = $_SESSION['subject_id'];
+
+    // Query to fetch the amount data based on the subject ID
+    $query = "SELECT attitude_amount, attendance_amount, recitation_amount, assignment_amount, quiz_amount, project_amount, prelim_amount, midterm_amount, final_amount 
+              FROM class 
+              WHERE subject_id = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$subjectId]);
+    
+    // Fetch the data
+    $amountData = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Assign fetched values to variables
+    $attitudeAmount = $amountData['attitude_amount'] ?? '';
+    $attendanceAmount = $amountData['attendance_amount'] ?? '';
+    $recitationAmount = $amountData['recitation_amount'] ?? '';
+    $assignmentAmount = $amountData['assignment_amount'] ?? '';
+    $quizAmount = $amountData['quiz_amount'] ?? '';
+    $projectAmount = $amountData['project_amount'] ?? '';
+    $prelimAmount = $amountData['prelim_amount'] ?? '';
+    $midtermAmount = $amountData['midterm_amount'] ?? '';
+    $finalAmount = $amountData['final_amount'] ?? '';
   
   // Check if the selected subject belongs to the logged-in instructor
   $stmt = $pdo->prepare("SELECT * FROM subjects WHERE id = :subject_id AND instructor_id = :instructor_id");
@@ -65,7 +88,36 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register-student">Register Student</button>
                     <!-- Add Student Button Modal -->
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-student">Add Student</button>
+                    <!-- Add Score Amount Modal -->
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#score-amount">Score Amount</button>
                 </div>
+
+               <!-- Add Score Amount Modal -->
+               <div class="modal fade" id="score-amount" tabindex="-1" aria-labelledby="score-amount" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header border-0">
+                                <h1 class="modal-title fs-5" id="score-amount-title">Score Amount</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <form action="/crms-project/instructor-score-amount" method="post">
+                                    <input class="form-control mb-3" type="text" id="attitude" name="attitudeAmount" placeholder="Attitude" value="<?php echo isset($attitudeAmount) ? htmlspecialchars($attitudeAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="attendance" name="attendanceAmount" placeholder="Attendance" value="<?php echo isset($attendanceAmount) ? htmlspecialchars($attendanceAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="recitation" name="recitationAmount" placeholder="Recitation" value="<?php echo isset($recitationAmount) ? htmlspecialchars($recitationAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="assignment" name="assignmentAmount" placeholder="Assignment" value="<?php echo isset($assignmentAmount) ? htmlspecialchars($assignmentAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="quiz" name="quizAmount" placeholder="Quiz" value="<?php echo isset($quizAmount) ? htmlspecialchars($quizAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="project" name="projectAmount" placeholder="Project" value="<?php echo isset($projectAmount) ? htmlspecialchars($projectAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="prelim" name="prelimAmount" placeholder="Prelim" value="<?php echo isset($prelimAmount) ? htmlspecialchars($prelimAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="midterm" name="midtermAmount" placeholder="Midterm" value="<?php echo isset($midtermAmount) ? htmlspecialchars($midtermAmount) : ''; ?>" autocomplete="off">
+                                    <input class="form-control mb-3" type="text" id="final" name="finalAmount" placeholder="Final" value="<?php echo isset($finalAmount) ? htmlspecialchars($finalAmount) : ''; ?>" autocomplete="off">
+                                    <button class="btn btn-primary" type="submit" name="scoreAmount">Update Amount</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                  <!-- Register Student Button Modal -->
                     <div class="modal fade" id="register-student" tabindex="-1" aria-labelledby="register-student" aria-hidden="true">
@@ -247,7 +299,7 @@
                         echo "<td><input type='text' class='form-control w-auto' name='prelim' value='" . (isset($student['prelim']) ? htmlspecialchars($student['prelim']) : '') . "' readonly autocomplete='off'></td>";
                         echo "<td><input type='text' class='form-control w-auto' name='midterm' value='" . (isset($student['midterm']) ? htmlspecialchars($student['midterm']) : '') . "' readonly autocomplete='off'></td>"; 
                         echo "<td><input type='text' class='form-control w-auto' name='final' value='" . (isset($student['final']) ? htmlspecialchars($student['final']) : '') . "' readonly autocomplete='off'></td>";
-                        echo "<td><input type='text' class='form-control w-auto' name='category' value='" . (isset($student['category']) ? htmlspecialchars($student['category']) : '') . "' readonly autocomplete='off' placeholder='e.g. 'minor' or 'major''></td>"; 
+                        echo "<td><input type='text' class='form-control w-auto' name='category' value='" . (isset($student['category']) ? htmlspecialchars($student['category']) : '') . "' readonly autocomplete='off' placeholder='e.g. minor or major'></td>"; 
                         echo "<td>";
                         // Update button with success color
                         echo "<input type='hidden' name='id_update' value='" . htmlspecialchars($student['id']) . "'>
