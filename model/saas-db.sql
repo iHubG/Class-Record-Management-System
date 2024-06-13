@@ -86,6 +86,27 @@ CREATE TABLE `class` (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
 	`subject_id` INT(10) NULL DEFAULT NULL,
 	`student_id` INT(10) NULL DEFAULT NULL,
+	`attitude` INT(10) NULL DEFAULT NULL,
+	`attendance` INT(10) NULL DEFAULT NULL,
+	`recitation` INT(10) NULL DEFAULT NULL,
+	`assignment` INT(10) NULL DEFAULT NULL,
+	`quiz` INT(10) NULL DEFAULT NULL,
+	`project` INT(10) NULL DEFAULT NULL,
+	`prelim` INT(10) NULL DEFAULT NULL,
+	`midterm` INT(10) NULL DEFAULT NULL,
+	`final` INT(10) NULL DEFAULT NULL,
+	`final_grade` DECIMAL(20,2) NULL DEFAULT NULL,
+	`remarks` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`category` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`attitude_amount` INT(10) NULL DEFAULT NULL,
+	`attendance_amount` INT(10) NULL DEFAULT NULL,
+	`recitation_amount` INT(10) NULL DEFAULT NULL,
+	`assignment_amount` INT(10) NULL DEFAULT NULL,
+	`quiz_amount` INT(10) NULL DEFAULT NULL,
+	`project_amount` INT(10) NULL DEFAULT NULL,
+	`prelim_amount` INT(10) NULL DEFAULT NULL,
+	`midterm_amount` INT(10) NULL DEFAULT NULL,
+	`final_amount` INT(10) NULL DEFAULT NULL,
 	PRIMARY KEY (`id`) USING BTREE,
 	INDEX `subject_id` (`subject_id`) USING BTREE,
 	INDEX `student_id` (`student_id`) USING BTREE,
@@ -95,6 +116,7 @@ CREATE TABLE `class` (
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 ;
+
 
 
 --
